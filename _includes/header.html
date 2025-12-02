@@ -1,0 +1,74 @@
+<header class="relative m-0 px-4 py-4 mb-8">
+    <nav class="flex items-center justify-between w-full" aria-label="主导航">
+        <!-- 桌面端导航 -->
+        <div class="hidden md:flex items-center space-x-4 w-full justify-center">
+            <a href="{{ '/' | relative_url }}"
+                class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-bold">
+                Home
+            </a>
+            <a href="{{ '/archive' | relative_url }}"
+                class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                Blog
+            </a>
+            <a href="{{ '/about' | relative_url }}"
+                class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                About
+            </a>
+        </div>
+
+        <!-- 桌面端主题切换按钮 -->
+        <div class="absolute right-4 top-1/2 transform -translate-y-1/2 hidden md:block">
+            {% include theme-toggle.html %}
+        </div>
+
+        <!-- 移动端控件 -->
+        <div class="md:hidden flex items-center justify-between w-full">
+            <button id="menu-btn" class="flex flex-col space-y-1 p-2 text-black dark:text-white" aria-label="打开菜单"
+                aria-expanded="false" aria-controls="menu">
+                <span class="w-6 h-0.5 bg-current transition-all"></span>
+                <span class="w-6 h-0.5 bg-current transition-all"></span>
+                <span class="w-6 h-0.5 bg-current transition-all"></span>
+            </button>
+            {% include theme-toggle.html %}
+        </div>
+
+        <!-- 移动端菜单 -->
+        <div id="menu"
+            class="md:hidden absolute top-full left-4 right-4 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-100 dark:border-gray-700 backdrop-blur-md hidden mt-3 z-50"
+            role="menu" aria-labelledby="menu-btn">
+            <div class="flex flex-col">
+                <a href="{{ '/' | relative_url }}" role="menuitem"
+                    class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-bold block w-full px-5 py-4 text-left">
+                    Home
+                </a>
+                <a href="{{ '/archive' | relative_url }}" role="menuitem"
+                    class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors block w-full px-5 py-4 text-left">
+                    Blog
+                </a>
+                <a href="{{ '/about' | relative_url }}" role="menuitem"
+                    class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors block w-full px-5 py-4 text-left">
+                    About
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<script>
+    const menuBtn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+
+    if (menuBtn && menu) {
+        menuBtn.addEventListener('click', () => {
+            if (menuBtn.classList.contains('open')) {
+                menu.classList.add('hidden');
+                menuBtn.classList.remove('open');
+                menuBtn.setAttribute('aria-expanded', 'false');
+            } else {
+                menu.classList.remove('hidden');
+                menuBtn.classList.add('open');
+                menuBtn.setAttribute('aria-expanded', 'true');
+            }
+        });
+    }
+</script>
