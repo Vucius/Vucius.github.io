@@ -220,6 +220,28 @@ layout: default
             </a>
         </div>
     </section>
+
+    <!-- LikeMe Section -->
+    <section class="my-32 sm:my-48 text-center select-none">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                Like
+            </h2>
+            <p class="text-lg sm:text-xl text-gray-500 dark:text-gray-400 font-light mb-8">
+                If you like my blog, give it a thumbs up!
+            </p>
+            <link rel="stylesheet" href="https://unpkg.com/@5ime/likeme@latest/static/css/likeme.css" />
+            <script src="https://unpkg.com/@5ime/likeme@latest/static/js/likeme.js"></script>
+            <div id="likeme" class="inline-block"></div>
+            <script>
+                likeMe({
+                    el: '#likeme',
+                    serverURL: 'https://forvuk.vercel.app',
+                    color: '#ff9797'
+                });
+            </script>
+        </div>
+    </section>
 </div>
 
 <script>
