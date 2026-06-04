@@ -1,0 +1,1421 @@
+---
+layout: default
+title: 五子棋 AI 对弈
+permalink: /gomoku/
+---
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+    /* Premium Font Styling */
+    .font-premium {
+        font-family: 'Outfit', 'Noto Sans SC', sans-serif;
+    }
+
+    /* Core Styles for Boards */
+    .wood-board {
+        background-color: #e6b88a;
+        background-image: 
+            radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15), rgba(0,0,0,0.05)),
+            repeating-linear-gradient(90deg, rgba(139, 90, 43, 0.05) 0px, rgba(139, 90, 43, 0.05) 2px, transparent 2px, transparent 40px),
+            repeating-linear-gradient(0deg, rgba(139, 90, 43, 0.03) 0px, rgba(139, 90, 43, 0.03) 3px, transparent 3px, transparent 25px);
+        box-shadow: inset 0 0 40px rgba(100, 60, 20, 0.3), 0 10px 25px -5px rgba(0,0,0,0.3);
+        border: 4px solid #8b5a2b;
+    }
+    
+    .wood-line {
+        border-color: rgba(92, 64, 51, 0.85);
+    }
+    
+    .wood-hoshi {
+        background-color: rgba(92, 64, 51, 0.9);
+        box-shadow: 0 1px 2px rgba(255,255,255,0.2);
+    }
+
+    .cyber-board {
+        background-color: #0b0f19;
+        background-image: 
+            radial-gradient(circle at 50% 50%, rgba(6, 182, 212, 0.1), transparent 80%),
+            linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8));
+        box-shadow: 0 0 30px rgba(6, 182, 212, 0.25), inset 0 0 20px rgba(236, 72, 153, 0.15);
+        border: 2px solid rgba(6, 182, 212, 0.4);
+    }
+
+    .cyber-line {
+        border-color: rgba(6, 182, 212, 0.25);
+    }
+
+    .cyber-hoshi {
+        background-color: #ec4899;
+        box-shadow: 0 0 8px #ec4899, 0 0 15px #ec4899;
+    }
+
+    /* Stones Styling */
+    .stone {
+        width: 86%;
+        height: 86%;
+        border-radius: 50%;
+        transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.15s ease;
+        transform: scale(0);
+    }
+
+    .stone-visible {
+        transform: scale(1);
+    }
+
+    /* Realistic Wood Stones */
+    .wood-stone-black {
+        background: radial-gradient(circle at 30% 30%, #555 0%, #1a1a1a 45%, #050505 100%);
+        box-shadow: 1px 3px 5px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.15);
+    }
+
+    .wood-stone-white {
+        background: radial-gradient(circle at 30% 30%, #ffffff 0%, #f0f0f0 40%, #dcdcdc 85%, #b5b5b5 100%);
+        box-shadow: 1px 3px 5px rgba(0,0,0,0.35), inset 0 -1px 2px rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,0.6);
+    }
+
+    /* Glowing Cyber Stones */
+    .cyber-stone-black {
+        background: radial-gradient(circle at 50% 50%, #1e293b 30%, #0891b2 75%, #06b6d4 100%);
+        box-shadow: 0 0 12px rgba(6, 182, 212, 0.8), inset 0 0 4px rgba(255,255,255,0.5);
+    }
+
+    .cyber-stone-white {
+        background: radial-gradient(circle at 50% 50%, #ffffff 30%, #db2777 75%, #ec4899 100%);
+        box-shadow: 0 0 12px rgba(236, 72, 153, 0.8), inset 0 0 4px rgba(255,255,255,0.6);
+    }
+
+    /* Star Points Positioning */
+    .hoshi-point {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    /* Last Move Cursor Indicator */
+    .last-move-indicator {
+        position: absolute;
+        width: 35%;
+        height: 35%;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 20;
+        animation: pulse-ring 1.8s infinite;
+    }
+
+    .wood-indicator {
+        background-color: #ff4757;
+        box-shadow: 0 0 6px #ff4757;
+    }
+
+    .cyber-indicator {
+        background-color: #39ff14;
+        box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14;
+    }
+
+    @keyframes pulse-ring {
+        0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.9; }
+        50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.3; }
+        100% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.9; }
+    }
+
+    /* Hover helper ring */
+    .hover-indicator {
+        position: absolute;
+        width: 80%;
+        height: 80%;
+        border-radius: 50%;
+        border: 2px dashed rgba(255, 255, 255, 0.4);
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.15s ease, transform 0.15s ease;
+        transform: scale(0.8);
+        z-index: 15;
+    }
+    
+    .intersect-point:hover .hover-indicator {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+
+    .wood-hover {
+        border-color: rgba(139, 90, 43, 0.6);
+        background-color: rgba(139, 90, 43, 0.1);
+    }
+
+    .cyber-hover {
+        border-color: rgba(6, 182, 212, 0.6);
+        background-color: rgba(6, 182, 212, 0.15);
+    }
+
+    /* Scrollbars for Game Logs */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(156, 163, 175, 0.3);
+        border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(156, 163, 175, 0.5);
+    }
+</style>
+
+<div class="max-w-7xl mx-auto px-4 md:px-6 py-6 pb-24 font-premium">
+    <!-- Header -->
+    <header class="text-center mb-8">
+        <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-2">
+            五子棋 <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-cyan-400 dark:to-blue-500">AI 对弈</span>
+        </h1>
+        <p class="text-sm md:text-base text-gray-500 dark:text-gray-400 font-light max-w-2xl mx-auto">
+            基于深度残差网络 (ResNet) 策略与价值模型评估的五子棋人机对弈系统。
+        </p>
+    </header>
+
+    <!-- Main Section Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left Column: Metrics & Logs -->
+        <div class="lg:col-span-3 space-y-6 order-2 lg:order-1">
+            <!-- Game Status & Turn Indicator Card -->
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+                <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                    <i class="ri-gamepad-line text-blue-500"></i> 对局状态
+                </h2>
+                <div class="space-y-4">
+                    <div id="turn-badge" class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">当前回合</span>
+                        <span id="turn-text" class="text-sm font-bold text-blue-600 dark:text-cyan-400 flex items-center gap-1.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-cyan-400 animate-ping"></span> 执黑先行
+                        </span>
+                    </div>
+                    
+                    <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 px-1">
+                        <span>落子步数: <strong id="step-count" class="text-gray-800 dark:text-gray-200 font-semibold">0</strong></span>
+                        <span>最近落子: <strong id="last-move-label" class="text-gray-800 dark:text-gray-200 font-semibold">-</strong></span>
+                    </div>
+
+                    <!-- AI Confidence Meter -->
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-gray-500 dark:text-gray-400">AI 评估置信度</span>
+                            <span id="ai-confidence" class="font-bold text-indigo-600 dark:text-pink-500">0.0%</span>
+                        </div>
+                        <div class="w-full bg-gray-100 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+                            <div id="ai-confidence-bar" class="bg-gradient-to-r from-blue-500 to-indigo-600 dark:from-cyan-400 dark:to-pink-500 h-full w-0 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Panel -->
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+                <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                    <i class="ri-trophy-line text-yellow-500"></i> 历史战绩
+                </h2>
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="p-3 bg-green-50 dark:bg-green-950/20 rounded-xl border border-green-100 dark:border-green-900/30">
+                        <div class="text-2xl font-extrabold text-green-600 dark:text-green-400" id="stat-win">0</div>
+                        <div class="text-[10px] text-green-600 dark:text-green-400 uppercase tracking-wider font-semibold">玩家胜</div>
+                    </div>
+                    <div class="p-3 bg-red-50 dark:bg-red-950/20 rounded-xl border border-red-100 dark:border-red-900/30">
+                        <div class="text-2xl font-extrabold text-red-600 dark:text-red-400" id="stat-lose">0</div>
+                        <div class="text-[10px] text-red-600 dark:text-red-400 uppercase tracking-wider font-semibold">AI 胜</div>
+                    </div>
+                    <div class="p-3 bg-gray-50 dark:bg-gray-900/20 rounded-xl border border-gray-100 dark:border-gray-800/30">
+                        <div class="text-2xl font-extrabold text-gray-600 dark:text-gray-400" id="stat-draw">0</div>
+                        <div class="text-[10px] text-gray-600 dark:text-gray-400 uppercase tracking-wider font-semibold">平局</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Logs -->
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg flex flex-col h-[280px]">
+                <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
+                    <i class="ri-list-ordered text-purple-500"></i> 对局明细
+                </h2>
+                <div id="game-logs" class="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-1 text-xs">
+                    <div class="text-gray-400 dark:text-gray-500 text-center py-8">等待落子开始对局...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Center Column: Board Area -->
+        <div class="lg:col-span-6 flex flex-col items-center order-1 lg:order-2">
+            <!-- Board Wrapper with Coordinates -->
+            <div id="board-container" class="relative w-full aspect-square max-w-[530px] p-2 select-none wood-board rounded-2xl transition-all duration-300">
+                <!-- 17x17 grid for board coordinates and content -->
+                <div class="grid grid-cols-[1.2rem_1fr_1.2rem] grid-rows-[1.2rem_1fr_1.2rem] w-full h-full relative">
+                    
+                    <!-- Top Labels (A-O) -->
+                    <div class="col-start-2 row-start-1 grid grid-cols-15 text-center text-[10px] font-bold text-gray-750 dark:text-gray-300 items-center justify-items-center">
+                        <div>A</div><div>B</div><div>C</div><div>D</div><div>E</div><div>F</div><div>G</div><div>H</div><div>I</div><div>J</div><div>K</div><div>L</div><div>M</div><div>N</div><div>O</div>
+                    </div>
+                    
+                    <!-- Bottom Labels (A-O) -->
+                    <div class="col-start-2 row-start-3 grid grid-cols-15 text-center text-[10px] font-bold text-gray-750 dark:text-gray-300 items-center justify-items-center">
+                        <div>A</div><div>B</div><div>C</div><div>D</div><div>E</div><div>F</div><div>G</div><div>H</div><div>I</div><div>J</div><div>K</div><div>L</div><div>M</div><div>N</div><div>O</div>
+                    </div>
+
+                    <!-- Left Labels (15-1) -->
+                    <div class="col-start-1 row-start-2 grid grid-rows-15 text-right text-[10px] font-bold text-gray-750 dark:text-gray-300 items-center pr-1.5 leading-none">
+                        <div>15</div><div>14</div><div>13</div><div>12</div><div>11</div><div>10</div><div>9</div><div>8</div><div>7</div><div>6</div><div>5</div><div>4</div><div>3</div><div>2</div><div>1</div>
+                    </div>
+
+                    <!-- Right Labels (15-1) -->
+                    <div class="col-start-3 row-start-2 grid grid-rows-15 text-left text-[10px] font-bold text-gray-750 dark:text-gray-300 items-center pl-1.5 leading-none">
+                        <div>15</div><div>14</div><div>13</div><div>12</div><div>11</div><div>10</div><div>9</div><div>8</div><div>7</div><div>6</div><div>5</div><div>4</div><div>3</div><div>2</div><div>1</div>
+                    </div>
+
+                    <!-- Center Board Area -->
+                    <div id="board-center" class="col-start-2 row-start-2 relative w-full h-full overflow-hidden rounded-sm">
+                        <!-- Background Grid Lines: 14x14 boxes for 15x15 intersections -->
+                        <div id="grid-lines" class="absolute top-[3.3333%] left-[3.3333%] right-[3.3333%] bottom-[3.3333%] grid grid-cols-14 grid-rows-14 pointer-events-none">
+                            <!-- JS will generate 196 cell items with borders -->
+                        </div>
+
+                        <!-- Hoshi Star Points -->
+                        <div id="hoshi-container" class="absolute inset-0 pointer-events-none">
+                            <!-- Hoshi points will be absolute positioned here -->
+                        </div>
+
+                        <!-- Interaction Layer & Stones: 15x15 points -->
+                        <div id="interaction-layer" class="absolute inset-0 grid grid-cols-15 grid-rows-15 z-10">
+                            <!-- JS will generate 225 cell elements for click interaction and stones -->
+                        </div>
+
+                        <!-- Last Move Indicator Marker (moves dynamically) -->
+                        <div id="last-move-marker" class="hidden last-move-indicator"></div>
+                        
+                        <!-- Temporary Highlight Indicator -->
+                        <div id="temp-move-marker" class="absolute w-[80%] h-[80%] border-4 border-yellow-455 rounded-full scale-110 pointer-events-none z-20 hidden transform -translate-x-1/2 -translate-y-1/2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Control Panel & Settings -->
+        <div class="lg:col-span-3 space-y-6 order-3">
+            <!-- Game Controls -->
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+                <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                    <i class="ri-settings-line text-indigo-500"></i> 控制面板
+                </h2>
+                <div class="space-y-4">
+                    <!-- Config switches -->
+                    <div class="space-y-3">
+                        <label class="flex items-center justify-between cursor-pointer p-2 hover:bg-gray-50 dark:hover:bg-gray-900/30 rounded-xl transition-colors">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">AI 先手 (执黑)</span>
+                            <div class="relative">
+                                <input type="checkbox" id="ai-first-toggle" class="sr-only peer">
+                                <div class="w-10 h-6 bg-gray-200 dark:bg-gray-700 rounded-full peer peer-focus:ring-2 peer-focus:ring-blue-500/20 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:peer-checked:bg-cyan-500"></div>
+                            </div>
+                        </label>
+                        
+                        <label class="flex items-center justify-between cursor-pointer p-2 hover:bg-gray-50 dark:hover:bg-gray-900/30 rounded-xl transition-colors">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">游戏静音</span>
+                            <div class="relative">
+                                <input type="checkbox" id="mute-toggle" class="sr-only peer">
+                                <div class="w-10 h-6 bg-gray-200 dark:bg-gray-700 rounded-full peer peer-focus:ring-2 peer-focus:ring-blue-500/20 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600 dark:peer-checked:bg-cyan-500"></div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="h-px bg-gray-105 dark:bg-gray-700"></div>
+
+                    <!-- Button actions -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <button id="restart-btn" class="flex flex-col items-center justify-center p-3 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/20 dark:hover:bg-blue-900/30 text-blue-600 dark:text-cyan-400 rounded-xl transition-colors font-semibold border border-blue-100 dark:border-blue-900/30">
+                            <i class="ri-refresh-line text-lg mb-1"></i>
+                            <span class="text-xs">重置棋局</span>
+                        </button>
+                        <button id="undo-btn" class="flex flex-col items-center justify-center p-3 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/20 dark:hover:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-xl transition-colors font-semibold border border-amber-100 dark:border-amber-900/30 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="ri-arrow-go-back-line text-lg mb-1"></i>
+                            <span class="text-xs">悔棋一步</span>
+                        </button>
+                        <button id="hint-btn" class="col-span-2 flex items-center justify-center gap-2 p-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700/50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="ri-lightbulb-line text-lg"></i>
+                            <span class="text-xs">获取 AI 提示</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connection & Settings -->
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+                <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center justify-between">
+                    <span class="flex items-center gap-2"><i class="ri-server-line text-green-500"></i> 模型服务</span>
+                    <button id="settings-btn" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors" title="配置 API Endpoint">
+                        <i class="ri-settings-3-line text-lg"></i>
+                    </button>
+                </h2>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
+                        <span>连接状态:</span>
+                        <span id="conn-status-badge" class="flex items-center gap-1 font-bold text-red-500">
+                            <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span> 未连接
+                        </span>
+                    </div>
+                    <div class="text-[11px] text-gray-400 dark:text-gray-505 font-mono break-all" id="current-endpoint-display">
+                        ENDPOINT: http://localhost:3000
+                    </div>
+                    <button id="test-conn-btn" class="w-full py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700/40 dark:hover:bg-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-300 rounded-lg transition-colors border border-gray-200/30 dark:border-gray-700/30">
+                        测试连接延迟
+                    </button>
+                </div>
+            </div>
+
+            <!-- Appearance Theme Controller -->
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+                <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
+                    <i class="ri-palette-line text-cyan-500"></i> 棋盘皮肤
+                </h2>
+                <div class="grid grid-cols-2 gap-2">
+                    <button id="theme-wood-btn" class="py-2.5 px-3 rounded-xl text-xs font-bold transition-all border text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 ring-2 ring-blue-500/80">
+                        木质经典
+                    </button>
+                    <button id="theme-cyber-btn" class="py-2.5 px-3 rounded-xl text-xs font-bold transition-all border text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
+                        赛博霓虹
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- API Settings Modal -->
+<div id="settings-modal" class="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-6 hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-gray-200 dark:border-gray-700">
+        <h3 class="text-xl font-extrabold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
+            <i class="ri-settings-4-line text-indigo-500"></i> 服务端 API 配置
+        </h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 leading-relaxed">
+            设置后台 PyTorch 模型的 API 请求基准地址。开发环境下通常为 Vuk_Services 运行的本地端口。
+        </p>
+        <div class="space-y-4">
+            <div>
+                <label for="api-url-input" class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1.5 uppercase tracking-wider">
+                    API Base URL
+                </label>
+                <input type="text" id="api-url-input" class="w-full px-3 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-cyan-500 dark:text-white font-mono" placeholder="http://localhost:3000">
+            </div>
+            <div class="flex gap-2">
+                <button id="modal-save-btn" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 dark:bg-cyan-500 dark:hover:bg-cyan-600 text-white text-xs font-bold rounded-xl transition-all shadow-md">
+                    保存配置
+                </button>
+                <button id="modal-close-btn" class="flex-1 py-2.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-xs font-bold rounded-xl transition-all">
+                    取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Game Over Modal -->
+<div id="result-modal" class="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-6 hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 max-w-xs w-full text-center shadow-2xl border border-gray-200 dark:border-gray-700 transform transition-all scale-100">
+        <div id="result-icon" class="text-5xl mb-4 animate-bounce">🏆</div>
+        <h3 id="result-title" class="text-2xl font-extrabold text-gray-900 dark:text-white mb-2">
+            恭喜获胜！
+        </h3>
+        <p id="result-message" class="text-sm text-gray-500 dark:text-gray-400 mb-6 leading-relaxed">
+            这场对弈非常精彩。
+        </p>
+        <div class="flex flex-col gap-3">
+            <button id="result-restart-btn" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:brightness-110 text-white py-3 rounded-xl font-bold transition-all shadow-lg text-sm">
+                再来一把
+            </button>
+            <button id="result-close-btn" class="w-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 py-3 rounded-xl font-bold transition-all text-sm">
+                关闭查看棋盘
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Sound Synthesizer & Game Control Script -->
+<script>
+    // ----------------------------------------------------
+    // Sound Engine Class
+    // ----------------------------------------------------
+    class SoundEngine {
+        constructor() {
+            this.ctx = null;
+            this.muted = false;
+        }
+
+        init() {
+            if (!this.ctx) {
+                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (this.ctx.state === 'suspended') {
+                this.ctx.resume();
+            }
+        }
+
+        playClick(isBlack) {
+            if (this.muted) return;
+            this.init();
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+            
+            // 1. Lower pitch thump
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            
+            osc.type = 'sine';
+            const baseFreq = isBlack ? 260 : 360;
+            osc.frequency.setValueAtTime(baseFreq, now);
+            osc.frequency.exponentialRampToValueAtTime(80, now + 0.08);
+            
+            gain.gain.setValueAtTime(0.4, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now);
+            osc.stop(now + 0.09);
+            
+            // 2. High-frequency click impact transient
+            const clickOsc = ctx.createOscillator();
+            const clickGain = ctx.createGain();
+            
+            clickOsc.type = 'triangle';
+            clickOsc.frequency.setValueAtTime(1400, now);
+            clickOsc.frequency.exponentialRampToValueAtTime(500, now + 0.02);
+            
+            clickGain.gain.setValueAtTime(0.12, now);
+            clickGain.gain.exponentialRampToValueAtTime(0.01, now + 0.02);
+            
+            clickOsc.connect(clickGain);
+            clickGain.connect(ctx.destination);
+            clickOsc.start(now);
+            clickOsc.stop(now + 0.025);
+        }
+
+        playWin() {
+            if (this.muted) return;
+            this.init();
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+            
+            // Arpeggio C Major C5 - E5 - G5 - C6
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            notes.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                
+                const time = now + idx * 0.12;
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.setValueAtTime(0.15, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.6);
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(time);
+                osc.stop(time + 0.65);
+            });
+        }
+
+        playLose() {
+            if (this.muted) return;
+            this.init();
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+            
+            // Descending minor progression G4 - F4 - Eb4 - C4
+            const notes = [392.00, 349.23, 311.13, 261.63];
+            notes.forEach((freq, idx) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.type = 'triangle';
+                osc.frequency.value = freq;
+                
+                const time = now + idx * 0.15;
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.setValueAtTime(0.18, time);
+                gain.gain.exponentialRampToValueAtTime(0.001, time + 0.8);
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(time);
+                osc.stop(time + 0.85);
+            });
+        }
+
+        playError() {
+            if (this.muted) return;
+            this.init();
+            const ctx = this.ctx;
+            const now = ctx.currentTime;
+            
+            const osc1 = ctx.createOscillator();
+            const osc2 = ctx.createOscillator();
+            const gain = ctx.createGain();
+            
+            osc1.type = 'sawtooth';
+            osc1.frequency.value = 135;
+            osc2.type = 'sine';
+            osc2.frequency.value = 138;
+            
+            gain.gain.setValueAtTime(0.12, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+            
+            osc1.connect(gain);
+            osc2.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc1.start(now);
+            osc2.start(now);
+            osc1.stop(now + 0.2);
+            osc2.stop(now + 0.2);
+        }
+    }
+
+    const sound = new SoundEngine();
+
+    // ----------------------------------------------------
+    // Game Logic Variables & Initializations
+    // ----------------------------------------------------
+    const BOARD_SIZE = 15;
+    const BOARD_SQUARE = BOARD_SIZE * BOARD_SIZE;
+
+    const gameState = {
+        board: Array(BOARD_SQUARE).fill(0), // 0: empty, 1: black, -1: white
+        history: [], // List of move indices
+        confidences: {}, // Map of move_index -> confidence value
+        gameOver: false,
+        isAIMoving: false,
+        lastMove: -1,
+        aiFirst: false,
+        theme: 'wood', // 'wood' or 'cyberpunk'
+        stats: {
+            win: 0,
+            lose: 0,
+            draw: 0
+        },
+        apiUrl: 'http://localhost:3000'
+    };
+
+    // Load URL and Theme Settings from LocalStorage
+    if (localStorage.getItem('gomoku_api_url')) {
+        gameState.apiUrl = localStorage.getItem('gomoku_api_url');
+    }
+    if (localStorage.getItem('gomoku_theme')) {
+        gameState.theme = localStorage.getItem('gomoku_theme');
+    }
+    if (localStorage.getItem('gomoku_stats')) {
+        try {
+            gameState.stats = JSON.parse(localStorage.getItem('gomoku_stats'));
+        } catch(e) {}
+    }
+
+    // ----------------------------------------------------
+    // Board Coordinates Mapper
+    // ----------------------------------------------------
+    function getCoordinateString(index) {
+        if (index === -1) return '-';
+        const row = Math.floor(index / BOARD_SIZE);
+        const col = index % BOARD_SIZE;
+        const letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O'];
+        const rowNum = 15 - row;
+        return `${letters[col]}${rowNum}`;
+    }
+
+    // ----------------------------------------------------
+    // Draw Grid Lines (14x14 boxes inside 15x15 intersections)
+    // ----------------------------------------------------
+    function drawGridLines() {
+        const gridLines = document.getElementById('grid-lines');
+        gridLines.innerHTML = '';
+        const lineClass = gameState.theme === 'wood' ? 'border-t border-l wood-line' : 'border-t border-l cyber-line';
+        const rightClass = gameState.theme === 'wood' ? 'border-r wood-line' : 'border-r cyber-line';
+        const bottomClass = gameState.theme === 'wood' ? 'border-b wood-line' : 'border-b cyber-line';
+
+        for (let i = 0; i < 14 * 14; i++) {
+            const cell = document.createElement('div');
+            cell.className = lineClass;
+            
+            // Right border for the last column cells
+            if ((i + 1) % 14 === 0) {
+                cell.classList.add(rightClass);
+            }
+            // Bottom border for the last row cells
+            if (i >= 14 * 13) {
+                cell.classList.add(bottomClass);
+            }
+            gridLines.appendChild(cell);
+        }
+    }
+
+    // ----------------------------------------------------
+    // Draw Star Points (Hoshi)
+    // ----------------------------------------------------
+    function drawHoshi() {
+        const container = document.getElementById('hoshi-container');
+        container.innerHTML = '';
+        
+        // Star points at intersections (3,3), (3,11), (7,7), (11,3), (11,11) in 15x15 (0-indexed)
+        const hoshiLocations = [
+            [3, 3], [3, 11], [7, 7], [11, 3], [11, 11]
+        ];
+
+        const hoshiClass = gameState.theme === 'wood' ? 'hoshi-point wood-hoshi' : 'hoshi-point cyber-hoshi';
+
+        hoshiLocations.forEach(([r, c]) => {
+            const dot = document.createElement('div');
+            dot.className = hoshiClass;
+            
+            // Calculate absolute position percentage (center of the intersection cell)
+            const topPct = ((r + 0.5) / 15) * 100;
+            const leftPct = ((c + 0.5) / 15) * 100;
+            
+            dot.style.top = `${topPct}%`;
+            dot.style.left = `${leftPct}%`;
+            
+            container.appendChild(dot);
+        });
+    }
+
+    // ----------------------------------------------------
+    // Initialize Interaction Layer
+    // ----------------------------------------------------
+    function initInteractionLayer() {
+        const layer = document.getElementById('interaction-layer');
+        layer.innerHTML = '';
+
+        const hoverClass = gameState.theme === 'wood' ? 'hover-indicator wood-hover' : 'hover-indicator cyber-hover';
+
+        for (let i = 0; i < BOARD_SQUARE; i++) {
+            const point = document.createElement('div');
+            point.className = 'intersect-point relative flex items-center justify-center cursor-pointer z-10';
+            
+            // Hover helper indicator
+            const hoverDot = document.createElement('div');
+            hoverDot.className = hoverClass;
+            point.appendChild(hoverDot);
+
+            // Click Handler
+            point.onclick = () => handlePlayerMove(i);
+
+            layer.appendChild(point);
+        }
+    }
+
+    // ----------------------------------------------------
+    // Apply UI Themes
+    // ----------------------------------------------------
+    function applyBoardTheme(themeName) {
+        gameState.theme = themeName;
+        localStorage.setItem('gomoku_theme', themeName);
+        
+        const container = document.getElementById('board-container');
+        const woodBtn = document.getElementById('theme-wood-btn');
+        const cyberBtn = document.getElementById('theme-cyber-btn');
+
+        if (themeName === 'wood') {
+            container.className = 'relative w-full aspect-square max-w-[530px] p-2 select-none wood-board rounded-2xl transition-all duration-300';
+            woodBtn.classList.add('ring-2', 'ring-blue-500/80');
+            cyberBtn.classList.remove('ring-2', 'ring-blue-500/80');
+        } else {
+            container.className = 'relative w-full aspect-square max-w-[530px] p-2 select-none cyber-board rounded-2xl transition-all duration-300';
+            cyberBtn.classList.add('ring-2', 'ring-blue-500/80');
+            woodBtn.classList.remove('ring-2', 'ring-blue-500/80');
+        }
+
+        // Redraw grid lines & star points to match theme style
+        drawGridLines();
+        drawHoshi();
+        
+        // Re-render placed stones with theme-specific classes
+        renderAllStones();
+        
+        // Reset last move indicator style
+        updateLastMoveMarker();
+        
+        // Re-init hover indications
+        initInteractionLayer();
+    }
+
+    // ----------------------------------------------------
+    // Render placed stones
+    // ----------------------------------------------------
+    function renderAllStones() {
+        const cells = document.getElementById('interaction-layer').children;
+        for (let i = 0; i < BOARD_SQUARE; i++) {
+            const val = gameState.board[i];
+            
+            // Remove existing stone elements
+            const existingStone = cells[i].querySelector('.stone');
+            if (existingStone) existingStone.remove();
+
+            if (val !== 0) {
+                const stone = document.createElement('div');
+                let stoneClass = 'stone stone-visible ';
+                if (gameState.theme === 'wood') {
+                    stoneClass += val === 1 ? 'wood-stone-black' : 'wood-stone-white';
+                } else {
+                    stoneClass += val === 1 ? 'cyber-stone-black' : 'cyber-stone-white';
+                }
+                stone.className = stoneClass;
+                cells[i].appendChild(stone);
+            }
+        }
+    }
+
+    // ----------------------------------------------------
+    // Place Piece (Logic + Render + Audio)
+    // ----------------------------------------------------
+    function placePiece(index, playerVal) {
+        gameState.board[index] = playerVal;
+        gameState.history.push(index);
+        gameState.lastMove = index;
+        
+        // Render stone on board
+        const cells = document.getElementById('interaction-layer').children;
+        const cell = cells[index];
+        
+        // Remove existing stone if any
+        const oldStone = cell.querySelector('.stone');
+        if (oldStone) oldStone.remove();
+
+        const stone = document.createElement('div');
+        let stoneClass = 'stone ';
+        if (gameState.theme === 'wood') {
+            stoneClass += playerVal === 1 ? 'wood-stone-black' : 'wood-stone-white';
+        } else {
+            stoneClass += playerVal === 1 ? 'cyber-stone-black' : 'cyber-stone-white';
+        }
+        stone.className = stoneClass;
+        cell.appendChild(stone);
+        
+        // Micro-animation for placing
+        requestAnimationFrame(() => {
+            stone.classList.add('stone-visible');
+        });
+
+        // Trigger Synth Sound
+        const isBlackStone = playerVal === 1;
+        sound.playClick(isBlackStone);
+
+        // Update indicator
+        updateLastMoveMarker();
+        
+        // Update Stats Labels
+        document.getElementById('step-count').innerText = gameState.history.length;
+        document.getElementById('last-move-label').innerText = getCoordinateString(index);
+    }
+
+    // ----------------------------------------------------
+    // Update Last Move Pulsing Indicator Position
+    // ----------------------------------------------------
+    function updateLastMoveMarker() {
+        const marker = document.getElementById('last-move-marker');
+        if (gameState.lastMove === -1) {
+            marker.classList.add('hidden');
+            return;
+        }
+
+        marker.classList.remove('hidden');
+        marker.className = gameState.theme === 'wood' ? 'last-move-indicator wood-indicator' : 'last-move-indicator cyber-indicator';
+
+        const row = Math.floor(gameState.lastMove / BOARD_SIZE);
+        const col = gameState.lastMove % BOARD_SIZE;
+
+        const topPct = ((row + 0.5) / 15) * 100;
+        const leftPct = ((col + 0.5) / 15) * 100;
+
+        marker.style.top = `${topPct}%`;
+        marker.style.left = `${leftPct}%`;
+    }
+
+    // ----------------------------------------------------
+    // Show temporary marker when hovering logs
+    // ----------------------------------------------------
+    function showTempMarker(index) {
+        const marker = document.getElementById('temp-move-marker');
+        if (index === -1 || gameState.board[index] === 0) {
+            marker.classList.add('hidden');
+            return;
+        }
+        
+        const row = Math.floor(index / BOARD_SIZE);
+        const col = index % BOARD_SIZE;
+        
+        const topPct = ((row + 0.5) / 15) * 100;
+        const leftPct = ((col + 0.5) / 15) * 100;
+        
+        marker.style.top = `${topPct}%`;
+        marker.style.left = `${leftPct}%`;
+        marker.classList.remove('hidden');
+    }
+    
+    function hideTempMarker() {
+        document.getElementById('temp-move-marker').classList.add('hidden');
+    }
+
+    // ----------------------------------------------------
+    // Handle Player Turn 落子
+    // ----------------------------------------------------
+    function handlePlayerMove(index) {
+        if (gameState.gameOver || gameState.isAIMoving) return;
+        if (gameState.board[index] !== 0) {
+            sound.playError();
+            return;
+        }
+
+        // Identify Player Stone color
+        const playerVal = gameState.aiFirst ? -1 : 1;
+        
+        placePiece(index, playerVal);
+        addLogItem(gameState.history.length, playerVal, index, null);
+
+        if (checkGameStatus(playerVal)) return;
+
+        // Trigger AI Turn
+        triggerAILogic();
+    }
+
+    // ----------------------------------------------------
+    // Trigger AI Move Calculation
+    // ----------------------------------------------------
+    async function triggerAILogic() {
+        gameState.isAIMoving = true;
+        
+        // Update indicators
+        const aiVal = gameState.aiFirst ? 1 : -1;
+        document.getElementById('turn-text').innerHTML = `
+            <span class="w-2.5 h-2.5 rounded-full bg-indigo-600 dark:bg-pink-500 animate-ping"></span> AI 正在思考...
+        `;
+        document.getElementById('turn-text').className = "text-sm font-bold text-indigo-600 dark:text-pink-400 flex items-center gap-1.5";
+        
+        document.getElementById('undo-btn').disabled = true;
+        document.getElementById('hint-btn').disabled = true;
+
+        try {
+            // Check if the board is empty and AI is first (AI opening strategy)
+            const emptyBoard = gameState.board.every(x => x === 0);
+            if (emptyBoard && aiVal === 1) {
+                // Play center position (H8 corresponds to center index 112)
+                setTimeout(() => {
+                    placePiece(112, 1);
+                    addLogItem(1, 1, 112, 1.0);
+                    updateConfidenceMeter(1.0);
+                    
+                    document.getElementById('undo-btn').disabled = false;
+                    document.getElementById('hint-btn').disabled = false;
+                    
+                    if (!checkGameStatus(1)) {
+                        setPlayerTurnBadge();
+                        gameState.isAIMoving = false;
+                    }
+                }, 600);
+                return;
+            }
+
+            // Otherwise, fetch prediction from local model API
+            const board2D = [];
+            for (let r = 0; r < 15; r++) {
+                board2D.push(gameState.board.slice(r * 15, (r + 1) * 15));
+            }
+
+            const response = await fetch(`${gameState.apiUrl}/api/gomoku/move`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    board: board2D,
+                    player: aiVal,
+                    step: gameState.history.length
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`API error status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            
+            if (result.success && result.data) {
+                const { row, col, confidence } = result.data;
+                const aiIndex = row * 15 + col;
+                
+                placePiece(aiIndex, aiVal);
+                gameState.confidences[aiIndex] = confidence;
+                addLogItem(gameState.history.length, aiVal, aiIndex, confidence);
+                updateConfidenceMeter(confidence);
+                
+                document.getElementById('undo-btn').disabled = false;
+                document.getElementById('hint-btn').disabled = false;
+
+                if (!checkGameStatus(aiVal)) {
+                    setPlayerTurnBadge();
+                    gameState.isAIMoving = false;
+                }
+            } else {
+                throw new Error(result.message || 'API responded with success: false');
+            }
+
+        } catch(err) {
+            console.error('Failed to get AI move:', err);
+            document.getElementById('turn-text').innerHTML = `
+                <span class="w-2.5 h-2.5 rounded-full bg-red-505 animate-pulse"></span> AI 服务异常
+            `;
+            document.getElementById('turn-text').className = "text-sm font-bold text-red-500 flex items-center gap-1.5";
+            sound.playError();
+            
+            document.getElementById('undo-btn').disabled = false;
+            document.getElementById('hint-btn').disabled = false;
+            gameState.isAIMoving = false;
+            
+            alert('AI 服务通信失败，请检查 Vuk_Services 后台服务是否启动！\n错误信息: ' + err.message);
+        }
+    }
+
+    // ----------------------------------------------------
+    // Update Confidence Meter Visual
+    // ----------------------------------------------------
+    function updateConfidenceMeter(confidence) {
+        const percentage = (confidence * 100).toFixed(1);
+        document.getElementById('ai-confidence').innerText = `${percentage}%`;
+        document.getElementById('ai-confidence-bar').style.width = `${percentage}%`;
+    }
+
+    // ----------------------------------------------------
+    // Set Player Turn Badge UI
+    // ----------------------------------------------------
+    function setPlayerTurnBadge() {
+        const playerVal = gameState.aiFirst ? -1 : 1;
+        const colorName = playerVal === 1 ? '黑' : '白';
+        
+        document.getElementById('turn-text').innerHTML = `
+            <span class="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-cyan-400 animate-ping"></span> 请落子 (执${colorName})
+        `;
+        document.getElementById('turn-text').className = "text-sm font-bold text-blue-600 dark:text-cyan-400 flex items-center gap-1.5";
+    }
+
+    // ----------------------------------------------------
+    // Add Game Log Item to DOM
+    // ----------------------------------------------------
+    function addLogItem(step, player, index, confidence) {
+        const container = document.getElementById('game-logs');
+        if (step === 1 || container.querySelector('.text-gray-400')) {
+            container.innerHTML = '';
+        }
+        
+        const item = document.createElement('div');
+        item.className = "flex items-center justify-between p-2 hover:bg-gray-100 dark:hover:bg-gray-700/40 rounded-lg transition-colors cursor-pointer";
+        
+        // Mouse hover highlights the cell
+        item.onmouseenter = () => showTempMarker(index);
+        item.onmouseleave = () => hideTempMarker();
+        
+        const stoneColorText = player === 1 ? '黑子' : '白子';
+        const playerLabel = (player === 1 && !gameState.aiFirst) || (player === -1 && gameState.aiFirst) ? '玩家' : 'AI';
+        const coord = getCoordinateString(index);
+        
+        let confStr = '-';
+        if (confidence !== null) {
+            confStr = `${(confidence * 100).toFixed(0)}%`;
+        }
+        
+        item.innerHTML = `
+            <div class="flex items-center gap-2">
+                <span class="font-mono text-gray-400 dark:text-gray-505 w-5">${step}.</span>
+                <span class="w-2 h-2 rounded-full ${player === 1 ? 'bg-gray-800' : 'bg-gray-200 border border-gray-400'}"></span>
+                <span class="font-semibold text-gray-750 dark:text-gray-300">${playerLabel} ${stoneColorText}</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="font-mono font-bold text-gray-900 dark:text-white">${coord}</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 font-mono w-10 text-right">${confStr}</span>
+            </div>
+        `;
+        
+        container.appendChild(item);
+        // Scroll to bottom
+        container.scrollTop = container.scrollHeight;
+    }
+
+    // ----------------------------------------------------
+    // Rule Engine: Check Win / Draw
+    // ----------------------------------------------------
+    function checkWinner(p) {
+        const b = gameState.board;
+        // Direction vectors: [row_offset, col_offset]
+        const dirs = [[0, 1], [1, 0], [1, 1], [1, -1]];
+        
+        for (let i = 0; i < BOARD_SQUARE; i++) {
+            if (b[i] !== p) continue;
+            
+            const r = Math.floor(i / BOARD_SIZE);
+            const c = i % BOARD_SIZE;
+            
+            for (const [dr, dc] of dirs) {
+                let count = 1;
+                // Walk in direction
+                for (let s = 1; s < 5; s++) {
+                    const nr = r + dr * s;
+                    const nc = c + dc * s;
+                    if (nr >= 0 && nr < 15 && nc >= 0 && nc < 15 && b[nr * BOARD_SIZE + nc] === p) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                if (count >= 5) return true;
+            }
+        }
+        return false;
+    }
+
+    function checkGameStatus(playerVal) {
+        const isWin = checkWinner(playerVal);
+        const isDraw = !isWin && gameState.board.every(x => x !== 0);
+
+        if (isWin || isDraw) {
+            gameState.gameOver = true;
+            
+            // Stop thinking labels
+            document.getElementById('undo-btn').disabled = false;
+            document.getElementById('hint-btn').disabled = true;
+
+            const modal = document.getElementById('result-modal');
+            const title = document.getElementById('result-title');
+            const msg = document.getElementById('result-message');
+            const icon = document.getElementById('result-icon');
+
+            const isPlayerWin = (playerVal === 1 && !gameState.aiFirst) || (playerVal === -1 && gameState.aiFirst);
+
+            if (isWin) {
+                if (isPlayerWin) {
+                    gameState.stats.win++;
+                    title.innerText = '你赢了！🎉';
+                    msg.innerText = '太厉害了！在与深度 ResNet 神经网络的棋力较量中，你获得了胜利！';
+                    icon.innerText = '👑';
+                    sound.playWin();
+                    document.getElementById('turn-text').innerHTML = `🏆 玩家获胜！`;
+                    document.getElementById('turn-text').className = "text-sm font-bold text-green-600 dark:text-green-400";
+                } else {
+                    gameState.stats.lose++;
+                    title.innerText = 'AI 获胜！🤖';
+                    msg.innerText = '很遗憾！AI 计高一筹，完成了五子连珠。再接再厉！';
+                    icon.innerText = '🤖';
+                    sound.playLose();
+                    document.getElementById('turn-text').innerHTML = `🤖 AI 获胜！`;
+                    document.getElementById('turn-text').className = "text-sm font-bold text-red-600 dark:text-red-400";
+                }
+            } else {
+                gameState.stats.draw++;
+                title.innerText = '平局！🤝';
+                msg.innerText = '棋盘已满！双方落子无暇，平分秋色。';
+                icon.innerText = '🤝';
+                sound.playError();
+                document.getElementById('turn-text').innerHTML = `🤝 双方平局`;
+                document.getElementById('turn-text').className = "text-sm font-bold text-gray-500 dark:text-gray-400";
+            }
+
+            // Sync Stats
+            localStorage.setItem('gomoku_stats', JSON.stringify(gameState.stats));
+            updateStatsUI();
+
+            // Open Modal
+            setTimeout(() => {
+                modal.classList.remove('hidden');
+            }, 800);
+
+            return true;
+        }
+        return false;
+    }
+
+    function updateStatsUI() {
+        document.getElementById('stat-win').innerText = gameState.stats.win;
+        document.getElementById('stat-lose').innerText = gameState.stats.lose;
+        document.getElementById('stat-draw').innerText = gameState.stats.draw;
+    }
+
+    // ----------------------------------------------------
+    // Actions & Controls
+    // ----------------------------------------------------
+    
+    // Undo Last Turn (Human and AI move)
+    function undoMove() {
+        if (gameState.isAIMoving || gameState.history.length === 0) return;
+        
+        const undoCount = (gameState.history.length >= 2 && !gameState.gameOver) ? 2 : 1;
+        
+        for (let k = 0; k < undoCount; k++) {
+            const lastIdx = gameState.history.pop();
+            gameState.board[lastIdx] = 0;
+            delete gameState.confidences[lastIdx];
+        }
+
+        // Re-calculate last move
+        gameState.lastMove = gameState.history.length > 0 ? gameState.history[gameState.history.length - 1] : -1;
+        gameState.gameOver = false;
+        
+        // Re-render
+        renderAllStones();
+        updateLastMoveMarker();
+        
+        // Redraw Logs
+        redrawLogsFromHistory();
+        
+        // Enable controls
+        document.getElementById('step-count').innerText = gameState.history.length;
+        document.getElementById('last-move-label').innerText = getCoordinateString(gameState.lastMove);
+        document.getElementById('hint-btn').disabled = false;
+
+        // Reset Confidence Meter to the last known AI confidence
+        resetConfidenceToLastAIMove();
+        
+        // Set turn badges
+        setPlayerTurnBadge();
+        sound.playClick(true);
+    }
+
+    function redrawLogsFromHistory() {
+        const container = document.getElementById('game-logs');
+        container.innerHTML = '';
+        if (gameState.history.length === 0) {
+            container.innerHTML = `<div class="text-gray-400 dark:text-gray-500 text-center py-8">等待落子开始对局...</div>`;
+            return;
+        }
+
+        gameState.history.forEach((idx, stepZeroIndex) => {
+            const stepNum = stepZeroIndex + 1;
+            let playerVal = 0;
+            if (gameState.aiFirst) {
+                playerVal = stepNum % 2 === 1 ? 1 : -1; // Odd is AI (Black), Even is Human (White)
+            } else {
+                playerVal = stepNum % 2 === 1 ? 1 : -1; // Odd is Human (Black), Even is AI (White)
+            }
+            
+            const confidence = gameState.confidences[idx] || null;
+            addLogItem(stepNum, playerVal, idx, confidence);
+        });
+    }
+
+    function resetConfidenceToLastAIMove() {
+        const aiVal = gameState.aiFirst ? 1 : -1;
+        let lastAIConfidence = 0.0;
+        
+        for (let i = gameState.history.length - 1; i >= 0; i--) {
+            const stepNum = i + 1;
+            const isAIStep = gameState.aiFirst ? (stepNum % 2 === 1) : (stepNum % 2 === 0);
+            if (isAIStep) {
+                const idx = gameState.history[i];
+                if (gameState.confidences[idx]) {
+                    lastAIConfidence = gameState.confidences[idx];
+                    break;
+                }
+            }
+        }
+        updateConfidenceMeter(lastAIConfidence);
+    }
+
+    // AI Hint Logic
+    async function requestAIHint() {
+        if (gameState.gameOver || gameState.isAIMoving) return;
+        
+        const playerVal = gameState.aiFirst ? -1 : 1; // current player
+        
+        document.getElementById('hint-btn').disabled = true;
+        document.getElementById('hint-btn').innerHTML = `<i class="ri-loader-4-line animate-spin"></i> 计算提示中...`;
+
+        try {
+            const board2D = [];
+            for (let r = 0; r < 15; r++) {
+                board2D.push(gameState.board.slice(r * 15, (r + 1) * 15));
+            }
+
+            const response = await fetch(`${gameState.apiUrl}/api/gomoku/move`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    board: board2D,
+                    player: playerVal,
+                    step: gameState.history.length
+                })
+            });
+
+            if (!response.ok) throw new Error('API server error');
+            const result = await response.json();
+            
+            if (result.success && result.data) {
+                const { row, col, confidence } = result.data;
+                const idx = row * 15 + col;
+                const coord = getCoordinateString(idx);
+                
+                showTempMarker(idx);
+                sound.playWin();
+                
+                alert(`AI 推荐落子位置: ${coord} (置信度: ${(confidence * 100).toFixed(1)}%)`);
+                
+                setTimeout(() => {
+                    hideTempMarker();
+                }, 3000);
+            }
+        } catch(e) {
+            console.error(e);
+            sound.playError();
+            alert('获取 AI 提示失败，请确保后台服务正常启动。');
+        } finally {
+            document.getElementById('hint-btn').disabled = false;
+            document.getElementById('hint-btn').innerHTML = `<i class="ri-lightbulb-line text-lg"></i> <span class="text-xs">获取 AI 提示</span>`;
+        }
+    }
+
+    // Restart/Reset Game State
+    function resetGame() {
+        gameState.board = Array(BOARD_SQUARE).fill(0);
+        gameState.history = [];
+        gameState.confidences = {};
+        gameState.gameOver = false;
+        gameState.isAIMoving = false;
+        gameState.lastMove = -1;
+        
+        document.getElementById('result-modal').classList.add('hidden');
+        
+        renderAllStones();
+        updateLastMoveMarker();
+        hideTempMarker();
+        
+        document.getElementById('step-count').innerText = 0;
+        document.getElementById('last-move-label').innerText = '-';
+        document.getElementById('game-logs').innerHTML = `<div class="text-gray-400 dark:text-gray-500 text-center py-8">等待落子开始对局...</div>`;
+        document.getElementById('undo-btn').disabled = false;
+        document.getElementById('hint-btn').disabled = false;
+        updateConfidenceMeter(0.0);
+
+        if (gameState.aiFirst) {
+            triggerAILogic();
+        } else {
+            setPlayerTurnBadge();
+        }
+        
+        sound.playClick(true);
+    }
+
+    // ----------------------------------------------------
+    // API Connection Ping Test Helper
+    // ----------------------------------------------------
+    async function testBackendConnection() {
+        const badge = document.getElementById('conn-status-badge');
+        
+        badge.innerHTML = `<i class="ri-loader-4-line animate-spin"></i> 检测中`;
+        badge.className = "flex items-center gap-1 font-bold text-gray-500";
+        
+        const start = performance.now();
+        try {
+            const res = await fetch(`${gameState.apiUrl}/api/healthz`, {
+                method: 'GET',
+                signal: AbortSignal.timeout(3000)
+            });
+            
+            if (res.ok) {
+                const latency = Math.round(performance.now() - start);
+                badge.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-green-500"></span> 在线 (${latency}ms)`;
+                badge.className = "flex items-center gap-1 font-bold text-green-555";
+                return true;
+            }
+        } catch(e) {
+            console.warn('Ping failed:', e);
+        }
+        
+        badge.innerHTML = `<span class="w-2.5 h-2.5 rounded-full bg-red-500"></span> 离线`;
+        badge.className = "flex items-center gap-1 font-bold text-red-500";
+        return false;
+    }
+
+    // ----------------------------------------------------
+    // Modal Configuration Settings
+    // ----------------------------------------------------
+    const settingsModal = document.getElementById('settings-modal');
+    const settingsBtn = document.getElementById('settings-btn');
+    const modalSaveBtn = document.getElementById('modal-save-btn');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const apiUrlInput = document.getElementById('api-url-input');
+
+    settingsBtn.onclick = () => {
+        apiUrlInput.value = gameState.apiUrl;
+        settingsModal.classList.remove('hidden');
+    };
+
+    modalCloseBtn.onclick = () => {
+        settingsModal.classList.add('hidden');
+    };
+
+    modalSaveBtn.onclick = async () => {
+        let val = apiUrlInput.value.trim();
+        if (val.endsWith('/')) {
+            val = val.substring(0, val.length - 1);
+        }
+        if (!val) val = 'http://localhost:3000';
+        
+        gameState.apiUrl = val;
+        localStorage.setItem('gomoku_api_url', val);
+        document.getElementById('current-endpoint-display').innerText = `ENDPOINT: ${val}`;
+        
+        settingsModal.classList.add('hidden');
+        await testBackendConnection();
+    };
+
+    // ----------------------------------------------------
+    // Init Setup on Load
+    // ----------------------------------------------------
+    window.addEventListener('DOMContentLoaded', async () => {
+        applyBoardTheme(gameState.theme);
+        updateStatsUI();
+        
+        const aiFirstToggle = document.getElementById('ai-first-toggle');
+        aiFirstToggle.checked = gameState.aiFirst;
+        aiFirstToggle.onchange = (e) => {
+            gameState.aiFirst = e.target.checked;
+            resetGame();
+        };
+
+        const muteToggle = document.getElementById('mute-toggle');
+        muteToggle.checked = sound.muted;
+        muteToggle.onchange = (e) => {
+            sound.muted = e.target.checked;
+        };
+
+        // Button Listeners
+        document.getElementById('restart-btn').onclick = resetGame;
+        document.getElementById('undo-btn').onclick = undoMove;
+        document.getElementById('hint-btn').onclick = requestAIHint;
+        
+        document.getElementById('result-restart-btn').onclick = resetGame;
+        document.getElementById('result-close-btn').onclick = () => {
+            document.getElementById('result-modal').classList.add('hidden');
+        };
+        
+        document.getElementById('test-conn-btn').onclick = testBackendConnection;
+
+        // Theme switch buttons
+        document.getElementById('theme-wood-btn').onclick = () => applyBoardTheme('wood');
+        document.getElementById('theme-cyber-btn').onclick = () => applyBoardTheme('cyber');
+
+        document.getElementById('current-endpoint-display').innerText = `ENDPOINT: ${gameState.apiUrl}`;
+
+        drawGridLines();
+        drawHoshi();
+        initInteractionLayer();
+        
+        await testBackendConnection();
+    });
+</script>
