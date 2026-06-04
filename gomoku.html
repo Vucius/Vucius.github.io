@@ -500,7 +500,7 @@ permalink: /gomoku/
             <!-- Game Status & Turn Indicator Card -->
             <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                    <i class="ri-gamepad-line text-blue-500"></i> 对局状态
+                    <span class="icon-svg text-blue-500">{% include icons/gamepad.svg %}</span> 对局状态
                 </h2>
                 <div class="space-y-4">
                     <div id="turn-badge" class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
@@ -531,7 +531,7 @@ permalink: /gomoku/
             <!-- Stats Panel -->
             <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                    <i class="ri-trophy-line text-yellow-500"></i> 历史战绩
+                    <span class="icon-svg text-yellow-500">{% include icons/trophy.svg %}</span> 历史战绩
                 </h2>
                 <div class="grid grid-cols-3 gap-2 text-center">
                     <div class="p-3 bg-green-50 dark:bg-green-950/20 rounded-xl border border-green-100 dark:border-green-900/30">
@@ -552,7 +552,7 @@ permalink: /gomoku/
             <!-- Game Logs -->
             <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg flex flex-col h-[280px]">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
-                    <i class="ri-list-ordered text-purple-500"></i> 对局明细
+                    <span class="icon-svg text-purple-500">{% include icons/list.svg %}</span> 对局明细
                 </h2>
                 <div id="game-logs" class="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-1 text-xs">
                     <div class="text-gray-400 dark:text-gray-500 text-center py-8">等待落子开始对局...</div>
@@ -619,7 +619,7 @@ permalink: /gomoku/
             <!-- Game Controls -->
             <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                    <i class="ri-settings-line text-indigo-500"></i> 控制面板
+                    <span class="icon-svg text-indigo-500">{% include icons/settings.svg %}</span> 控制面板
                 </h2>
                 <div class="space-y-4">
                     <!-- Config switches -->
@@ -646,15 +646,15 @@ permalink: /gomoku/
                     <!-- Button actions -->
                     <div class="grid grid-cols-2 gap-3">
                         <button id="restart-btn" class="flex flex-col items-center justify-center p-3 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/20 dark:hover:bg-blue-900/30 text-blue-600 dark:text-cyan-400 rounded-xl transition-colors font-semibold border border-blue-100 dark:border-blue-900/30">
-                            <i class="ri-refresh-line text-lg mb-1"></i>
+                            <span class="icon-svg text-lg mb-1">{% include icons/refresh.svg %}</span>
                             <span class="text-xs">重置棋局</span>
                         </button>
                         <button id="undo-btn" class="flex flex-col items-center justify-center p-3 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/20 dark:hover:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-xl transition-colors font-semibold border border-amber-100 dark:border-amber-900/30 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <i class="ri-arrow-go-back-line text-lg mb-1"></i>
+                            <span class="icon-svg text-lg mb-1">{% include icons/undo.svg %}</span>
                             <span class="text-xs">悔棋一步</span>
                         </button>
                         <button id="hint-btn" class="col-span-2 flex items-center justify-center gap-2 p-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700/50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
-                            <i class="ri-lightbulb-line text-lg"></i>
+                            <span class="icon-svg text-lg">{% include icons/lightbulb.svg %}</span>
                             <span class="text-xs">获取 AI 提示</span>
                         </button>
                     </div>
@@ -664,9 +664,9 @@ permalink: /gomoku/
             <!-- Connection & Settings -->
             <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center justify-between">
-                    <span class="flex items-center gap-2"><i class="ri-server-line text-green-500"></i> 模型服务</span>
+                    <span class="flex items-center gap-2"><span class="icon-svg text-green-500">{% include icons/server.svg %}</span> 模型服务</span>
                     <button id="settings-btn" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors" title="配置 API Endpoint">
-                        <i class="ri-settings-3-line text-lg"></i>
+                        <span class="icon-svg text-lg">{% include icons/settings-suggest.svg %}</span>
                     </button>
                 </h2>
                 <div class="space-y-3">
@@ -688,7 +688,7 @@ permalink: /gomoku/
             <!-- Appearance Theme Controller -->
             <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
-                    <i class="ri-palette-line text-cyan-500"></i> 棋盘皮肤
+                    <span class="icon-svg text-cyan-500">{% include icons/palette.svg %}</span> 棋盘皮肤
                 </h2>
                 <div class="grid grid-cols-2 gap-2">
                     <button id="theme-wood-btn" class="py-2.5 px-3 rounded-xl text-xs font-bold transition-all border text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 ring-2 ring-blue-500/80">
@@ -707,7 +707,7 @@ permalink: /gomoku/
 <div id="settings-modal" class="fixed inset-0 bg-black/60 z-[60] flex items-center justify-center p-6 hidden">
     <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-sm w-full shadow-2xl border border-gray-200 dark:border-gray-700">
         <h3 class="text-xl font-extrabold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-            <i class="ri-settings-4-line text-indigo-500"></i> 服务端 API 配置
+            <span class="icon-svg text-indigo-500">{% include icons/settings.svg %}</span> 服务端 API 配置
         </h3>
         <p class="text-xs text-gray-500 dark:text-gray-400 mb-4 leading-relaxed">
             设置后台 PyTorch 模型的 API 请求基准地址。开发环境下通常为 Vuk_Services 运行的本地端口。

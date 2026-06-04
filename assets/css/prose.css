@@ -1,0 +1,310 @@
+/* =============================================
+   CUSTOM TYPOGRAPHY STYLES FOR MARKDOWN POSTS (.prose)
+   ============================================= */
+
+.prose {
+    color: #374151; /* gray-700 */
+    font-size: 1rem;
+    line-height: 1.75;
+}
+
+.prose-lg {
+    font-size: 1.125rem;
+    line-height: 1.7777778;
+}
+
+/* Headings */
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    color: #111827; /* gray-900 */
+    font-weight: 700;
+    clear: both;
+    line-height: 1.25;
+}
+
+.prose h1 {
+    font-size: 2.25em;
+    margin-top: 0;
+    margin-bottom: 0.8em;
+}
+
+.prose h2 {
+    font-size: 1.5em;
+    margin-top: 2em;
+    margin-bottom: 0.8em;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 0.3em;
+}
+
+.prose h3 {
+    font-size: 1.25em;
+    margin-top: 1.6em;
+    margin-bottom: 0.6em;
+}
+
+.prose h4 {
+    font-size: 1.1em;
+    margin-top: 1.4em;
+    margin-bottom: 0.5em;
+}
+
+/* Paragraphs & Spacing */
+.prose p {
+    margin-top: 0;
+    margin-bottom: 1.25em;
+    text-align: justify;
+}
+
+/* Links */
+.prose a {
+    color: #2563eb; /* blue-600 */
+    text-decoration: underline;
+    font-weight: 500;
+    text-underline-offset: 4px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.prose a:hover {
+    color: #1d4ed8; /* blue-700 */
+    text-decoration-color: #1d4ed8;
+}
+
+/* Strong & Emphasis */
+.prose strong {
+    color: #111827; /* gray-900 */
+    font-weight: 600;
+}
+
+/* Lists */
+.prose ol {
+    list-style-type: decimal;
+    padding-left: 1.625em;
+    margin-top: 0;
+    margin-bottom: 1.25em;
+}
+
+.prose ul {
+    list-style-type: disc;
+    padding-left: 1.625em;
+    margin-top: 0;
+    margin-bottom: 1.25em;
+}
+
+.prose li {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    padding-left: 0.125em;
+}
+
+.prose li > p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.prose li > ul,
+.prose li > ol {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+/* Horizontal Rules */
+.prose hr {
+    border-color: #e5e7eb; /* gray-200 */
+    border-width: 1px 0 0 0;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+/* Blockquotes */
+.prose blockquote {
+    font-weight: 500;
+    font-style: italic;
+    color: #4b5563; /* gray-600 */
+    border-left-width: 0.25rem;
+    border-left-color: #e5e7eb; /* gray-200 */
+    padding-left: 1em;
+    margin-top: 1.6em;
+    margin-bottom: 1.6em;
+    background-color: #f9fafb; /* gray-50 */
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    border-top-right-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+}
+
+.prose blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* Inline Code */
+.prose code {
+    color: #e11d48; /* rose-600 */
+    background-color: #f3f4f6; /* gray-100 */
+    font-weight: 600;
+    font-size: 0.875em;
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Fenced Code Blocks (Jekyll output usually renders this in figure.highlight or div.highlight) */
+.prose pre, 
+.prose .highlight pre,
+.prose figure.highlight pre {
+    color: #e2e8f0; /* slate-200 */
+    background-color: #1f2937; /* gray-800 */
+    overflow-x: auto;
+    font-size: 0.875em;
+    line-height: 1.7142857;
+    margin-top: 1.7142857em;
+    margin-bottom: 1.7142857em;
+    border-radius: 0.5rem;
+    padding: 1em 1.25em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.prose pre code,
+.prose .highlight pre code,
+.prose figure.highlight pre code {
+    background-color: transparent;
+    padding: 0;
+    font-weight: inherit;
+    color: inherit;
+    font-size: inherit;
+    border-radius: 0;
+}
+
+/* Table styling */
+.prose table {
+    width: 100%;
+    table-layout: auto;
+    text-align: left;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    border-collapse: collapse;
+}
+
+.prose th {
+    color: #111827;
+    font-weight: 600;
+    border-bottom-width: 2px;
+    border-bottom-color: #d1d5db;
+    padding: 0.75em 1em;
+    background-color: #f9fafb;
+}
+
+.prose td {
+    border-bottom-width: 1px;
+    border-bottom-color: #e5e7eb;
+    padding: 0.75em 1em;
+}
+
+.prose tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Images */
+.prose img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* =============================================
+   DARK MODE SUPPORT (prose-invert)
+   ============================================= */
+
+.dark .prose-invert {
+    color: #d1d5db; /* gray-300 */
+}
+
+.dark .prose-invert h1,
+.dark .prose-invert h2,
+.dark .prose-invert h3,
+.dark .prose-invert h4,
+.dark .prose-invert h5,
+.dark .prose-invert h6 {
+    color: #ffffff;
+}
+
+.dark .prose-invert h2 {
+    border-bottom-color: #374151; /* gray-700 */
+}
+
+.dark .prose-invert a {
+    color: #60a5fa; /* blue-400 */
+}
+
+.dark .prose-invert a:hover {
+    color: #93c5fd; /* blue-300 */
+}
+
+.dark .prose-invert strong {
+    color: #ffffff;
+}
+
+.dark .prose-invert hr {
+    border-color: #374151; /* gray-700 */
+}
+
+.dark .prose-invert blockquote {
+    color: #9ca3af; /* gray-400 */
+    border-left-color: #4b5563; /* gray-600 */
+    background-color: #1f2937; /* gray-800 */
+}
+
+.dark .prose-invert code {
+    color: #f43f5e; /* rose-500 */
+    background-color: #374151; /* gray-700 */
+}
+
+.dark .prose-invert pre,
+.dark .prose-invert .highlight pre,
+.dark .prose-invert figure.highlight pre {
+    background-color: #111827; /* gray-900 */
+    color: #e2e8f0;
+}
+
+.dark .prose-invert th {
+    color: #ffffff;
+    border-bottom-color: #4b5563; /* gray-600 */
+    background-color: #1f2937;
+}
+
+.dark .prose-invert td {
+    border-bottom-color: #374151; /* gray-700 */
+}
+
+.dark .prose-invert tr:nth-child(even) {
+    background-color: #1f2937;
+}
+
+/* =============================================
+   INLINE SVG ICON STYLING (.icon-svg)
+   ============================================= */
+
+.icon-svg,
+.icon-svg svg {
+    width: 1.25em;
+    height: 1.25em;
+    fill: currentColor !important;
+    display: inline-block;
+    vertical-align: -0.125em;
+    transition: color 0.2s ease, fill 0.2s ease;
+}
+
+/* Ensure inline SVGs fit properly in their parent contexts */
+button .icon-svg, 
+a .icon-svg, 
+h2 .icon-svg {
+    margin-right: 0.25em;
+}
+
+/* Clean spacing for buttons with only icon + vertical labels */
+button .icon-svg.mb-1 {
+    margin-right: 0;
+    margin-bottom: 0.25rem;
+}
+

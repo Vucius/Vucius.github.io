@@ -18,6 +18,12 @@ layout: default
     .animate-floatY {
         animation: floatY 1.6s ease-in-out infinite;
     }
+
+    @media (min-width: 640px) {
+        .sm\:col-span-2 {
+            grid-column: span 2 / span 2;
+        }
+    }
 </style>
 
 <div class="max-w-6xl mx-auto px-6 sm:px-8 pt-16 pb-24">
@@ -60,7 +66,7 @@ layout: default
         <div class="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4 max-w-5xl mx-auto">
             <!-- Main Profile Card -->
             <div
-                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 col-span-2 sm:col-span-4 md:col-span-3 row-span-2 p-6 sm:p-8">
+                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-4 md:col-span-3 row-span-2 p-6 sm:p-8">
                 <div class="h-full flex flex-col justify-between">
                     <div>
                         <div class="mb-6 flex items-center gap-3">
@@ -74,23 +80,23 @@ layout: default
                             <a href="mailto:{{ site.email }}"
                                 class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
                                 title="Email">
-                                <i class="ri-mail-fill" style="font-size: 1rem;"></i>
+                                <span class="icon-svg">{% include icons/mail.svg %}</span>
                             </a>
                             <a href="https://github.com/{{ site.github_username }}" target="_blank"
                                 class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
                                 title="GitHub">
-                                <i class="ri-github-fill" style="font-size: 1rem;"></i>
+                                <span class="icon-svg">{% include icons/github.svg %}</span>
                             </a>
                             <a href="https://twitter.com/{{ site.twitter_username }}" target="_blank"
                                 class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
                                 title="Twitter">
-                                <i class="ri-twitter-fill" style="font-size: 1rem;"></i>
+                                <span class="icon-svg">{% include icons/twitter.svg %}</span>
                             </a>
                         </div>
                         <div class="mt-6 flex flex-wrap gap-2">
                             <span
                                 class="px-2.5 py-1 text-sm rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center gap-1">
-                                <i class="ri-code-line" style="font-size: 1rem;"></i> Developer
+                                <span class="icon-svg">{% include icons/code.svg %}</span> Developer
                             </span>
                         </div>
                     </div>
@@ -99,19 +105,19 @@ layout: default
 
             <!-- Tech Stack Card -->
             <div
-                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 col-span-2 md:col-span-2 row-span-4">
+                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-2 md:col-span-2 row-span-4">
                 <div class="h-full flex flex-col items-center justify-center text-center">
                     <div class="text-2xl sm:text-3xl text-gray-900 dark:text-white mb-3">Creating</div>
                     <div class="text-sm font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400 mb-4">
                         Something Cool.</div>
                     <div class="flex flex-wrap justify-center gap-1">
-                        <i class="ri-html5-line" style="font-size: 1.5rem;"></i>
-                        <i class="ri-css3-line" style="font-size: 1.5rem;"></i>
-                        <i class="ri-javascript-line" style="font-size: 1.5rem;"></i>
-                        <i class="ri-reactjs-line" style="font-size: 1.5rem;"></i>
-                        <i class="ri-vuejs-line" style="font-size: 1.5rem;"></i>
-                        <i class="ri-nodejs-line" style="font-size: 1.5rem;"></i>
-                        <i class="ri-github-line" style="font-size: 1.5rem;"></i>
+                        <span class="icon-svg text-2xl">{% include icons/html5.svg %}</span>
+                        <span class="icon-svg text-2xl">{% include icons/css3.svg %}</span>
+                        <span class="icon-svg text-2xl">{% include icons/javascript.svg %}</span>
+                        <span class="icon-svg text-2xl">{% include icons/react.svg %}</span>
+                        <span class="icon-svg text-2xl">{% include icons/vue.svg %}</span>
+                        <span class="icon-svg text-2xl">{% include icons/node.svg %}</span>
+                        <span class="icon-svg text-2xl">{% include icons/github.svg %}</span>
                     </div>
                 </div>
             </div>
