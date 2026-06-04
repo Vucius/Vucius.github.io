@@ -1543,7 +1543,7 @@ permalink: /gomoku/
         const playerVal = gameState.aiFirst ? -1 : 1; // current player
         
         document.getElementById('hint-btn').disabled = true;
-        document.getElementById('hint-btn').innerHTML = `<i class="ri-loader-4-line animate-spin"></i> 计算提示中...`;
+        document.getElementById('hint-btn').innerHTML = `{% include icons/loader.svg %} 计算提示中...`;
 
         try {
             const board2D = [];
@@ -1584,7 +1584,7 @@ permalink: /gomoku/
             alert('获取 AI 提示失败，请确保后台服务正常启动。');
         } finally {
             document.getElementById('hint-btn').disabled = false;
-            document.getElementById('hint-btn').innerHTML = `<i class="ri-lightbulb-line text-lg"></i> <span class="text-xs">获取 AI 提示</span>`;
+            document.getElementById('hint-btn').innerHTML = `<span class="icon-svg text-lg">{% include icons/lightbulb.svg %}</span> <span class="text-xs">获取 AI 提示</span>`;
         }
     }
 
@@ -1625,7 +1625,7 @@ permalink: /gomoku/
     async function testBackendConnection() {
         const badge = document.getElementById('conn-status-badge');
         
-        badge.innerHTML = `<i class="ri-loader-4-line animate-spin"></i> 检测中`;
+        badge.innerHTML = `{% include icons/loader.svg %} 检测中`;
         badge.className = "flex items-center gap-1 font-bold text-gray-500";
         
         const start = performance.now();
