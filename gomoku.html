@@ -200,7 +200,7 @@ permalink: /gomoku/
     .justify-items-center { justify-items: center; }
 
     /* --- Sizing --- */
-    .max-w-\[530px\] { max-width: 530px; }
+    .max-w-\[720px\] { max-width: 720px; }
     .max-w-xs { max-width: 20rem; }
     .h-\[280px\] { height: 280px; }
     .h-6 { height: 1.5rem; }
@@ -468,8 +468,8 @@ permalink: /gomoku/
 
     /* --- Responsive: lg (1024px+) --- */
     @media (min-width: 1024px) {
-        .lg\:col-span-3 { grid-column: span 3 / span 3; }
-        .lg\:col-span-6 { grid-column: span 6 / span 6; }
+        .lg\:col-span-2 { grid-column: span 2 / span 2; }
+        .lg\:col-span-8 { grid-column: span 8 / span 8; }
         .lg\:grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
         .lg\:order-1 { order: 1; }
         .lg\:order-2 { order: 2; }
@@ -496,14 +496,14 @@ permalink: /gomoku/
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         <!-- Left Column: Metrics & Logs -->
-        <div class="lg:col-span-3 space-y-6 order-2 lg:order-1">
+        <div class="lg:col-span-2 space-y-6 order-2 lg:order-1">
             <!-- Game Status & Turn Indicator Card -->
-            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-5 lg:p-4 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
                     <span class="icon-svg text-blue-500">{% include icons/gamepad.svg %}</span> 对局状态
                 </h2>
                 <div class="space-y-4">
-                    <div id="turn-badge" class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
+                    <div id="turn-badge" class="flex items-center justify-between p-3 lg:p-2.5 bg-gray-50 dark:bg-gray-900/50 rounded-xl">
                         <span class="text-sm text-gray-500 dark:text-gray-400">当前回合</span>
                         <span id="turn-text" class="text-sm font-bold text-blue-600 dark:text-cyan-400 flex items-center gap-1.5">
                             <span class="w-2.5 h-2.5 rounded-full bg-blue-600 dark:bg-cyan-400 animate-ping"></span> 执黑先行
@@ -529,20 +529,20 @@ permalink: /gomoku/
             </div>
 
             <!-- Stats Panel -->
-            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-5 lg:p-4 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
                     <span class="icon-svg text-yellow-500">{% include icons/trophy.svg %}</span> 历史战绩
                 </h2>
                 <div class="grid grid-cols-3 gap-2 text-center">
-                    <div class="p-3 bg-green-50 dark:bg-green-950/20 rounded-xl border border-green-100 dark:border-green-900/30">
+                    <div class="p-3 lg:py-2 lg:px-1 bg-green-50 dark:bg-green-950/20 rounded-xl border border-green-100 dark:border-green-900/30">
                         <div class="text-2xl font-extrabold text-green-600 dark:text-green-400" id="stat-win">0</div>
                         <div class="text-[10px] text-green-600 dark:text-green-400 uppercase tracking-wider font-semibold">玩家胜</div>
                     </div>
-                    <div class="p-3 bg-red-50 dark:bg-red-950/20 rounded-xl border border-red-100 dark:border-red-900/30">
+                    <div class="p-3 lg:py-2 lg:px-1 bg-red-50 dark:bg-red-950/20 rounded-xl border border-red-100 dark:border-red-900/30">
                         <div class="text-2xl font-extrabold text-red-600 dark:text-red-400" id="stat-lose">0</div>
                         <div class="text-[10px] text-red-600 dark:text-red-400 uppercase tracking-wider font-semibold">AI 胜</div>
                     </div>
-                    <div class="p-3 bg-gray-50 dark:bg-gray-900/20 rounded-xl border border-gray-100 dark:border-gray-800/30">
+                    <div class="p-3 lg:py-2 lg:px-1 bg-gray-50 dark:bg-gray-900/20 rounded-xl border border-gray-100 dark:border-gray-800/30">
                         <div class="text-2xl font-extrabold text-gray-600 dark:text-gray-400" id="stat-draw">0</div>
                         <div class="text-[10px] text-gray-600 dark:text-gray-400 uppercase tracking-wider font-semibold">平局</div>
                     </div>
@@ -550,7 +550,7 @@ permalink: /gomoku/
             </div>
 
             <!-- Game Logs -->
-            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg flex flex-col h-[280px]">
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-5 lg:p-4 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg flex flex-col h-[280px]">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
                     <span class="icon-svg text-purple-500">{% include icons/list.svg %}</span> 对局明细
                 </h2>
@@ -561,9 +561,9 @@ permalink: /gomoku/
         </div>
 
         <!-- Center Column: Board Area -->
-        <div class="lg:col-span-6 flex flex-col items-center order-1 lg:order-2">
+        <div class="lg:col-span-8 flex flex-col items-center order-1 lg:order-2">
             <!-- Board Wrapper with Coordinates -->
-            <div id="board-container" class="relative w-full aspect-square max-w-[530px] p-2 select-none wood-board rounded-2xl transition-all duration-300">
+            <div id="board-container" class="relative w-full aspect-square max-w-[720px] p-2 select-none wood-board rounded-2xl transition-all duration-300">
                 <!-- 17x17 grid for board coordinates and content -->
                 <div class="grid grid-cols-[1.2rem_1fr_1.2rem] grid-rows-[1.2rem_1fr_1.2rem] w-full h-full relative">
                     
@@ -615,9 +615,9 @@ permalink: /gomoku/
         </div>
 
         <!-- Right Column: Control Panel & Settings -->
-        <div class="lg:col-span-3 space-y-6 order-3">
+        <div class="lg:col-span-2 space-y-6 order-3">
             <!-- Game Controls -->
-            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-5 lg:p-4 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
                     <span class="icon-svg text-indigo-500">{% include icons/settings.svg %}</span> 控制面板
                 </h2>
@@ -644,16 +644,16 @@ permalink: /gomoku/
                     <div class="h-px bg-gray-105 dark:bg-gray-700"></div>
 
                     <!-- Button actions -->
-                    <div class="grid grid-cols-2 gap-3">
-                        <button id="restart-btn" class="flex flex-col items-center justify-center p-3 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/20 dark:hover:bg-blue-900/30 text-blue-600 dark:text-cyan-400 rounded-xl transition-colors font-semibold border border-blue-100 dark:border-blue-900/30">
-                            <span class="icon-svg text-lg mb-1">{% include icons/refresh.svg %}</span>
+                    <div class="grid grid-cols-2 gap-3 lg:gap-2">
+                        <button id="restart-btn" class="flex flex-col items-center justify-center p-3 lg:p-2 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/20 dark:hover:bg-blue-900/30 text-blue-600 dark:text-cyan-400 rounded-xl transition-colors font-semibold border border-blue-100 dark:border-blue-900/30">
+                            <span class="icon-svg text-lg mb-1 lg:mb-0.5">{% include icons/refresh.svg %}</span>
                             <span class="text-xs">重置棋局</span>
                         </button>
-                        <button id="undo-btn" class="flex flex-col items-center justify-center p-3 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/20 dark:hover:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-xl transition-colors font-semibold border border-amber-100 dark:border-amber-900/30 disabled:opacity-50 disabled:cursor-not-allowed">
-                            <span class="icon-svg text-lg mb-1">{% include icons/undo.svg %}</span>
+                        <button id="undo-btn" class="flex flex-col items-center justify-center p-3 lg:p-2 bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/20 dark:hover:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-xl transition-colors font-semibold border border-amber-100 dark:border-amber-900/30 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span class="icon-svg text-lg mb-1 lg:mb-0.5">{% include icons/undo.svg %}</span>
                             <span class="text-xs">悔棋一步</span>
                         </button>
-                        <button id="hint-btn" class="col-span-2 flex items-center justify-center gap-2 p-3 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700/50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
+                        <button id="hint-btn" class="col-span-2 flex items-center justify-center gap-2 p-3 lg:p-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700/50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-xl transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed">
                             <span class="icon-svg text-lg">{% include icons/lightbulb.svg %}</span>
                             <span class="text-xs">获取 AI 提示</span>
                         </button>
@@ -662,7 +662,7 @@ permalink: /gomoku/
             </div>
 
             <!-- Connection & Settings -->
-            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-5 lg:p-4 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center justify-between">
                     <span class="flex items-center gap-2"><span class="icon-svg text-green-500">{% include icons/server.svg %}</span> 模型服务</span>
                     <button id="settings-btn" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors" title="配置 API Endpoint">
@@ -686,15 +686,15 @@ permalink: /gomoku/
             </div>
 
             <!-- Appearance Theme Controller -->
-            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-6 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
+            <div class="bg-white/85 dark:bg-gray-800/85 backdrop-blur-md p-5 lg:p-4 rounded-2xl border border-gray-200/50 dark:border-gray-700/50 shadow-lg">
                 <h2 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-4 flex items-center gap-2">
                     <span class="icon-svg text-cyan-500">{% include icons/palette.svg %}</span> 棋盘皮肤
                 </h2>
                 <div class="grid grid-cols-2 gap-2">
-                    <button id="theme-wood-btn" class="py-2.5 px-3 rounded-xl text-xs font-bold transition-all border text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 ring-2 ring-blue-500/80">
+                    <button id="theme-wood-btn" class="py-2.5 lg:py-2 px-3 lg:px-2 rounded-xl text-xs font-bold transition-all border text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 ring-2 ring-blue-500/80">
                         木质经典
                     </button>
-                    <button id="theme-cyber-btn" class="py-2.5 px-3 rounded-xl text-xs font-bold transition-all border text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
+                    <button id="theme-cyber-btn" class="py-2.5 lg:py-2 px-3 lg:px-2 rounded-xl text-xs font-bold transition-all border text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800">
                         赛博霓虹
                     </button>
                 </div>
@@ -1037,11 +1037,11 @@ permalink: /gomoku/
         const cyberBtn = document.getElementById('theme-cyber-btn');
 
         if (themeName === 'wood') {
-            container.className = 'relative w-full aspect-square max-w-[530px] p-2 select-none wood-board rounded-2xl transition-all duration-300';
+            container.className = 'relative w-full aspect-square max-w-[720px] p-2 select-none wood-board rounded-2xl transition-all duration-300';
             woodBtn.classList.add('ring-2', 'ring-blue-500/80');
             cyberBtn.classList.remove('ring-2', 'ring-blue-500/80');
         } else {
-            container.className = 'relative w-full aspect-square max-w-[530px] p-2 select-none cyber-board rounded-2xl transition-all duration-300';
+            container.className = 'relative w-full aspect-square max-w-[720px] p-2 select-none cyber-board rounded-2xl transition-all duration-300';
             cyberBtn.classList.add('ring-2', 'ring-blue-500/80');
             woodBtn.classList.remove('ring-2', 'ring-blue-500/80');
         }
