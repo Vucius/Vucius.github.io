@@ -1245,11 +1245,11 @@ permalink: /gomoku/
             
             // Right border for the last column cells
             if ((i + 1) % 14 === 0) {
-                cell.classList.add(rightClass);
+                cell.className += ' ' + rightClass;
             }
             // Bottom border for the last row cells
             if (i >= 14 * 13) {
-                cell.classList.add(bottomClass);
+                cell.className += ' ' + bottomClass;
             }
             gridLines.appendChild(cell);
         }
