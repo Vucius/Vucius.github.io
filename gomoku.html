@@ -129,13 +129,22 @@ permalink: /gomoku/
 
     /* Temporary Highlight Indicator & Pulse */
     #temp-move-marker {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #4F6EF7;
+        box-shadow: 0 0 8px #4F6EF7, 0 0 15px #4F6EF7;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 20;
         animation: temp-pulse 1.2s infinite ease-in-out;
         transition: opacity 0.15s ease;
     }
 
     @keyframes temp-pulse {
-        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.3; }
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+        50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.4; }
     }
 
     /* Custom Toast Notification */
@@ -833,7 +842,7 @@ permalink: /gomoku/
                         <span class="icon-svg text-gray-500">{% include icons/list.svg %}</span> 对局明细
                     </h2>
                     <div id="game-logs" class="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-1 text-xs">
-                        <div class="text-gray-400 dark:text-gray-500 text-center py-8">等待落子开始对局...</div>
+                        <div id="log-placeholder" class="text-gray-400 dark:text-gray-500 text-center py-8">等待落子开始对局...</div>
                     </div>
                 </div>
             </div>
@@ -886,7 +895,7 @@ permalink: /gomoku/
                         <div id="last-move-marker" class="hidden last-move-indicator"></div>
                         
                         <!-- Temporary Highlight Indicator -->
-                        <div id="temp-move-marker" class="absolute w-[80%] h-[80%] border-4 border-[#4F6EF7] rounded-full scale-110 pointer-events-none z-20 hidden transform -translate-x-1/2 -translate-y-1/2"></div>
+                        <div id="temp-move-marker" class="hidden"></div>
 
                         <!-- Winning Laser Line SVG Overlay -->
                         <svg id="winning-line-svg" class="absolute inset-0 pointer-events-none z-30 hidden w-full h-full">
@@ -1728,7 +1737,11 @@ permalink: /gomoku/
     // ----------------------------------------------------
     function addLogItem(step, player, index, confidence) {
         const container = document.getElementById('game-logs');
-        if (step === 1 || container.querySelector('.text-gray-400')) {
+        const placeholder = document.getElementById('log-placeholder');
+        if (placeholder) {
+            placeholder.remove();
+        }
+        if (step === 1) {
             container.innerHTML = '';
         }
         
@@ -1962,7 +1975,7 @@ permalink: /gomoku/
         const container = document.getElementById('game-logs');
         container.innerHTML = '';
         if (gameState.history.length === 0) {
-            container.innerHTML = `<div class="text-gray-400 dark:text-gray-500 text-center py-8">等待落子开始对局...</div>`;
+            container.innerHTML = `<div id="log-placeholder" class="text-gray-400 dark:text-gray-500 text-center py-8">等待落子开始对局...</div>`;
             return;
         }
 
@@ -2068,7 +2081,7 @@ permalink: /gomoku/
         
         document.getElementById('step-count').innerText = 0;
         document.getElementById('last-move-label').innerText = '-';
-        document.getElementById('game-logs').innerHTML = `<div class="text-gray-400 dark:text-gray-500 text-center py-8">等待落子开始对局...</div>`;
+        document.getElementById('game-logs').innerHTML = `<div id="log-placeholder" class="text-gray-400 dark:text-gray-500 text-center py-8">等待落子开始对局...</div>`;
         document.getElementById('undo-btn').disabled = false;
         document.getElementById('hint-btn').disabled = false;
         updateConfidenceMeter(0.0);
