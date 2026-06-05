@@ -42,6 +42,7 @@ permalink: /gomoku/
             linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.8));
         box-shadow: 0 0 30px rgba(79, 110, 247, 0.25), inset 0 0 20px rgba(79, 110, 247, 0.15);
         border: 2px solid rgba(79, 110, 247, 0.4);
+        padding: 8px !important;
     }
 
     .cyber-line {
@@ -106,13 +107,12 @@ permalink: /gomoku/
     /* Last Move Cursor Indicator */
     .last-move-indicator {
         position: absolute;
-        width: 35%;
-        height: 35%;
+        width: 20%;
+        height: 20%;
         border-radius: 50%;
         transform: translate(-50%, -50%);
         pointer-events: none;
         z-index: 20;
-        animation: pulse-ring 1.8s infinite;
     }
 
     .wood-indicator {
@@ -123,12 +123,6 @@ permalink: /gomoku/
     .cyber-indicator {
         background-color: #22c55e;
         box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
-    }
-
-    @keyframes pulse-ring {
-        0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.9; }
-        50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.3; }
-        100% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.9; }
     }
 
     /* Hover helper ring */
@@ -645,6 +639,7 @@ permalink: /gomoku/
         border: 4px solid #7d4f27;
         border-bottom-width: 8px !important;
         border-right-width: 6px !important;
+        padding: 10px 8px 6px 10px !important;
     }
 
     /* Premium Card Styles */
@@ -693,6 +688,11 @@ permalink: /gomoku/
     .cyber-board #interaction-layer[data-current-turn="white"] .intersect-point:not(.has-stone):hover::before {
         background: radial-gradient(circle at 50% 50%, #ffffff 30%, #dc2626 75%, #ef4444 100%);
         border: none;
+    }
+    .intersect-point::before {
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
     }
 
     /* Wood preview skin backgrounds */
@@ -829,7 +829,7 @@ permalink: /gomoku/
                     <!-- Center Board Area -->
                     <div id="board-center" class="col-start-2 row-start-2 relative w-full h-full overflow-hidden rounded-sm">
                         <!-- Background Grid Lines: 14x14 boxes for 15x15 intersections -->
-                        <div id="grid-lines" class="absolute grid grid-cols-14 grid-rows-14 pointer-events-none" style="top: 3.3333%; left: 3.3333%; right: 3.3333%; bottom: 3.3333%;">
+                        <div id="grid-lines" class="absolute grid grid-cols-14 grid-rows-14 pointer-events-none" style="top: 3.3333%; left: 3.3333%; width: 93.3333%; height: 93.3333%;">
                             <!-- JS will generate 196 cell items with borders -->
                         </div>
 
