@@ -227,24 +227,71 @@ layout: default
         </div>
     </section>
 
-    <!-- LikeMe Section -->
+    <!-- Interaction Section -->
     <section class="my-32 sm:my-48 text-center select-none">
         <div class="max-w-4xl mx-auto px-6">
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                Like
+                Like & Views
             </h2>
             <p class="text-lg sm:text-xl text-gray-500 dark:text-gray-400 font-light mb-8">
                 If you like my blog, give it a thumbs up!
             </p>
-            <link rel="stylesheet" href="https://unpkg.com/@5ime/likeme@latest/static/css/likeme.css" />
-            <script src="https://unpkg.com/@5ime/likeme@latest/static/js/likeme.js"></script>
-            <div id="likeme" class="inline-block"></div>
+
+            <div class="inline-flex flex-col items-center gap-4">
+                <!-- Like Button -->
+                <button onclick="sendLike()" id="likeBtn" class="group relative inline-flex items-center justify-center px-8 py-3 font-bold text-white transition-all duration-200 bg-rose-400 rounded-full hover:bg-rose-500 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-400 dark:focus:ring-offset-gray-900">
+                    <span class="mr-2 text-xl group-hover:scale-110 transition-transform">❤️</span>
+                    <span id="like-count">...</span>
+                </button>
+                
+                <!-- View Count -->
+                <div class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1.5 mt-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                    <span id="view-count">...</span> views
+                </div>
+            </div>
+
             <script>
-                likeMe({
-                    el: '#likeme',
-                    serverURL: 'https://forvuk.vercel.app',
-                    color: '#ff9797'
-                });
+                const SERVER_URL = 'https://vukservices.vercel.app';
+                
+                async function fetchCounts() {
+                    try {
+                        const [likeRes, viewRes] = await Promise.all([
+                            fetch(`${SERVER_URL}/api/like`),
+                            fetch(`${SERVER_URL}/api/view`, { method: 'POST' })
+                        ]);
+                        const likeData = await likeRes.json();
+                        const viewData = await viewRes.json();
+                        
+                        document.getElementById('like-count').innerText = (likeData?.data?.count || 0) + ' Likes';
+                        document.getElementById('view-count').innerText = viewData?.data?.count || 0;
+                    } catch (err) {
+                        console.error('Failed to load counts:', err);
+                    }
+                }
+
+                async function sendLike() {
+                    const btn = document.getElementById('likeBtn');
+                    if (btn.disabled) return;
+                    btn.disabled = true;
+                    btn.classList.add('opacity-80', 'scale-95');
+                    
+                    try {
+                        const res = await fetch(`${SERVER_URL}/api/like`, { method: 'POST' });
+                        const data = await res.json();
+                        document.getElementById('like-count').innerText = (data?.data?.count || 0) + ' Likes';
+                    } catch (err) {
+                        console.error('Failed to send like:', err);
+                    } finally {
+                        setTimeout(() => {
+                            btn.disabled = false;
+                            btn.classList.remove('opacity-80', 'scale-95');
+                        }, 300);
+                    }
+                }
+
+                // Execute on load
+                fetchCounts();
             </script>
         </div>
     </section>
