@@ -68,13 +68,17 @@ permalink: /gomoku/
 
     /* Realistic Wood Stones */
     .wood-stone-black {
-        background: radial-gradient(circle at 30% 30%, #555 0%, #1a1a1a 45%, #050505 100%);
-        box-shadow: 1px 3px 5px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.15);
+        background-image: url('{{ "/assets/images/black_stone.svg" | relative_url }}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        box-shadow: 1px 3px 5px rgba(0,0,0,0.5);
     }
 
     .wood-stone-white {
-        background: radial-gradient(circle at 30% 30%, #ffffff 0%, #f0f0f0 40%, #dcdcdc 85%, #b5b5b5 100%);
-        box-shadow: 1px 3px 5px rgba(0,0,0,0.35), inset 0 -1px 2px rgba(0,0,0,0.15), inset 0 1px 2px rgba(255,255,255,0.6);
+        background-image: url('{{ "/assets/images/white_stone.svg" | relative_url }}');
+        background-size: cover;
+        background-repeat: no-repeat;
+        box-shadow: 1px 3px 5px rgba(0,0,0,0.35);
     }
 
     /* Glowing Cyber Stones */
@@ -865,19 +869,15 @@ permalink: /gomoku/
                             <label class="flex items-center justify-between cursor-pointer p-1.5 hover:bg-white dark:hover:bg-gray-800/40 rounded-lg transition-colors">
                                 <span class="text-xs font-semibold text-gray-700 dark:text-gray-300">AI 先手 (执黑)</span>
                                 <input type="checkbox" id="ai-first-toggle" class="sr-only peer">
-                                <div class="text-gray-400 peer-checked:text-[#4F6EF7] transition-colors w-7 h-7 flex items-center justify-center">
-                                    <span class="block peer-checked:hidden">{% include icons/toggle_off.svg %}</span>
-                                    <span class="hidden peer-checked:block">{% include icons/toggle_on.svg %}</span>
-                                </div>
+                                <span class="block peer-checked:hidden text-gray-400 w-7 h-7 transition-colors">{% include icons/toggle_off.svg %}</span>
+                                <span class="hidden peer-checked:block text-[#4F6EF7] w-7 h-7 transition-colors">{% include icons/toggle_on.svg %}</span>
                             </label>
                             
                             <label class="flex items-center justify-between cursor-pointer p-1.5 hover:bg-white dark:hover:bg-gray-800/40 rounded-lg transition-colors">
                                 <span class="text-xs font-semibold text-gray-700 dark:text-gray-300">游戏静音</span>
                                 <input type="checkbox" id="mute-toggle" class="sr-only peer">
-                                <div class="text-gray-400 peer-checked:text-[#4F6EF7] transition-colors w-7 h-7 flex items-center justify-center">
-                                    <span class="block peer-checked:hidden">{% include icons/toggle_off.svg %}</span>
-                                    <span class="hidden peer-checked:block">{% include icons/toggle_on.svg %}</span>
-                                </div>
+                                <span class="block peer-checked:hidden text-gray-400 w-7 h-7 transition-colors">{% include icons/toggle_off.svg %}</span>
+                                <span class="hidden peer-checked:block text-[#4F6EF7] w-7 h-7 transition-colors">{% include icons/toggle_on.svg %}</span>
                             </label>
                         </div>
                     </div>
@@ -1037,9 +1037,13 @@ permalink: /gomoku/
 
         init() {
             if (!this.ctx) {
-                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                try {
+                    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                } catch(e) {
+                    console.warn("AudioContext failed", e);
+                }
             }
-            if (this.ctx.state === 'suspended') {
+            if (this.ctx && this.ctx.state === 'suspended') {
                 this.ctx.resume();
             }
         }
@@ -1047,6 +1051,7 @@ permalink: /gomoku/
         playClick(isBlack) {
             if (this.muted) return;
             this.init();
+            if (!this.ctx) return;
             const ctx = this.ctx;
             const now = ctx.currentTime;
             
@@ -1087,6 +1092,7 @@ permalink: /gomoku/
         playWin() {
             if (this.muted) return;
             this.init();
+            if (!this.ctx) return;
             const ctx = this.ctx;
             const now = ctx.currentTime;
             
@@ -1114,6 +1120,7 @@ permalink: /gomoku/
         playLose() {
             if (this.muted) return;
             this.init();
+            if (!this.ctx) return;
             const ctx = this.ctx;
             const now = ctx.currentTime;
             
@@ -1141,6 +1148,7 @@ permalink: /gomoku/
         playError() {
             if (this.muted) return;
             this.init();
+            if (!this.ctx) return;
             const ctx = this.ctx;
             const now = ctx.currentTime;
             
