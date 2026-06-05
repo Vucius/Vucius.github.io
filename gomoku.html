@@ -139,26 +139,37 @@ permalink: /gomoku/
         transition: opacity 0.15s ease;
     }
 
-    .wood-temp {
+    .temp-blue {
+        background-color: #4F6EF7;
+        box-shadow: 0 0 8px #4F6EF7, 0 0 15px #4F6EF7;
+        animation: temp-pulse-blue 1.2s infinite ease-in-out;
+    }
+
+    .temp-green {
+        background-color: #22c55e;
+        box-shadow: 0 0 8px #22c55e, 0 0 15px #22c55e;
+        animation: temp-pulse-green 1.2s infinite ease-in-out;
+    }
+
+    .temp-red {
         background-color: #ff4757;
         box-shadow: 0 0 8px #ff4757, 0 0 15px #ff4757;
-        animation: temp-pulse-wood 1.2s infinite ease-in-out;
+        animation: temp-pulse-red 1.2s infinite ease-in-out;
     }
 
-    .cyber-temp {
-        background-color: #22c55e;
-        box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
-        animation: temp-pulse-cyber 1.2s infinite ease-in-out;
+    @keyframes temp-pulse-blue {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; box-shadow: 0 0 8px #4F6EF7, 0 0 15px #4F6EF7; }
+        50% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.4; box-shadow: 0 0 12px #4F6EF7, 0 0 25px #4F6EF7; }
     }
 
-    @keyframes temp-pulse-wood {
+    @keyframes temp-pulse-green {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; box-shadow: 0 0 8px #22c55e, 0 0 15px #22c55e; }
+        50% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.4; box-shadow: 0 0 12px #22c55e, 0 0 25px #22c55e; }
+    }
+
+    @keyframes temp-pulse-red {
         0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; box-shadow: 0 0 8px #ff4757, 0 0 15px #ff4757; }
         50% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.4; box-shadow: 0 0 12px #ff4757, 0 0 25px #ff4757; }
-    }
-
-    @keyframes temp-pulse-cyber {
-        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e; }
-        50% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.4; box-shadow: 0 0 15px #22c55e, 0 0 35px #22c55e; }
     }
 
     /* Custom Toast Notification */
@@ -1531,7 +1542,7 @@ permalink: /gomoku/
     // ----------------------------------------------------
     // Show temporary marker when hovering logs
     // ----------------------------------------------------
-    function showTempMarker(index, allowEmpty = false) {
+    function showTempMarker(index, allowEmpty = false, type = 'hint') {
         const marker = document.getElementById('temp-move-marker');
         if (index === -1 || (!allowEmpty && gameState.board[index] === 0)) {
             marker.classList.add('hidden');
@@ -1546,8 +1557,14 @@ permalink: /gomoku/
         
         marker.style.top = `${topPct}%`;
         marker.style.left = `${leftPct}%`;
-        marker.classList.remove('wood-temp', 'cyber-temp');
-        marker.classList.add(gameState.theme === 'wood' ? 'wood-temp' : 'cyber-temp');
+        marker.classList.remove('wood-temp', 'cyber-temp', 'temp-blue', 'temp-green', 'temp-red');
+        if (type === 'player') {
+            marker.classList.add('temp-green');
+        } else if (type === 'ai') {
+            marker.classList.add('temp-red');
+        } else {
+            marker.classList.add('temp-blue');
+        }
         marker.classList.remove('hidden');
     }
     
@@ -1764,12 +1781,14 @@ permalink: /gomoku/
         const item = document.createElement('div');
         item.className = "flex items-center justify-between p-2 hover:bg-gray-100 dark:hover:bg-gray-700/40 rounded-lg transition-colors cursor-pointer";
         
+        const isPlayer = (player === 1 && !gameState.aiFirst) || (player === -1 && gameState.aiFirst);
+        
         // Mouse hover highlights the cell
-        item.onmouseenter = () => showTempMarker(index);
+        item.onmouseenter = () => showTempMarker(index, false, isPlayer ? 'player' : 'ai');
         item.onmouseleave = () => hideTempMarker();
         
         const stoneColorText = player === 1 ? '黑子' : '白子';
-        const playerLabel = (player === 1 && !gameState.aiFirst) || (player === -1 && gameState.aiFirst) ? '玩家' : 'AI';
+        const playerLabel = isPlayer ? '玩家' : 'AI';
         const coord = getCoordinateString(index);
         
         let confStr = '-';
