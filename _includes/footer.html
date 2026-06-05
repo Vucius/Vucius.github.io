@@ -1,3 +1,19 @@
 <footer class="py-8 px-4 pb-12 text-center text-gray-700 dark:text-gray-400" role="contentinfo" aria-label="网站页脚">
-    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. All rights reserved.</p>
+    <p>&copy; {{ 'now' | date: "%Y" }} {{ site.title }}. All rights reserved. <span id="global-view-count">...</span> people have visited.</p>
 </footer>
+
+<script>
+    (async function() {
+        try {
+            const SERVER_URL = 'https://vukservices.vercel.app';
+            // Always track a view when any page with a footer loads
+            const viewRes = await fetch(`${SERVER_URL}/api/view`, { method: 'POST' });
+            const viewData = await viewRes.json();
+            const count = viewData?.data?.count || viewData?.count || 0;
+            const el = document.getElementById('global-view-count');
+            if (el) el.innerText = count;
+        } catch (err) {
+            console.error('Failed to update views:', err);
+        }
+    })();
+</script>
