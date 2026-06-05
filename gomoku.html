@@ -66,16 +66,16 @@ permalink: /gomoku/
         transform: scale(1);
     }
 
-    /* Realistic Wood Stones */
+    /* Realistic Wood Stones (Data URI) */
     .wood-stone-black {
-        background-image: url('{{ "/assets/images/black_stone.svg" | relative_url }}');
+        background-image: url('data:image/svg+xml;utf8,<svg style="overflow: hidden; position: relative; top: -0.875px;" height="250" version="1.1" width="250" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="radialGradient1" fx="0.75" fy="0.75"><stop offset="0%" stop-color="%23a0a0a0"></stop><stop offset="100%" stop-color="%23000000" stop-opacity="0.9"></stop></radialGradient></defs><circle cx="125" cy="125" r="125" fill="%23ffffff" stroke="%23000" stroke-width="0"></circle><circle style="fill-opacity: 1; opacity: 1; stroke-opacity: 0.3;" cx="125" cy="125" r="125" fill="url(%23radialGradient1)" stroke="%23000" fill-opacity="1" opacity="1" stroke-opacity="0.3" stroke-width="1.2"></circle></svg>');
         background-size: cover;
         background-repeat: no-repeat;
         box-shadow: 1px 3px 5px rgba(0,0,0,0.5);
     }
 
     .wood-stone-white {
-        background-image: url('{{ "/assets/images/white_stone.svg" | relative_url }}');
+        background-image: url('data:image/svg+xml;utf8,<svg style="overflow: hidden; position: relative; top: -0.875px;" height="250" version="1.1" width="250" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="radialGradient1" fx="0.75" fy="0.75"><stop offset="0%" stop-color="%23ffffff"></stop><stop offset="100%" stop-color="%23a0a0a0" stop-opacity="1"></stop></radialGradient></defs><circle cx="125" cy="125" r="125" fill="%23ffffff" stroke="%23000" stroke-width="0"></circle><circle style="fill-opacity: 1; opacity: 1; stroke-opacity: 0.3;" cx="125" cy="125" r="125" fill="url(%23radialGradient1)" stroke="%23000" fill-opacity="1" opacity="1" stroke-opacity="0.3" stroke-width="1.1"></circle></svg>');
         background-size: cover;
         background-repeat: no-repeat;
         box-shadow: 1px 3px 5px rgba(0,0,0,0.35);
@@ -444,6 +444,10 @@ permalink: /gomoku/
 
     /* Dark mode peer checked */
     .peer:checked ~ .dark\:peer-checked\:bg-cyan-500:is(.dark *) { background-color: rgb(6 182 212); }
+    
+    /* Toggle visibility states */
+    .peer:checked ~ .peer-checked\:hidden { display: none !important; }
+    .peer:checked ~ .peer-checked\:block { display: block !important; }
 
     /* --- Transform Utilities --- */
     .-translate-x-1\/2 {
