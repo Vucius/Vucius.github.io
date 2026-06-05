@@ -1343,14 +1343,14 @@ permalink: /gomoku/
         drawGridLines();
         drawHoshi();
         
+        // Re-init hover indications
+        initInteractionLayer();
+
         // Re-render placed stones with theme-specific classes
         renderAllStones();
         
         // Reset last move indicator style
         updateLastMoveMarker();
-        
-        // Re-init hover indications
-        initInteractionLayer();
     }
 
     // ----------------------------------------------------
