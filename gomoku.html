@@ -864,17 +864,19 @@ permalink: /gomoku/
                         <div class="space-y-2 bg-gray-50/40 dark:bg-gray-900/10 p-2 rounded-xl border border-gray-100 dark:border-gray-800/40">
                             <label class="flex items-center justify-between cursor-pointer p-1.5 hover:bg-white dark:hover:bg-gray-800/40 rounded-lg transition-colors">
                                 <span class="text-xs font-semibold text-gray-700 dark:text-gray-300">AI 先手 (执黑)</span>
-                                <div class="relative">
-                                    <input type="checkbox" id="ai-first-toggle" class="sr-only peer">
-                                    <div class="w-8 h-5 bg-gray-200 dark:bg-gray-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#4F6EF7]"></div>
+                                <input type="checkbox" id="ai-first-toggle" class="sr-only peer">
+                                <div class="text-gray-400 peer-checked:text-[#4F6EF7] transition-colors w-7 h-7 flex items-center justify-center">
+                                    <span class="block peer-checked:hidden">{% include icons/toggle_off.svg %}</span>
+                                    <span class="hidden peer-checked:block">{% include icons/toggle_on.svg %}</span>
                                 </div>
                             </label>
                             
                             <label class="flex items-center justify-between cursor-pointer p-1.5 hover:bg-white dark:hover:bg-gray-800/40 rounded-lg transition-colors">
                                 <span class="text-xs font-semibold text-gray-700 dark:text-gray-300">游戏静音</span>
-                                <div class="relative">
-                                    <input type="checkbox" id="mute-toggle" class="sr-only peer">
-                                    <div class="w-8 h-5 bg-gray-200 dark:bg-gray-700 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#4F6EF7]"></div>
+                                <input type="checkbox" id="mute-toggle" class="sr-only peer">
+                                <div class="text-gray-400 peer-checked:text-[#4F6EF7] transition-colors w-7 h-7 flex items-center justify-center">
+                                    <span class="block peer-checked:hidden">{% include icons/toggle_off.svg %}</span>
+                                    <span class="hidden peer-checked:block">{% include icons/toggle_on.svg %}</span>
                                 </div>
                             </label>
                         </div>
@@ -1289,7 +1291,16 @@ permalink: /gomoku/
             point.appendChild(hoverDot);
 
             // Click Handler
-            point.onclick = () => handlePlayerMove(i);
+            point.addEventListener('click', (e) => {
+                e.preventDefault();
+                handlePlayerMove(i);
+            });
+            
+            // Touch Handler
+            point.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // Prevent double firing of click
+                handlePlayerMove(i);
+            }, { passive: false });
 
             layer.appendChild(point);
         }
