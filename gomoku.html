@@ -1021,6 +1021,40 @@ permalink: /gomoku/
                 </div>
             </div>
 
+            <!-- AI Battle Mode Card -->
+            <div class="game-card">
+                <h2 class="text-base font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
+                    <span class="icon-svg text-yellow-500">🏆</span> AI 自动对决
+                </h2>
+                <div class="space-y-3">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="flex flex-col gap-1 text-[11px]">
+                            <span class="text-gray-500 dark:text-gray-400 font-bold">黑方 AI (先手)</span>
+                            <select id="battle-black-select" class="w-full px-2 py-1 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none dark:text-white font-semibold text-[10px] cursor-pointer">
+                                <option value="best_model">ResNet-20</option>
+                                <option value="Medium-ppo" selected>PPO (中等)</option>
+                                <option value="easy-iter">Easy-Iter</option>
+                                <option value="Third-dqn">DQN (中等)</option>
+                                <option value="12.13best">AlphaZero 9x9</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col gap-1 text-[11px]">
+                            <span class="text-gray-500 dark:text-gray-400 font-bold">白方 AI (后手)</span>
+                            <select id="battle-white-select" class="w-full px-2 py-1 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg focus:outline-none dark:text-white font-semibold text-[10px] cursor-pointer">
+                                <option value="best_model" selected>ResNet-20</option>
+                                <option value="Medium-ppo">PPO (中等)</option>
+                                <option value="easy-iter">Easy-Iter</option>
+                                <option value="Third-dqn">DQN (中等)</option>
+                                <option value="12.13best">AlphaZero 9x9</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="battle-start-btn" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-1.5">
+                        <span>▶</span> 开始 AI 对战
+                    </button>
+                </div>
+            </div>
+
             <!-- Appearance Theme Controller -->
             <div class="game-card">
                 <h2 class="text-base font-bold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
@@ -1283,6 +1317,10 @@ permalink: /gomoku/
         aiFirst: false,
         theme: 'wood', // 'wood' or 'cyberpunk'
         model: 'Medium-ppo', // 'Medium-ppo', 'best_model', 'easy-iter', 'Third-dqn', '12.13best'
+        battleRunning: false,
+        battleBlackModel: 'Medium-ppo',
+        battleWhiteModel: 'best_model',
+        battleTimeout: null,
         stats: {
             win: 0,
             lose: 0,
@@ -1300,6 +1338,12 @@ permalink: /gomoku/
     }
     if (localStorage.getItem('gomoku_model')) {
         gameState.model = localStorage.getItem('gomoku_model');
+    }
+    if (localStorage.getItem('gomoku_battle_black')) {
+        gameState.battleBlackModel = localStorage.getItem('gomoku_battle_black');
+    }
+    if (localStorage.getItem('gomoku_battle_white')) {
+        gameState.battleWhiteModel = localStorage.getItem('gomoku_battle_white');
     }
     if (localStorage.getItem('gomoku_stats')) {
         try {
@@ -1593,7 +1637,7 @@ permalink: /gomoku/
     // Handle Player Turn 落子
     // ----------------------------------------------------
     function handlePlayerMove(index) {
-        if (gameState.gameOver || gameState.isAIMoving) return;
+        if (gameState.gameOver || gameState.isAIMoving || gameState.battleRunning) return;
 
         // 严格检查当前是否为玩家回合
         const currentTurnColor = (gameState.history.length % 2 === 0) ? 1 : -1; // 1代表黑子，-1代表白子
@@ -1989,6 +2033,7 @@ permalink: /gomoku/
     
     // Undo Last Turn (Human and AI move)
     function undoMove() {
+        stopBattleMode();
         if (gameState.isAIMoving || gameState.history.length === 0) return;
         
         const undoCount = (gameState.history.length >= 2 && !gameState.gameOver) ? 2 : 1;
@@ -2083,6 +2128,118 @@ permalink: /gomoku/
         }
     }
 
+    // ----------------------------------------------------
+    // AI Battle Mode Loop Logic
+    // ----------------------------------------------------
+    async function triggerBattleNextMove() {
+        if (!gameState.battleRunning || gameState.gameOver) return;
+
+        const turnColor = (gameState.history.length % 2 === 0) ? 'black' : 'white';
+        const aiVal = turnColor === 'black' ? 1 : -1;
+        const currentModel = turnColor === 'black' ? gameState.battleBlackModel : gameState.battleWhiteModel;
+
+        gameState.isAIMoving = true;
+        updateTurnDisplay();
+
+        const delay = Math.floor(Math.random() * (5000 - 2000 + 1)) + 2000;
+        
+        gameState.battleTimeout = setTimeout(async () => {
+            try {
+                const board2D = [];
+                for (let r = 0; r < 15; r++) {
+                    board2D.push(gameState.board.slice(r * 15, (r + 1) * 15));
+                }
+
+                const response = await fetch(`${gameState.apiUrl}/api/gomoku/move`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        board: board2D,
+                        player: aiVal,
+                        step: gameState.history.length,
+                        model: currentModel
+                    })
+                });
+
+                if (!response.ok) throw new Error(`API error: ${response.status}`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    const { row, col, confidence } = result.data;
+                    const aiIndex = row * 15 + col;
+
+                    placePiece(aiIndex, aiVal);
+                    gameState.confidences[aiIndex] = confidence;
+                    addLogItem(gameState.history.length, aiVal, aiIndex, confidence);
+                    updateConfidenceMeter(confidence);
+
+                    gameState.isAIMoving = false;
+                    if (!checkGameStatus(aiVal)) {
+                        updateTurnDisplay();
+                        if (gameState.battleRunning) {
+                            triggerBattleNextMove();
+                        }
+                    } else {
+                        stopBattleMode();
+                    }
+                } else {
+                    throw new Error(result.message || 'API success false');
+                }
+            } catch (err) {
+                console.error('Battle mode error:', err);
+                sound.playError();
+                showNotification('AI 对战因通信错误暂停，请检查服务。', 'error');
+                stopBattleMode();
+            }
+        }, delay);
+    }
+
+    function startBattleMode() {
+        if (gameState.gameOver) {
+            resetGame();
+        }
+        gameState.battleRunning = true;
+        
+        const btn = document.getElementById('battle-start-btn');
+        if (btn) {
+            btn.innerHTML = `<span>⏸</span> 暂停 AI 对战`;
+            btn.className = "w-full py-2 bg-red-500 hover:bg-red-600 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-red-500/20 flex items-center justify-center gap-1.5";
+        }
+        
+        const toggle = document.getElementById('ai-first-toggle');
+        if (toggle) toggle.disabled = true;
+        const hintBtn = document.getElementById('hint-btn');
+        if (hintBtn) hintBtn.disabled = true;
+        const undoBtn = document.getElementById('undo-btn');
+        if (undoBtn) undoBtn.disabled = true;
+        
+        triggerBattleNextMove();
+    }
+
+    function stopBattleMode() {
+        gameState.battleRunning = false;
+        if (gameState.battleTimeout) {
+            clearTimeout(gameState.battleTimeout);
+            gameState.battleTimeout = null;
+        }
+        gameState.isAIMoving = false;
+        
+        const btn = document.getElementById('battle-start-btn');
+        if (btn) {
+            btn.innerHTML = `<span>▶</span> 开始 AI 对战`;
+            btn.className = "w-full py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-blue-500/20 flex items-center justify-center gap-1.5";
+        }
+        
+        const toggle = document.getElementById('ai-first-toggle');
+        if (toggle) toggle.disabled = false;
+        const hintBtn = document.getElementById('hint-btn');
+        if (hintBtn) hintBtn.disabled = gameState.gameOver;
+        const undoBtn = document.getElementById('undo-btn');
+        if (undoBtn) undoBtn.disabled = false;
+        
+        updateTurnDisplay();
+    }
+
     // AI Hint Logic
     async function requestAIHint() {
         if (gameState.gameOver || gameState.isAIMoving) return;
@@ -2138,6 +2295,7 @@ permalink: /gomoku/
 
     // Restart/Reset Game State
     function resetGame() {
+        stopBattleMode();
         gameState.board = Array(BOARD_SQUARE).fill(0);
         gameState.history = [];
         gameState.confidences = {};
@@ -2290,6 +2448,35 @@ permalink: /gomoku/
                 updateDiagnosisModelDisplay();
             };
         }
+
+        // Bind battle selectors and button
+        const battleBlackSelect = document.getElementById('battle-black-select');
+        if (battleBlackSelect) {
+            battleBlackSelect.value = gameState.battleBlackModel;
+            battleBlackSelect.onchange = (e) => {
+                gameState.battleBlackModel = e.target.value;
+                localStorage.setItem('gomoku_battle_black', e.target.value);
+            };
+        }
+        const battleWhiteSelect = document.getElementById('battle-white-select');
+        if (battleWhiteSelect) {
+            battleWhiteSelect.value = gameState.battleWhiteModel;
+            battleWhiteSelect.onchange = (e) => {
+                gameState.battleWhiteModel = e.target.value;
+                localStorage.setItem('gomoku_battle_white', e.target.value);
+            };
+        }
+        const battleStartBtn = document.getElementById('battle-start-btn');
+        if (battleStartBtn) {
+            battleStartBtn.onclick = () => {
+                if (gameState.battleRunning) {
+                    stopBattleMode();
+                } else {
+                    startBattleMode();
+                }
+            };
+        }
+
         updateDiagnosisModelDisplay();
 
         drawGridLines();
