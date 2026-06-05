@@ -133,18 +133,32 @@ permalink: /gomoku/
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background-color: #4F6EF7;
-        box-shadow: 0 0 8px #4F6EF7, 0 0 15px #4F6EF7;
         transform: translate(-50%, -50%);
         pointer-events: none;
         z-index: 20;
-        animation: temp-pulse 1.2s infinite ease-in-out;
         transition: opacity 0.15s ease;
     }
 
-    @keyframes temp-pulse {
-        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
-        50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.4; }
+    .wood-temp {
+        background-color: #ff4757;
+        box-shadow: 0 0 8px #ff4757, 0 0 15px #ff4757;
+        animation: temp-pulse-wood 1.2s infinite ease-in-out;
+    }
+
+    .cyber-temp {
+        background-color: #22c55e;
+        box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e;
+        animation: temp-pulse-cyber 1.2s infinite ease-in-out;
+    }
+
+    @keyframes temp-pulse-wood {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; box-shadow: 0 0 8px #ff4757, 0 0 15px #ff4757; }
+        50% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.4; box-shadow: 0 0 12px #ff4757, 0 0 25px #ff4757; }
+    }
+
+    @keyframes temp-pulse-cyber {
+        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; box-shadow: 0 0 10px #22c55e, 0 0 20px #22c55e; }
+        50% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.4; box-shadow: 0 0 15px #22c55e, 0 0 35px #22c55e; }
     }
 
     /* Custom Toast Notification */
@@ -837,11 +851,11 @@ permalink: /gomoku/
                 </div>
 
                 <!-- Game Logs -->
-                <div class="game-card flex flex-col" style="height:200px">
+                <div class="game-card flex flex-col" style="height: 300px;">
                     <h2 class="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-505 mb-2.5 flex items-center gap-2">
-                        <span class="icon-svg text-gray-500">{% include icons/list.svg %}</span> 对局明细
+                        <span class="icon-svg text-gray-505">{% include icons/list.svg %}</span> 对局明细
                     </h2>
-                    <div id="game-logs" class="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-1 text-xs">
+                    <div id="game-logs" class="overflow-y-auto custom-scrollbar space-y-2 pr-1 text-xs" style="height: 220px;">
                         <div id="log-placeholder" class="text-gray-400 dark:text-gray-500 text-center py-8">等待落子开始对局...</div>
                     </div>
                 </div>
@@ -1532,6 +1546,8 @@ permalink: /gomoku/
         
         marker.style.top = `${topPct}%`;
         marker.style.left = `${leftPct}%`;
+        marker.classList.remove('wood-temp', 'cyber-temp');
+        marker.classList.add(gameState.theme === 'wood' ? 'wood-temp' : 'cyber-temp');
         marker.classList.remove('hidden');
     }
     
