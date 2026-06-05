@@ -807,8 +807,8 @@ permalink: /gomoku/
                     <span class="w-2 h-2 rounded-full bg-red-500"></span> AI 离线
                 </span>
                 <span class="text-gray-300 dark:text-gray-600">|</span>
-                <span class="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
-                    🧠 ResNet-20
+                <span id="status-model" class="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+                    🧠 PPO
                 </span>
             </div>
         </div>
@@ -988,18 +988,31 @@ permalink: /gomoku/
                         <span class="icon-svg text-base">{% include icons/settings-suggest.svg %}</span>
                     </button>
                 </h2>
-                <div class="space-y-2">
+                <div class="space-y-2.5">
                     <div class="flex items-center justify-between text-xs">
                         <span class="text-gray-500 dark:text-gray-400">状态:</span>
                         <span id="conn-status-badge" class="flex items-center gap-1.5 font-bold text-red-500">
                             <span class="w-2 h-2 rounded-full bg-red-500"></span> 离线
                         </span>
                     </div>
+
+                    <!-- Model Selector -->
+                    <div class="flex flex-col gap-1 text-xs border-t border-gray-100 dark:border-gray-800/40 pt-2.5">
+                        <span class="text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider text-[10px]">选择 AI 模型</span>
+                        <select id="model-select" class="w-full px-2.5 py-1.5 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4F6EF7] dark:focus:ring-blue-500 dark:text-white font-semibold text-xs cursor-pointer">
+                            <option value="Medium-ppo">中等难度 (PPO 强化学习)</option>
+                            <option value="best_model">高强度 (ResNet-20 神经网络)</option>
+                            <option value="easy-iter">简单难度 (Easy-Iter 15x15)</option>
+                            <option value="Third-dqn">中等难度 (DQN 强化学习)</option>
+                            <option value="12.13best">经典 9x9 (AlphaZero 架构)</option>
+                        </select>
+                    </div>
+
                     <details class="text-[10px] text-gray-400 dark:text-gray-505 cursor-pointer pt-1 border-t border-gray-100 dark:border-gray-800/40">
                         <summary class="hover:text-gray-600 dark:hover:text-gray-300 transition-colors font-semibold">高级诊断信息</summary>
                         <div class="mt-1.5 space-y-1 font-mono text-[9px] break-all leading-tight bg-gray-50/50 dark:bg-gray-900/30 p-2 rounded-lg border border-gray-100/30 dark:border-gray-800/30">
                             <div id="current-endpoint-display">ENDPOINT: https://vukservices.vercel.app</div>
-                            <div>MODEL: ResNet-20</div>
+                            <div id="current-model-display">MODEL: PPO</div>
                         </div>
                     </details>
                     <button id="test-conn-btn" class="w-full py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-green-500/20">
@@ -1269,6 +1282,7 @@ permalink: /gomoku/
         lastMove: -1,
         aiFirst: false,
         theme: 'wood', // 'wood' or 'cyberpunk'
+        model: 'Medium-ppo', // 'Medium-ppo', 'best_model', 'easy-iter', 'Third-dqn', '12.13best'
         stats: {
             win: 0,
             lose: 0,
@@ -1283,6 +1297,9 @@ permalink: /gomoku/
     }
     if (localStorage.getItem('gomoku_theme')) {
         gameState.theme = localStorage.getItem('gomoku_theme');
+    }
+    if (localStorage.getItem('gomoku_model')) {
+        gameState.model = localStorage.getItem('gomoku_model');
     }
     if (localStorage.getItem('gomoku_stats')) {
         try {
@@ -1668,7 +1685,8 @@ permalink: /gomoku/
                 body: JSON.stringify({
                     board: board2D,
                     player: aiVal,
-                    step: gameState.history.length
+                    step: gameState.history.length,
+                    model: gameState.model
                 })
             });
 
@@ -2046,6 +2064,25 @@ permalink: /gomoku/
         updateConfidenceMeter(lastAIConfidence);
     }
 
+    function updateDiagnosisModelDisplay() {
+        const names = {
+            'best_model': 'ResNet-20',
+            '12.13best': 'AlphaZero 9x9',
+            'easy-iter': 'Easy-Iter',
+            'Medium-ppo': 'PPO',
+            'Third-dqn': 'DQN'
+        };
+        const display = names[gameState.model] || gameState.model;
+        const currentModelDisplay = document.getElementById('current-model-display');
+        if (currentModelDisplay) {
+            currentModelDisplay.innerText = `MODEL: ${display}`;
+        }
+        const statusModel = document.getElementById('status-model');
+        if (statusModel) {
+            statusModel.innerHTML = `🧠 ${display}`;
+        }
+    }
+
     // AI Hint Logic
     async function requestAIHint() {
         if (gameState.gameOver || gameState.isAIMoving) return;
@@ -2067,7 +2104,8 @@ permalink: /gomoku/
                 body: JSON.stringify({
                     board: board2D,
                     player: playerVal,
-                    step: gameState.history.length
+                    step: gameState.history.length,
+                    model: gameState.model
                 })
             });
 
@@ -2241,6 +2279,18 @@ permalink: /gomoku/
         document.getElementById('theme-cyber-btn').onclick = () => applyBoardTheme('cyber');
 
         document.getElementById('current-endpoint-display').innerText = `ENDPOINT: ${gameState.apiUrl}`;
+
+        // Bind model select listener
+        const modelSelect = document.getElementById('model-select');
+        if (modelSelect) {
+            modelSelect.value = gameState.model;
+            modelSelect.onchange = (e) => {
+                gameState.model = e.target.value;
+                localStorage.setItem('gomoku_model', e.target.value);
+                updateDiagnosisModelDisplay();
+            };
+        }
+        updateDiagnosisModelDisplay();
 
         drawGridLines();
         drawHoshi();
