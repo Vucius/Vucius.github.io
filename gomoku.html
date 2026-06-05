@@ -1479,6 +1479,16 @@ permalink: /gomoku/
     // ----------------------------------------------------
     function handlePlayerMove(index) {
         if (gameState.gameOver || gameState.isAIMoving) return;
+
+        // 严格检查当前是否为玩家回合
+        const currentTurnColor = (gameState.history.length % 2 === 0) ? 1 : -1; // 1代表黑子，-1代表白子
+        const expectedPlayerColor = gameState.aiFirst ? -1 : 1;
+        
+        if (currentTurnColor !== expectedPlayerColor) {
+            showNotification('请等待 AI 落子！如果 AI 通信失败，请使用"悔棋"撤回上一步。', 'error');
+            return;
+        }
+
         if (gameState.board[index] !== 0) {
             sound.playError();
             return;
@@ -1494,6 +1504,26 @@ permalink: /gomoku/
 
         // Trigger AI Turn
         triggerAILogic();
+    }
+
+    // ----------------------------------------------------
+    // Global UI Notification Helper
+    // ----------------------------------------------------
+    function showNotification(message, type = 'error') {
+        const toast = document.createElement('div');
+        toast.className = `fixed top-10 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-full shadow-2xl z-[100] text-white font-medium transition-opacity duration-300 ${type === 'error' ? 'bg-red-500' : 'bg-green-500'} bg-opacity-90 backdrop-blur-sm flex items-center gap-2`;
+        toast.style.opacity = '0';
+        toast.innerHTML = type === 'error' ? `<span>⚠️</span> ${message}` : `<span>💡</span> ${message}`;
+        document.body.appendChild(toast);
+        
+        requestAnimationFrame(() => {
+            toast.style.opacity = '1';
+        });
+        
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
     }
 
     // ----------------------------------------------------
@@ -1584,7 +1614,7 @@ permalink: /gomoku/
             `;
             turnText.className = "text-sm font-bold text-red-500 flex items-center gap-1.5";
             
-            alert('AI 服务通信失败，请检查 Vuk_Services 后台服务是否启动！\n错误信息: ' + err.message);
+            showNotification('AI 服务通信失败，请检查后台服务！', 'error');
         }
     }
 
@@ -1948,7 +1978,7 @@ permalink: /gomoku/
                 showTempMarker(idx);
                 sound.playWin();
                 
-                alert(`AI 推荐落子位置: ${coord} (置信度: ${(confidence * 100).toFixed(1)}%)`);
+                showNotification(`AI 推荐落子位置: ${coord} (置信度: ${(confidence * 100).toFixed(1)}%)`, 'success');
                 
                 setTimeout(() => {
                     hideTempMarker();
@@ -1957,7 +1987,7 @@ permalink: /gomoku/
         } catch(e) {
             console.error(e);
             sound.playError();
-            alert('获取 AI 提示失败，请确保后台服务正常启动。');
+            showNotification('获取 AI 提示失败，请确保后台服务正常启动。', 'error');
         } finally {
             document.getElementById('hint-btn').disabled = false;
             document.getElementById('hint-btn').innerHTML = `<span class="icon-svg text-lg">{% include icons/lightbulb.svg %}</span> <span class="text-xs">获取 AI 提示</span>`;
