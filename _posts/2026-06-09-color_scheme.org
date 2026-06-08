@@ -1,6 +1,6 @@
 #+TITLE: 我喜欢的配色方案
-#+AUTHOR:
-#+DATE:
+#+AUTHOR: Vucius
+#+DATE: 2026-06-09
 
 * 我喜欢的配色方案
 
