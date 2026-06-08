@@ -14,9 +14,10 @@ title: Han Column Encoder
         margin: 0 auto;
         background-color: #f5f5dc; /* 宣纸/米黄底色 */
     }
-    /* 暗色模式下的表格底色 */
+    /* 暗色模式下的表格底色 - Cyberpunk Style */
     .dark .han-table {
-        background-color: #2d2a26;
+        background-color: rgba(15, 23, 42, 0.85);
+        box-shadow: 0 0 20px rgba(79, 110, 247, 0.2);
     }
     .han-table td {
         font-family: "SimSun", "STSong", serif;
@@ -29,8 +30,9 @@ title: Han Column Encoder
         color: #333;
     }
     .dark .han-table td {
-        border-color: #666;
-        color: #e5e5e5;
+        border-color: rgba(79, 110, 247, 0.4);
+        color: #06b6d4; /* Neon cyan text */
+        text-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
     }
 </style>
 
@@ -87,7 +89,7 @@ title: Han Column Encoder
                     } else {
                         // 空白填充格的颜色
                         const isDark = document.documentElement.classList.contains('dark');
-                        td.style.backgroundColor = isDark ? '#3d3934' : '#e8e8d3'; 
+                        td.style.backgroundColor = isDark ? 'rgba(79, 110, 247, 0.1)' : '#e8e8d3'; 
                         td.innerHTML = '&nbsp;';
                     }
                     

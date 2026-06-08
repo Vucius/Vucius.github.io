@@ -1,0 +1,206 @@
+/* =============================================
+   CYBERPUNK THEME OVERRIDES FOR DARK MODE
+   ============================================= */
+
+.dark {
+    /* Cyberpunk Variables */
+    --cyber-bg-base: #0b0f19;
+    --cyber-bg-card: rgba(15, 23, 42, 0.85); /* Deep slate translucent */
+    --cyber-bg-card-hover: rgba(79, 110, 247, 0.15);
+    --cyber-border-neon: rgba(79, 110, 247, 0.4);
+    --cyber-border-neon-subtle: rgba(79, 110, 247, 0.2);
+    --cyber-text-neon-cyan: #06b6d4;
+    --cyber-text-neon-blue: #4F6EF7;
+    --cyber-text-neon-red: #ef4444;
+}
+
+/* 1. Global Background */
+.dark body {
+    background-color: var(--cyber-bg-base) !important;
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(79, 110, 247, 0.08), transparent 85%),
+        linear-gradient(rgba(15, 23, 42, 0.4), rgba(15, 23, 42, 0.4)) !important;
+    background-attachment: fixed !important;
+    color: #cbd5e1 !important; /* light slate text */
+}
+
+/* 2. Background Overrides */
+.dark .bg-gray-900,
+.dark \.bg-gray-900\/50,
+.dark \.bg-gray-900\/20 {
+    background-color: var(--cyber-bg-base) !important;
+}
+
+.dark .bg-gray-800,
+.dark .bg-gray-50,
+.dark .bg-white,
+.dark .dark\:bg-gray-800 {
+    background-color: var(--cyber-bg-card) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+}
+
+/* 3. Cards and Blocks */
+.dark .rounded-2xl,
+.dark .rounded-xl,
+.dark .game-card {
+    border: 1px solid var(--cyber-border-neon) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 10px rgba(79, 110, 247, 0.15) !important;
+    transition: all 0.3s ease !important;
+}
+
+.dark .rounded-2xl:hover,
+.dark .rounded-xl:hover,
+.dark .game-card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(79, 110, 247, 0.3) !important;
+    border-color: rgba(79, 110, 247, 0.7) !important;
+}
+
+/* 4. Hover States */
+.dark .hover\:bg-gray-50:hover,
+.dark .hover\:bg-gray-100:hover,
+.dark .hover\:bg-gray-700:hover,
+.dark .hover\:bg-gray-800:hover,
+.dark .dark\:hover\:bg-gray-700:hover,
+.dark .dark\:hover\:bg-gray-800:hover,
+.dark .dark\:hover\:bg-gray-600:hover {
+    background-color: var(--cyber-bg-card-hover) !important;
+    color: #ffffff !important;
+}
+
+/* 5. Borders */
+.dark .border,
+.dark .border-t,
+.dark .border-b,
+.dark .border-l,
+.dark .border-r,
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300,
+.dark .border-gray-400,
+.dark .dark\:border-gray-500,
+.dark .dark\:border-gray-600,
+.dark .dark\:border-gray-700,
+.dark .dark\:border-gray-800 {
+    border-color: var(--cyber-border-neon-subtle) !important;
+}
+
+.dark .border-blue-600,
+.dark .border-indigo-600 {
+    border-color: var(--cyber-border-neon) !important;
+    box-shadow: 0 0 8px var(--cyber-text-neon-blue) !important;
+}
+
+/* 6. Typography */
+.dark .text-gray-900,
+.dark .text-black,
+.dark .text-gray-800,
+.dark .dark\:text-white {
+    color: #ffffff !important;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .text-gray-700,
+.dark .text-gray-600,
+.dark .text-gray-500,
+.dark .dark\:text-gray-300,
+.dark .dark\:text-gray-400 {
+    color: #94a3b8 !important; /* Cool slate */
+}
+
+/* Links & Brand Colors */
+.dark a,
+.dark .text-blue-600,
+.dark .text-indigo-600,
+.dark .dark\:text-blue-400 {
+    color: #06b6d4 !important; /* Neon Cyan */
+    transition: all 0.2s ease !important;
+}
+
+.dark a:hover,
+.dark .hover\:text-blue-600:hover,
+.dark .hover\:text-blue-800:hover,
+.dark .dark\:hover\:text-blue-400:hover,
+.dark .dark\:hover\:text-blue-300:hover {
+    color: #38bdf8 !important; /* Lighter Cyan */
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.6) !important;
+}
+
+/* 7. Tags & Badges */
+.dark .bg-gray-200,
+.dark .bg-gray-100,
+.dark .dark\:bg-gray-700 {
+    background-color: rgba(79, 110, 247, 0.1) !important;
+    color: #60a5fa !important;
+    border: 1px solid rgba(79, 110, 247, 0.3) !important;
+}
+
+.dark .bg-blue-100,
+.dark .dark\:bg-blue-900 {
+    background-color: rgba(79, 110, 247, 0.2) !important;
+    color: #93c5fd !important;
+    border: 1px solid var(--cyber-border-neon) !important;
+    box-shadow: 0 0 10px rgba(79, 110, 247, 0.2) !important;
+}
+
+/* 8. Prose (Markdown Typography) */
+.dark .prose-invert {
+    color: #cbd5e1 !important;
+}
+
+.dark .prose-invert h1,
+.dark .prose-invert h2,
+.dark .prose-invert h3,
+.dark .prose-invert h4,
+.dark .prose-headings\:text-gray-100 {
+    color: #ffffff !important;
+    text-shadow: 0 0 8px rgba(79, 110, 247, 0.2) !important;
+}
+
+.dark .prose-invert h2 {
+    border-bottom-color: var(--cyber-border-neon-subtle) !important;
+}
+
+.dark .prose-invert code {
+    color: #f43f5e !important; /* Rose/Pink */
+    background-color: rgba(244, 63, 94, 0.1) !important;
+    border: 1px solid rgba(244, 63, 94, 0.2) !important;
+}
+
+.dark .prose-invert pre,
+.dark .prose-invert .highlight pre {
+    background-color: #0d1117 !important; /* Very dark slate */
+    border: 1px solid var(--cyber-border-neon-subtle) !important;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark .prose-invert blockquote {
+    background-color: rgba(79, 110, 247, 0.05) !important;
+    border-left-color: var(--cyber-text-neon-blue) !important;
+    color: #94a3b8 !important;
+}
+
+/* 9. Component Specifics */
+
+/* Theme Toggle Button */
+.dark .theme-toggle:hover {
+    background-color: var(--cyber-bg-card-hover) !important;
+    box-shadow: 0 0 10px rgba(79, 110, 247, 0.4) !important;
+}
+
+/* Like Button */
+.dark #likeBtn {
+    background: rgba(15, 23, 42, 0.85) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+.dark #likeBtn:hover {
+    border-color: rgba(239, 68, 68, 0.8) !important;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Mobile Nav Overlay */
+.dark #menu {
+    background: rgba(15, 23, 42, 0.95) !important;
+    border: 1px solid var(--cyber-border-neon) !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(79, 110, 247, 0.25) !important;
+}
