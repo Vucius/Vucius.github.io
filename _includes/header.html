@@ -19,25 +19,50 @@
                     opacity: 1 !important;
                     visibility: visible !important;
                 }
+                .custom-dropdown {
+                    min-width: 150px;
+                    background: #fff;
+                    border: none;
+                    border-radius: 12px;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                    padding: 6px;
+                    margin-top: 8px;
+                }
+                .custom-dropdown-item {
+                    padding: 10px 16px;
+                    transition: background 0.2s, border-radius 0.2s;
+                }
+                .custom-dropdown-item:hover {
+                    background: rgba(0, 0, 0, 0.05);
+                    border-radius: 8px;
+                }
+                html.dark .custom-dropdown {
+                    background: #1f2937;
+                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                }
+                html.dark .custom-dropdown-item:hover {
+                    background: rgba(255, 255, 255, 0.05);
+                }
             </style>
             <div class="relative group">
                 <button class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center animate-fade-in">
                     Miscellany
                     <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
-                <div class="group-hover-menu absolute left-1/2 transform -translate-x-1/2 pt-2 w-48 opacity-0 invisible transition-all duration-300 z-50">
-                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 py-2">
+                <div class="group-hover-menu absolute left-1/2 transform -translate-x-1/2 opacity-0 invisible transition-all duration-300 z-50">
+                    <div class="absolute -top-4 left-0 w-full h-8 bg-transparent"></div>
+                    <div class="custom-dropdown">
                         <a href="{{ '/gomoku/' | relative_url }}"
-                            class="block px-4 py-2 text-sm text-center text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                            class="block text-sm text-black dark:text-white custom-dropdown-item">
                             Gomoku
                         </a>
                         <a href="{{ '/hancolumnencoder/' | relative_url }}"
-                            class="block px-4 py-2 text-sm text-center text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border-t border-gray-100 dark:border-gray-700">
+                            class="block text-sm text-black dark:text-white custom-dropdown-item">
                             Han Column Encoder
                         </a>
                         <a href="{{ '/collections/' | relative_url }}"
-                            class="block px-4 py-2 text-sm text-center text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border-t border-gray-100 dark:border-gray-700">
-                            collections
+                            class="block text-sm text-black dark:text-white custom-dropdown-item">
+                            Collections
                         </a>
                     </div>
                 </div>
@@ -93,7 +118,7 @@
                         </a>
                         <a href="{{ '/collections/' | relative_url }}" role="menuitem"
                             class="block w-full pl-8 pr-5 py-4 text-left text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors border-t border-gray-100/50 dark:border-gray-800">
-                            collections
+                            Collections
                         </a>
                     </div>
                 </div>
