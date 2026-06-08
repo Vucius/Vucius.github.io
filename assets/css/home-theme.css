@@ -1,0 +1,206 @@
+/* ==========================================================================
+   HOME PAGE THEME OVERRIDES (Wuxia Aesthetics: Da Mo Gu Yan, Ji Lv Dao Ke)
+   ========================================================================== */
+
+/* Active theme body settings */
+body.home-theme-active {
+    background-color: var(--home-theme-bg) !important;
+    background-image: none !important;
+    color: var(--home-theme-text) !important;
+    font-family: "Noto Serif SC", "SimSun", "STSong", "Georgia", serif !important;
+    transition: background-color 0.5s ease, color 0.5s ease !important;
+}
+
+/* Page containers */
+body.home-theme-active .min-h-screen {
+    background-color: transparent !important;
+}
+
+/* Header and Footer adaptation */
+body.home-theme-active header,
+body.home-theme-active footer {
+    border-color: var(--home-theme-border) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.home-theme-active header a,
+body.home-theme-active header button,
+body.home-theme-active footer a,
+body.home-theme-active footer span,
+body.home-theme-active footer p {
+    color: var(--home-theme-primary) !important;
+    text-shadow: none !important;
+}
+
+body.home-theme-active header a:hover,
+body.home-theme-active header button:hover,
+body.home-theme-active footer a:hover {
+    color: var(--home-theme-accent) !important;
+    opacity: 0.9;
+}
+
+/* Dropdown menu styling in header */
+body.home-theme-active header .group .absolute div.bg-white,
+body.home-theme-active header .group .absolute div.dark\:bg-gray-800 {
+    background-color: var(--home-theme-bg) !important;
+    border-color: var(--home-theme-border) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+body.home-theme-active header .group .absolute a {
+    color: var(--home-theme-primary) !important;
+}
+
+body.home-theme-active header .group .absolute a:hover {
+    background-color: var(--home-theme-border) !important;
+    color: var(--home-theme-accent) !important;
+}
+
+/* Hero Section */
+body.home-theme-active h1.text-gray-900,
+body.home-theme-active .dark\:text-white,
+body.home-theme-active h2.text-gray-900 {
+    color: var(--home-theme-primary) !important;
+    font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+}
+
+body.home-theme-active header p.text-gray-500,
+body.home-theme-active .dark\:text-gray-400,
+body.home-theme-active p.text-gray-500 {
+    color: var(--home-theme-text) !important;
+    opacity: 0.85;
+}
+
+/* Scrolling Text Animation */
+body.home-theme-active .scroll-text {
+    color: var(--home-theme-primary) !important;
+    font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
+    font-weight: 600 !important;
+}
+
+/* Cards (Profile, Tech, Projects) */
+body.home-theme-active .rounded-2xl,
+body.home-theme-active .bg-gray-50,
+body.home-theme-active .dark\:bg-gray-800,
+body.home-theme-active article.bg-gray-50 {
+    background-color: var(--home-theme-card-bg) !important;
+    border: 1px solid var(--home-theme-border) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    transition: all 0.3s ease !important;
+}
+
+body.home-theme-active .rounded-2xl:hover,
+body.home-theme-active article.bg-gray-50:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06) !important;
+    border-color: var(--home-theme-primary) !important;
+}
+
+/* Text inside cards */
+body.home-theme-active .rounded-2xl h3,
+body.home-theme-active article h3 {
+    color: var(--home-theme-primary) !important;
+    font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
+}
+
+body.home-theme-active .rounded-2xl p,
+body.home-theme-active article p {
+    color: var(--home-theme-text) !important;
+}
+
+/* Icons and small circles in cards */
+body.home-theme-active .bg-gray-200,
+body.home-theme-active .dark\:bg-gray-700 {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    color: var(--home-theme-primary) !important;
+}
+
+body.home-theme-active .bg-gray-200:hover,
+body.home-theme-active .dark\:bg-gray-700:hover {
+    background-color: var(--home-theme-primary) !important;
+    color: var(--home-theme-bg) !important;
+}
+
+body.home-theme-active .icon-svg {
+    color: currentColor !important;
+    fill: currentColor !important;
+}
+
+/* Developer tag / badges */
+body.home-theme-active span.bg-gray-200 {
+    border: 1px solid var(--home-theme-border) !important;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    color: var(--home-theme-primary) !important;
+}
+
+/* Like Button specific */
+body.home-theme-active #likeBtn {
+    background-color: var(--home-theme-card-bg) !important;
+    border: 1px solid var(--home-theme-border) !important;
+}
+
+body.home-theme-active #likeBtn:hover {
+    border-color: var(--home-theme-accent) !important;
+    background-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+body.home-theme-active #likeBtn .icon-svg {
+    color: var(--home-theme-accent) !important;
+}
+
+body.home-theme-active #like-count {
+    color: var(--home-theme-primary) !important;
+}
+
+body.home-theme-active #likeBtn div {
+    color: var(--home-theme-primary) !important;
+}
+
+/* Project Links */
+body.home-theme-active article a {
+    color: var(--home-theme-primary) !important;
+}
+
+body.home-theme-active article a:hover {
+    color: var(--home-theme-accent) !important;
+    text-decoration: underline !important;
+}
+
+/* View More on GitHub Button/Link */
+body.home-theme-active .inline-flex.items-center.text-gray-900,
+body.home-theme-active .dark\:text-white {
+    color: var(--home-theme-primary) !important;
+}
+
+body.home-theme-active .inline-flex.items-center.text-gray-900:hover {
+    color: var(--home-theme-accent) !important;
+}
+
+/* Banner displaying theme information */
+.home-theme-banner {
+    background-color: rgba(255, 255, 255, 0.45) !important;
+    border: 1px solid var(--home-theme-border) !important;
+    border-radius: 0.75rem !important;
+    color: var(--home-theme-primary) !important;
+    transition: all 0.3s ease !important;
+}
+
+.home-theme-banner button {
+    border-color: var(--home-theme-border) !important;
+    color: var(--home-theme-primary) !important;
+}
+
+.home-theme-banner button:hover {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    color: var(--home-theme-accent) !important;
+}
+
+/* Theme Toggle Adaption */
+body.home-theme-active .theme-toggle {
+    display: none !important; /* Hide standard theme toggle as it's atmospheric-locked */
+}

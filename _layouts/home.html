@@ -2,6 +2,76 @@
 layout: default
 ---
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ '/assets/css/home-theme.css' | relative_url }}">
+
+<script>
+    (function () {
+        // 定义大漠孤烟、羁旅刀客等传统配色方案
+        const schemes = [
+            {
+                name: "大漠孤烟",
+                keywords: "厚重、沉稳、古朴、木质感",
+                bg: "#DCDCDC",
+                primary: "#71462E",
+                accent: "#4D3224",
+                text: "#4D3224",
+                border: "rgba(113, 70, 46, 0.25)",
+                cardBg: "rgba(255, 255, 255, 0.45)"
+            },
+            {
+                name: "羁旅刀客",
+                keywords: "冷峻、锋利、对抗感、竞技感",
+                bg: "#DCDCDC",
+                primary: "#40494D",
+                accent: "#7A1F27",
+                text: "#40494D",
+                border: "rgba(64, 73, 77, 0.25)",
+                cardBg: "rgba(255, 255, 255, 0.45)"
+            },
+            {
+                name: "灰白 · 枯茶 · 熟褐",
+                keywords: "厚重、沉稳、古朴、木质感",
+                bg: "#DCDCDC",
+                primary: "#71462E",
+                accent: "#4D3224",
+                text: "#4D3224",
+                border: "rgba(113, 70, 46, 0.25)",
+                cardBg: "rgba(255, 255, 255, 0.45)"
+            },
+            {
+                name: "灰白 · 鸦青 · 绛红",
+                keywords: "冷峻、锋利、对抗感、竞技感",
+                bg: "#DCDCDC",
+                primary: "#40494D",
+                accent: "#7A1F27",
+                text: "#40494D",
+                border: "rgba(64, 73, 77, 0.25)",
+                cardBg: "rgba(255, 255, 255, 0.45)"
+            }
+        ];
+
+        // 随机选择一种配色
+        const randomIndex = Math.floor(Math.random() * schemes.length);
+        const selected = schemes[randomIndex];
+
+        // 立即应用 CSS 变量，防止页面闪烁
+        document.body.classList.add('home-theme-active');
+        document.documentElement.style.setProperty('--home-theme-bg', selected.bg);
+        document.documentElement.style.setProperty('--home-theme-primary', selected.primary);
+        document.documentElement.style.setProperty('--home-theme-accent', selected.accent);
+        document.documentElement.style.setProperty('--home-theme-text', selected.text);
+        document.documentElement.style.setProperty('--home-theme-border', selected.border);
+        document.documentElement.style.setProperty('--home-theme-card-bg', selected.cardBg);
+
+        // 挂载至 window 供后续切换及渲染使用
+        window.currentHomeTheme = selected;
+        window.homeThemesList = schemes;
+    })();
+</script>
+
 <style>
     @keyframes floatY {
 
@@ -26,7 +96,29 @@ layout: default
     }
 </style>
 
-<div class="max-w-6xl mx-auto px-6 sm:px-8 pt-16 pb-24">
+<div class="max-w-6xl mx-auto px-6 sm:px-8 pt-8">
+    <!-- 配色指示 Banner -->
+    <div class="home-theme-banner p-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm shadow-sm transition-all duration-300">
+        <div class="flex items-center gap-3">
+            <span class="flex gap-1.5" aria-hidden="true">
+                <span class="w-3.5 h-3.5 rounded-full inline-block" style="background-color: var(--home-theme-bg); border: 1px solid rgba(0,0,0,0.15);"></span>
+                <span class="w-3.5 h-3.5 rounded-full inline-block" style="background-color: var(--home-theme-primary);"></span>
+                <span class="w-3.5 h-3.5 rounded-full inline-block" style="background-color: var(--home-theme-accent);"></span>
+            </span>
+            <div>
+                <span class="font-medium text-gray-900 dark:text-white">侠风：<span id="home-theme-name">配色方案</span></span>
+                <span class="mx-2 opacity-50">·</span>
+                <span class="opacity-80 italic" id="home-theme-keywords">意境</span>
+            </div>
+        </div>
+        <button onclick="changeHomeTheme()" class="text-xs px-3 py-1.5 rounded-full border transition-all flex items-center gap-1 focus:outline-none">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path></svg>
+            换个配色
+        </button>
+    </div>
+</div>
+
+<div class="max-w-6xl mx-auto px-6 sm:px-8 pt-8 pb-24">
     <!-- Hero Section -->
     <header class="text-center mb-32 sm:mb-40 select-none relative">
         <div class="max-w-4xl mx-auto space-y-4 sm:space-y-6">
@@ -289,4 +381,45 @@ layout: default
             }
         }
     });
+
+    // 渲染页面加载时的配色方案信息
+    function updateHomeThemeUI() {
+        const theme = window.currentHomeTheme;
+        if (theme) {
+            document.getElementById('home-theme-name').innerText = theme.name;
+            document.getElementById('home-theme-keywords').innerText = theme.keywords;
+        }
+    }
+
+    // 交互点击无刷新切换配色
+    function changeHomeTheme() {
+        const schemes = window.homeThemesList;
+        let currentIndex = schemes.findIndex(t => t.name === window.currentHomeTheme.name);
+
+        // 随机出一个另外的不同配色
+        let nextIndex;
+        do {
+            nextIndex = Math.floor(Math.random() * schemes.length);
+        } while (nextIndex === currentIndex && schemes.length > 1);
+
+        const selected = schemes[nextIndex];
+        window.currentHomeTheme = selected;
+
+        // 应用 CSS 变量
+        document.documentElement.style.setProperty('--home-theme-bg', selected.bg);
+        document.documentElement.style.setProperty('--home-theme-primary', selected.primary);
+        document.documentElement.style.setProperty('--home-theme-accent', selected.accent);
+        document.documentElement.style.setProperty('--home-theme-text', selected.text);
+        document.documentElement.style.setProperty('--home-theme-border', selected.border);
+        document.documentElement.style.setProperty('--home-theme-card-bg', selected.cardBg);
+
+        updateHomeThemeUI();
+    }
+
+    // 初始化运行
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateHomeThemeUI);
+    } else {
+        updateHomeThemeUI();
+    }
 </script>
