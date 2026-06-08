@@ -1,0 +1,188 @@
+/* ==========================================================================
+   POST THEME OVERRIDES (Chinese Scholar Aesthetics: Moon White, Navy, Bamboo Green, Ink)
+   ========================================================================== */
+
+/* Active theme body settings */
+body.post-theme-active {
+    background-color: var(--post-theme-bg) !important;
+    background-image: none !important;
+    color: var(--post-theme-text) !important;
+    font-family: "Noto Serif SC", "SimSun", "STSong", "Georgia", serif !important;
+    transition: background-color 0.5s ease, color 0.5s ease !important;
+}
+
+/* Ensure background transitions are smooth for the main page container */
+body.post-theme-active .min-h-screen {
+    background-color: transparent !important;
+}
+
+/* Header and Footer adaptation */
+body.post-theme-active header,
+body.post-theme-active footer {
+    border-color: var(--post-theme-border) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.post-theme-active header a,
+body.post-theme-active header button,
+body.post-theme-active footer a,
+body.post-theme-active footer span,
+body.post-theme-active footer p {
+    color: var(--post-theme-primary) !important;
+    text-shadow: none !important;
+}
+
+body.post-theme-active header a:hover,
+body.post-theme-active header button:hover,
+body.post-theme-active footer a:hover {
+    color: var(--post-theme-text) !important;
+    opacity: 0.8;
+}
+
+/* Dropdown menu styling in header */
+body.post-theme-active header .group .absolute div.bg-white,
+body.post-theme-active header .group .absolute div.dark\:bg-gray-800 {
+    background-color: var(--post-theme-bg) !important;
+    border-color: var(--post-theme-border) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+body.post-theme-active header .group .absolute a {
+    color: var(--post-theme-primary) !important;
+}
+
+body.post-theme-active header .group .absolute a:hover {
+    background-color: var(--post-theme-border) !important;
+    color: var(--post-theme-text) !important;
+}
+
+/* Banner displaying theme information */
+.post-theme-banner {
+    background-color: rgba(255, 255, 255, 0.45) !important;
+    border: 1px solid var(--post-theme-border) !important;
+    border-radius: 0.75rem !important;
+    color: var(--post-theme-primary) !important;
+    transition: all 0.3s ease !important;
+}
+
+.post-theme-banner button {
+    border-color: var(--post-theme-border) !important;
+    color: var(--post-theme-primary) !important;
+}
+
+.post-theme-banner button:hover {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    color: var(--post-theme-text) !important;
+}
+
+/* Post Headings */
+body.post-theme-active .prose h1,
+body.post-theme-active .prose h2,
+body.post-theme-active .prose h3,
+body.post-theme-active .prose h4,
+body.post-theme-active .prose-headings\:text-gray-900,
+body.post-theme-active h1.text-gray-900,
+body.post-theme-active .dark\:text-white {
+    color: var(--post-theme-primary) !important;
+    font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+}
+
+body.post-theme-active .prose h2 {
+    border-bottom-color: var(--post-theme-border) !important;
+}
+
+/* Body and paragraphs */
+body.post-theme-active .prose,
+body.post-theme-active .text-gray-600,
+body.post-theme-active .dark\:text-gray-400 {
+    color: var(--post-theme-text) !important;
+}
+
+/* Links inside prose */
+body.post-theme-active .prose a,
+body.post-theme-active .text-blue-600,
+body.post-theme-active .dark\:text-blue-400 {
+    color: var(--post-theme-primary) !important;
+    text-decoration-color: var(--post-theme-primary) !important;
+}
+
+body.post-theme-active .prose a:hover,
+body.post-theme-active .text-blue-600:hover,
+body.post-theme-active .dark\:text-blue-400:hover {
+    color: var(--post-theme-text) !important;
+    text-decoration-color: var(--post-theme-text) !important;
+}
+
+/* Category Tag and Badges */
+body.post-theme-active .post-category-tag,
+body.post-theme-active .bg-blue-100,
+body.post-theme-active .dark\:bg-blue-900,
+body.post-theme-active .text-blue-800,
+body.post-theme-active .dark\:text-blue-200 {
+    background-color: rgba(255, 255, 255, 0.6) !important;
+    color: var(--post-theme-primary) !important;
+    border: 1px solid var(--post-theme-border) !important;
+    box-shadow: none !important;
+}
+
+/* Blockquotes styling */
+body.post-theme-active .prose blockquote {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    border-left-color: var(--post-theme-primary) !important;
+    color: var(--post-theme-text) !important;
+    opacity: 0.95;
+}
+
+/* Inline code style */
+body.post-theme-active .prose code {
+    color: var(--post-theme-primary) !important;
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    border: 1px solid var(--post-theme-border) !important;
+}
+
+/* Code block styles */
+body.post-theme-active .prose pre,
+body.post-theme-active .prose .highlight pre,
+body.post-theme-active .prose figure.highlight pre {
+    background-color: #f7faf9 !important; /* light ivory-gray matching overall tone */
+    border: 1px solid var(--post-theme-border) !important;
+    color: var(--post-theme-text) !important;
+    box-shadow: none !important;
+}
+
+body.post-theme-active .prose pre code {
+    color: var(--post-theme-text) !important;
+}
+
+/* Horizontal Rules */
+body.post-theme-active .prose hr {
+    border-color: var(--post-theme-border) !important;
+}
+
+/* Tables styling */
+body.post-theme-active .prose table {
+    border-color: var(--post-theme-border) !important;
+}
+
+body.post-theme-active .prose th {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    color: var(--post-theme-primary) !important;
+    border-bottom-color: var(--post-theme-border) !important;
+}
+
+body.post-theme-active .prose td {
+    border-bottom-color: var(--post-theme-border) !important;
+    color: var(--post-theme-text) !important;
+}
+
+body.post-theme-active .prose tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Theme Toggle Adaption */
+body.post-theme-active .theme-toggle {
+    display: none !important; /* Hide theme toggle on styled post pages as they are aesthetic-locked */
+}

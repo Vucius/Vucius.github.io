@@ -2,7 +2,81 @@
 layout: default
 ---
 
-<article class="max-w-4xl mx-auto px-4 md:px-6 pt-6 pb-32">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ '/assets/css/post-theme.css' | relative_url }}">
+
+<script>
+    (function () {
+        // 定义三种传统配色方案
+        const schemes = [
+            {
+                name: "月白 · 藏蓝 · 银",
+                keywords: "清冷、克制、文人、现代国风",
+                bg: "#E2ECE9",
+                primary: "#16345C",
+                border: "#cbd6d3",
+                text: "#1A2E40"
+            },
+            {
+                name: "月白 · 竹青 · 墨黑",
+                keywords: "雅致、自然、书卷气、东方美学",
+                bg: "#E2ECE9",
+                primary: "#457053",
+                border: "#cbd6d3",
+                text: "#1C1C1C"
+            },
+            {
+                name: "寒潭孤剑",
+                keywords: "清冷、克制、文人、现代国风",
+                bg: "#E2ECE9",
+                primary: "#16345C",
+                border: "#cbd6d3",
+                text: "#1A2E40"
+            }
+        ];
+
+        // 随机选择一种方案
+        const randomIndex = Math.floor(Math.random() * schemes.length);
+        const selected = schemes[randomIndex];
+
+        // 立即应用 CSS 变量，防止页面闪烁
+        document.body.classList.add('post-theme-active');
+        document.documentElement.style.setProperty('--post-theme-bg', selected.bg);
+        document.documentElement.style.setProperty('--post-theme-primary', selected.primary);
+        document.documentElement.style.setProperty('--post-theme-border', selected.border);
+        document.documentElement.style.setProperty('--post-theme-text', selected.text);
+
+        // 挂载到 window 方便后续交互使用
+        window.currentPostTheme = selected;
+        window.postThemesList = schemes;
+    })();
+</script>
+
+<div class="max-w-4xl mx-auto px-4 md:px-6 mt-8">
+    <!-- 配色指示 Banner -->
+    <div class="post-theme-banner p-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm shadow-sm transition-all duration-300">
+        <div class="flex items-center gap-3">
+            <span class="flex gap-1.5" aria-hidden="true">
+                <span class="w-3.5 h-3.5 rounded-full inline-block" style="background-color: var(--post-theme-bg); border: 1px solid rgba(0,0,0,0.15);"></span>
+                <span class="w-3.5 h-3.5 rounded-full inline-block" style="background-color: var(--post-theme-primary);"></span>
+                <span class="w-3.5 h-3.5 rounded-full inline-block" style="background-color: var(--post-theme-border);"></span>
+            </span>
+            <div>
+                <span class="font-medium text-gray-900 dark:text-white">意境：<span id="post-theme-name">配色方案</span></span>
+                <span class="mx-2 opacity-50">·</span>
+                <span class="opacity-80 italic" id="post-theme-keywords">意境</span>
+            </div>
+        </div>
+        <button onclick="changePostTheme()" class="text-xs px-3 py-1.5 rounded-full border transition-all flex items-center gap-1 focus:outline-none">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12"></path></svg>
+            换个配色
+        </button>
+    </div>
+</div>
+
+<article class="max-w-4xl mx-auto px-4 md:px-6 pt-10 pb-32">
     <header class="mb-12 text-center">
         <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
             {{ page.title }}
@@ -19,7 +93,7 @@ layout: default
         {% if page.categories.size > 0 %}
         <div class="mt-4 flex flex-wrap justify-center gap-2">
             {% for category in page.categories %}
-            <span class="px-3 py-1 text-sm rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+            <span class="post-category-tag px-3 py-1 text-sm rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
                 {{ category }}
             </span>
             {% endfor %}
@@ -52,3 +126,44 @@ layout: default
         </div>
     </footer>
 </article>
+
+<script>
+    // 渲染加载时的配色方案信息
+    function updateThemeUI() {
+        const theme = window.currentPostTheme;
+        if (theme) {
+            document.getElementById('post-theme-name').innerText = theme.name;
+            document.getElementById('post-theme-keywords').innerText = theme.keywords;
+        }
+    }
+
+    // 交互点击切换配色
+    function changePostTheme() {
+        const schemes = window.postThemesList;
+        let currentIndex = schemes.findIndex(t => t.name === window.currentPostTheme.name);
+        
+        // 随机出另外一个不同的配色
+        let nextIndex;
+        do {
+            nextIndex = Math.floor(Math.random() * schemes.length);
+        } while (nextIndex === currentIndex && schemes.length > 1);
+
+        const selected = schemes[nextIndex];
+        window.currentPostTheme = selected;
+
+        // 应用变量
+        document.documentElement.style.setProperty('--post-theme-bg', selected.bg);
+        document.documentElement.style.setProperty('--post-theme-primary', selected.primary);
+        document.documentElement.style.setProperty('--post-theme-border', selected.border);
+        document.documentElement.style.setProperty('--post-theme-text', selected.text);
+
+        updateThemeUI();
+    }
+
+    // 初始化时运行
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', updateThemeUI);
+    } else {
+        updateThemeUI();
+    }
+</script>
