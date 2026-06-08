@@ -8,16 +8,30 @@
             </a>
             <a href="{{ '/archive' | relative_url }}"
                 class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                Blog
+                posts
             </a>
             <a href="{{ '/about' | relative_url }}"
                 class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 About
             </a>
-            <a href="{{ '/gomoku/' | relative_url }}"
-                class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                Gomoku
-            </a>
+            <div class="relative group">
+                <button class="px-4 py-3 text-black dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors flex items-center">
+                    Miscellany
+                    <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="absolute left-1/2 transform -translate-x-1/2 pt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 py-2">
+                        <a href="{{ '/gomoku/' | relative_url }}"
+                            class="block px-4 py-2 text-sm text-center text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                            Gomoku
+                        </a>
+                        <a href="{{ '/hancolumnencoder/' | relative_url }}"
+                            class="block px-4 py-2 text-sm text-center text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors border-t border-gray-100 dark:border-gray-700">
+                            Han Column Encoder
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- 桌面端主题切换按钮 -->
@@ -47,16 +61,28 @@
                 </a>
                 <a href="{{ '/archive' | relative_url }}" role="menuitem"
                     class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors block w-full px-5 py-4 text-left">
-                    Blog
+                    posts
                 </a>
                 <a href="{{ '/about' | relative_url }}" role="menuitem"
                     class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors block w-full px-5 py-4 text-left">
                     About
                 </a>
-                <a href="{{ '/gomoku/' | relative_url }}" role="menuitem"
-                    class="px-4 py-3 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors block w-full px-5 py-4 text-left">
-                    Gomoku
-                </a>
+                <div class="w-full">
+                    <button id="mobile-misc-btn" class="w-full flex items-center justify-between px-5 py-4 text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        <span>Miscellany</span>
+                        <svg class="w-4 h-4 transition-transform duration-200" id="mobile-misc-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="mobile-misc-menu" class="hidden flex-col bg-gray-50 dark:bg-gray-900/50">
+                        <a href="{{ '/gomoku/' | relative_url }}" role="menuitem"
+                            class="block w-full pl-8 pr-5 py-4 text-left text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                            Gomoku
+                        </a>
+                        <a href="{{ '/hancolumnencoder/' | relative_url }}" role="menuitem"
+                            class="block w-full pl-8 pr-5 py-4 text-left text-black dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors border-t border-gray-100/50 dark:border-gray-800">
+                            Han Column Encoder
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -77,6 +103,18 @@
                 menuBtn.classList.add('open');
                 menuBtn.setAttribute('aria-expanded', 'true');
             }
+        });
+    }
+
+    const mobileMiscBtn = document.getElementById('mobile-misc-btn');
+    const mobileMiscMenu = document.getElementById('mobile-misc-menu');
+    const mobileMiscIcon = document.getElementById('mobile-misc-icon');
+
+    if (mobileMiscBtn && mobileMiscMenu && mobileMiscIcon) {
+        mobileMiscBtn.addEventListener('click', () => {
+            mobileMiscMenu.classList.toggle('hidden');
+            mobileMiscMenu.classList.toggle('flex');
+            mobileMiscIcon.classList.toggle('rotate-180');
         });
     }
 </script>
