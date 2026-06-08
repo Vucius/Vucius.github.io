@@ -1,0 +1,120 @@
+/* ==========================================================================
+   ABOUT PAGE THEME OVERRIDES (Traditional Aesthetics: Zhu Lin Yin Yi, Shi Jia Gong Zi)
+   ========================================================================== */
+
+/* Active theme body settings */
+body.about-theme-active {
+    background-color: var(--about-theme-bg) !important;
+    background-image: none !important;
+    color: var(--about-theme-text) !important;
+    font-family: "Noto Serif SC", "SimSun", "STSong", "Georgia", serif !important;
+    transition: background-color 0.5s ease, color 0.5s ease !important;
+}
+
+/* Page container */
+body.about-theme-active .min-h-screen {
+    background-color: transparent !important;
+}
+
+/* Header and Footer adaptation */
+body.about-theme-active header,
+body.about-theme-active footer {
+    border-color: var(--about-theme-border) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.about-theme-active header a,
+body.about-theme-active header button,
+body.about-theme-active footer a,
+body.about-theme-active footer span,
+body.about-theme-active footer p {
+    color: var(--about-theme-primary) !important;
+    text-shadow: none !important;
+}
+
+body.about-theme-active header a:hover,
+body.about-theme-active header button:hover,
+body.about-theme-active footer a:hover {
+    color: var(--about-theme-accent) !important;
+    opacity: 0.9;
+}
+
+/* Dropdown menu styling in header */
+body.about-theme-active header .group .absolute div.bg-white,
+body.about-theme-active header .group .absolute div.dark\:bg-gray-800 {
+    background-color: var(--about-theme-bg) !important;
+    border-color: var(--about-theme-border) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+body.about-theme-active header .group .absolute a {
+    color: var(--about-theme-primary) !important;
+}
+
+body.about-theme-active header .group .absolute a:hover {
+    background-color: var(--about-theme-border) !important;
+    color: var(--about-theme-accent) !important;
+}
+
+/* Page Headings */
+body.about-theme-active .prose h1,
+body.about-theme-active .prose h2,
+body.about-theme-active .prose h3,
+body.about-theme-active .prose h4,
+body.about-theme-active h1.text-gray-900,
+body.about-theme-active .dark\:text-white {
+    color: var(--about-theme-primary) !important;
+    font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
+    font-weight: 600 !important;
+    text-shadow: none !important;
+}
+
+body.about-theme-active .prose h2 {
+    border-bottom-color: var(--about-theme-border) !important;
+}
+
+/* Body and paragraphs */
+body.about-theme-active .prose,
+body.about-theme-active .text-gray-600,
+body.about-theme-active .dark\:text-gray-400 {
+    color: var(--about-theme-text) !important;
+}
+
+/* Links inside prose */
+body.about-theme-active .prose a,
+body.about-theme-active .text-blue-600,
+body.about-theme-active .dark\:text-blue-400 {
+    color: var(--about-theme-primary) !important;
+    text-decoration-color: var(--about-theme-primary) !important;
+}
+
+body.about-theme-active .prose a:hover,
+body.about-theme-active .text-blue-600:hover,
+body.about-theme-active .dark\:text-blue-400:hover {
+    color: var(--about-theme-accent) !important;
+    text-decoration-color: var(--about-theme-accent) !important;
+}
+
+/* Horizontal Rules */
+body.about-theme-active .prose hr {
+    border-color: var(--about-theme-border) !important;
+}
+
+/* Lists and list items */
+body.about-theme-active .prose ul,
+body.about-theme-active .prose ol {
+    color: var(--about-theme-text) !important;
+}
+
+/* Blockquotes styling */
+body.about-theme-active .prose blockquote {
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    border-left-color: var(--about-theme-primary) !important;
+    color: var(--about-theme-text) !important;
+}
+
+/* Theme Toggle Adaption */
+body.about-theme-active .theme-toggle {
+    display: none !important; /* Hide standard theme toggle as it's atmospheric-locked */
+}

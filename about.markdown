@@ -3,6 +3,47 @@ layout: default
 title: About
 ---
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ '/assets/css/about-theme.css' | relative_url }}">
+
+<script>
+    (function () {
+        // 定义两种配色方案
+        const schemes = [
+            {
+                name: "竹林隐逸",
+                bg: "#E2ECE9",
+                primary: "#457053",
+                border: "#cbd6d3",
+                text: "#1C1C1C",
+                accent: "#1C1C1C"
+            },
+            {
+                name: "世家公子",
+                bg: "#F9F1DC",
+                primary: "#2E6851",
+                border: "#e8dcbc",
+                text: "#1B332A",
+                accent: "#B89453"
+            }
+        ];
+
+        // 随机选择一种方案
+        const randomIndex = Math.floor(Math.random() * schemes.length);
+        const selected = schemes[randomIndex];
+
+        // 立即应用 CSS 变量，防止页面闪烁
+        document.body.classList.add('about-theme-active');
+        document.documentElement.style.setProperty('--about-theme-bg', selected.bg);
+        document.documentElement.style.setProperty('--about-theme-primary', selected.primary);
+        document.documentElement.style.setProperty('--about-theme-border', selected.border);
+        document.documentElement.style.setProperty('--about-theme-text', selected.text);
+        document.documentElement.style.setProperty('--about-theme-accent', selected.accent);
+    })();
+</script>
+
 <div class="max-w-4xl mx-auto px-4 md:px-6 pt-6 pb-32">
     <header class="text-center mb-16">
         <h1 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">

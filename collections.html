@@ -1,0 +1,195 @@
+---
+layout: default
+title: Collections
+permalink: /collections/
+---
+
+<style>
+    /* Gallery grid layout */
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+
+    /* Gallery card styling */
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        border-radius: 1rem;
+        cursor: pointer;
+        background-color: #f3f4f6;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        aspect-ratio: 4 / 3;
+    }
+
+    .dark .gallery-item {
+        background-color: #1e293b;
+        border: 1px solid rgba(79, 110, 247, 0.2);
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+
+    .dark .gallery-item:hover {
+        box-shadow: 0 0 15px rgba(79, 110, 247, 0.3);
+        border-color: rgba(79, 110, 247, 0.6);
+    }
+
+    /* Image zoom on hover */
+    .gallery-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover .gallery-image {
+        transform: scale(1.06);
+    }
+
+    /* Details overlay */
+    .gallery-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 60%, transparent 100%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 1.25rem;
+        color: #ffffff;
+    }
+
+    .gallery-item:hover .gallery-overlay {
+        opacity: 1;
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        background-color: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        backdrop-filter: blur(8px);
+    }
+
+    .lightbox-modal.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .lightbox-content {
+        max-width: 90vw;
+        max-height: 85vh;
+        transform: scale(0.95);
+        transition: transform 0.3s ease;
+        border-radius: 0.5rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .lightbox-modal.active .lightbox-content {
+        transform: scale(1);
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.15);
+        border: none;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .lightbox-close:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+    }
+</style>
+
+<div class="max-w-6xl mx-auto px-4 md:px-6 pt-6 pb-32">
+    <header class="text-center mb-16 select-none">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight leading-tight">
+            Collections
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 font-light max-w-2xl mx-auto">
+            写真・画像集 — 记录美好的视觉瞬间
+        </p>
+    </header>
+
+    <!-- Gallery Grid -->
+    <div class="gallery-grid" aria-label="画像ギャラリー">
+        <!-- Item 1: Serene Landscape -->
+        <div class="gallery-item" onclick="openLightbox('{{ '/assets/images/landscape.png' | relative_url }}', 'Serene Mountain Range', '大漠孤烟 · 晨雾大漠')" role="button" aria-label="查看 Serene Mountain Range">
+            <img class="gallery-image" src="{{ '/assets/images/landscape.png' | relative_url }}" alt="Serene Mountain Range" loading="lazy">
+            <div class="gallery-overlay">
+                <span class="text-xs uppercase tracking-wider text-blue-400 font-semibold mb-1">Landscape</span>
+                <h3 class="text-lg font-bold">Serene Mountain Range</h3>
+                <p class="text-sm opacity-80 mt-0.5">大漠孤烟 · 晨雾大漠</p>
+            </div>
+        </div>
+
+        <!-- Item 2: Cyberpunk Street -->
+        <div class="gallery-item" onclick="openLightbox('{{ '/assets/images/cyberpunk.png' | relative_url }}', 'Cyberpunk Street', '赛博朋克 · 霓虹街景')" role="button" aria-label="查看 Cyberpunk Street">
+            <img class="gallery-image" src="{{ '/assets/images/cyberpunk.png' | relative_url }}" alt="Cyberpunk Street" loading="lazy">
+            <div class="gallery-overlay">
+                <span class="text-xs uppercase tracking-wider text-purple-400 font-semibold mb-1">Cyberpunk</span>
+                <h3 class="text-lg font-bold">Cyberpunk Street</h3>
+                <p class="text-sm opacity-80 mt-0.5">赛博朋克 · 霓虹街景</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox-modal" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox(event)" aria-label="关闭">&times;</button>
+    <img id="lightbox-img" class="lightbox-content" src="" alt="Full Screen View">
+</div>
+
+<script>
+    function openLightbox(src, title, desc) {
+        const lightbox = document.getElementById('lightbox');
+        const img = document.getElementById('lightbox-img');
+        if (lightbox && img) {
+            img.src = src;
+            img.alt = title + ' - ' + desc;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // block page scrolling
+        }
+    }
+
+    function closeLightbox(event) {
+        // Close only if clicking the close button, background overlay, or ESC key
+        const lightbox = document.getElementById('lightbox');
+        if (lightbox) {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = ''; // restore scrolling
+        }
+    }
+
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeLightbox();
+        }
+    });
+</script>
