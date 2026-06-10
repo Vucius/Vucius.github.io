@@ -140,8 +140,7 @@ layout: default
                     <div>
                         <div class="mb-6 flex items-center gap-3">
                             <div>
-                                <h3 class="text-xl sm:text-2xl text-gray-900 dark:text-white">@{{ site.github_username
-                                    }}</h3>
+                                <h3 class="text-xl sm:text-2xl text-gray-900 dark:text-white">{{ site.github_username }}</h3>
                                 <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">{{ site.description }}</p>
                             </div>
                         </div>
@@ -165,28 +164,77 @@ layout: default
                         <div class="mt-6 flex flex-wrap gap-2">
                             <span
                                 class="px-2.5 py-1 text-sm rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center gap-1">
-                                <span class="icon-svg">{% include icons/code.svg %}</span> Developer
+                                Developer
+                            </span>
+                            <span
+                                class="px-2.5 py-1 text-sm rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                                hard-boiled
+                            </span>
+                            <span
+                                class="px-2.5 py-1 text-sm rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center gap-1">
+                                thinker
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tech Stack Card -->
+            <!-- Card 1: Programming Language, GUI, Database System -->
             <div
-                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-2 md:col-span-2 row-span-4">
-                <div class="h-full flex flex-col items-center justify-center text-center">
-                    <div class="text-2xl sm:text-3xl text-gray-900 dark:text-white mb-3">Creating</div>
-                    <div class="text-sm font-semibold uppercase tracking-wide text-gray-600 dark:text-gray-400 mb-4">
-                        Something Cool.</div>
-                    <div class="flex flex-wrap justify-center gap-1">
-                        <span class="icon-svg text-2xl">{% include icons/html5.svg %}</span>
-                        <span class="icon-svg text-2xl">{% include icons/css3.svg %}</span>
-                        <span class="icon-svg text-2xl">{% include icons/javascript.svg %}</span>
-                        <span class="icon-svg text-2xl">{% include icons/react.svg %}</span>
-                        <span class="icon-svg text-2xl">{% include icons/vue.svg %}</span>
-                        <span class="icon-svg text-2xl">{% include icons/node.svg %}</span>
-                        <span class="icon-svg text-2xl">{% include icons/github.svg %}</span>
+                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-2 md:col-span-3 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xl sm:text-2xl text-gray-900 dark:text-white mb-4">Tech Stack</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">Programming Languages</div>
+                            <div class="flex flex-wrap gap-2.5">
+                                <img src="{{ '/assets/icons/Programming_Language/c.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="C" alt="C" />
+                                <img src="{{ '/assets/icons/Programming_Language/cplusplus.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="C++" alt="C++" />
+                                <img src="{{ '/assets/icons/Programming_Language/csharp.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="C#" alt="C#" />
+                                <img src="{{ '/assets/icons/Programming_Language/python.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Python" alt="Python" />
+                                <img src="{{ '/assets/icons/Programming_Language/ruby.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Ruby" alt="Ruby" />
+                                <img src="{{ '/assets/icons/Programming_Language/rust.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Rust" alt="Rust" />
+                                <img src="{{ '/assets/icons/Programming_Language/org.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Org Mode" alt="Org Mode" />
+                                <img src="{{ '/assets/icons/Programming_Language/markdown.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Markdown" alt="Markdown" />
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">GUI</div>
+                                <div class="flex flex-wrap gap-2.5">
+                                    <img src="{{ '/assets/icons/GUI/qt.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Qt" alt="Qt" />
+                                    <img src="{{ '/assets/icons/GUI/avaloniaui.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Avalonia UI" alt="Avalonia UI" />
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-2">Databases</div>
+                                <div class="flex flex-wrap gap-2.5">
+                                    <img src="{{ '/assets/icons/Database_System/postgresql.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="PostgreSQL" alt="PostgreSQL" />
+                                    <img src="{{ '/assets/icons/Database_System/sqlite.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="SQLite" alt="SQLite" />
+                                    <img src="{{ '/assets/icons/Database_System/redis.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Redis" alt="Redis" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: LLMs -->
+            <div
+                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-2 md:col-span-3 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xl sm:text-2xl text-gray-900 dark:text-white mb-4">Large Language Models</h3>
+                    <div class="flex flex-wrap gap-3">
+                        <img src="{{ '/assets/icons/llms/openai.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="OpenAI" alt="OpenAI" />
+                        <img src="{{ '/assets/icons/llms/claude-color.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Claude" alt="Claude" />
+                        <img src="{{ '/assets/icons/llms/gemini-color.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Gemini" alt="Gemini" />
+                        <img src="{{ '/assets/icons/llms/deepseek.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="DeepSeek" alt="DeepSeek" />
+                        <img src="{{ '/assets/icons/llms/gemma-color.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Gemma" alt="Gemma" />
+                        <img src="{{ '/assets/icons/llms/grok.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Grok" alt="Grok" />
+                        <img src="{{ '/assets/icons/llms/huggingface-color.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Hugging Face" alt="Hugging Face" />
+                        <img src="{{ '/assets/icons/llms/perplexity-color.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Perplexity" alt="Perplexity" />
+                        <img src="{{ '/assets/icons/llms/qwen-color.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="Qwen" alt="Qwen" />
+                        <img src="{{ '/assets/icons/llms/chatglm-color.svg' | relative_url }}" class="w-8 h-8 object-contain transition-transform hover:scale-110" title="ChatGLM" alt="ChatGLM" />
                     </div>
                 </div>
             </div>
@@ -203,6 +251,19 @@ layout: default
                     Do You Like Me
                 </div>
             </button>
+
+            <!-- Card 3: Systems -->
+            <div
+                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-2 md:col-span-3 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xl sm:text-2xl text-gray-900 dark:text-white mb-4">Operating Systems</h3>
+                    <div class="flex flex-wrap gap-4">
+                        <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="h-8 object-contain transition-transform hover:scale-110" title="Gentoo Linux" alt="Gentoo Linux" />
+                        <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="h-8 object-contain transition-transform hover:scale-110" title="Arch Linux" alt="Arch Linux" />
+                        <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="h-8 object-contain transition-transform hover:scale-110" title="Manjaro Linux" alt="Manjaro Linux" />
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Scripts for Like functionality -->
