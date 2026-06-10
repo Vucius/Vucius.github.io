@@ -1,0 +1,1 @@
+require 'jekyll'; site = Jekyll::Site.new(Jekyll.configuration({})); site.read; doc = site.posts.docs.find { |d| d.path.include?('color_scheme') }; puts 'URL: ' + doc.url; puts 'Dest: ' + doc.destination(''); puts 'Date: ' + doc.date.to_s; puts 'Data Date: ' + doc.data['date'].to_s
