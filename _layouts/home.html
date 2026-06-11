@@ -14,42 +14,42 @@ layout: default
             {
                 name: "大漠孤烟",
                 keywords: "厚重、沉稳、古朴、木质感",
-                bg: "#DCDCDC",
+                bg: "#f5f5f7",
                 primary: "#71462E",
                 accent: "#4D3224",
                 text: "#4D3224",
-                border: "rgba(113, 70, 46, 0.25)",
-                cardBg: "rgba(255, 255, 255, 0.45)"
+                border: "rgba(113, 70, 46, 0.08)",
+                cardBg: "rgba(255, 255, 255, 0.72)"
             },
             {
                 name: "羁旅刀客",
                 keywords: "冷峻、锋利、对抗感、竞技感",
-                bg: "#DCDCDC",
+                bg: "#f5f5f7",
                 primary: "#40494D",
                 accent: "#7A1F27",
                 text: "#40494D",
-                border: "rgba(64, 73, 77, 0.25)",
-                cardBg: "rgba(255, 255, 255, 0.45)"
+                border: "rgba(64, 73, 77, 0.08)",
+                cardBg: "rgba(255, 255, 255, 0.72)"
             },
             {
                 name: "灰白 · 枯茶 · 熟褐",
                 keywords: "厚重、沉稳、古朴、木质感",
-                bg: "#DCDCDC",
+                bg: "#f5f5f7",
                 primary: "#71462E",
                 accent: "#4D3224",
                 text: "#4D3224",
-                border: "rgba(113, 70, 46, 0.25)",
-                cardBg: "rgba(255, 255, 255, 0.45)"
+                border: "rgba(113, 70, 46, 0.08)",
+                cardBg: "rgba(255, 255, 255, 0.72)"
             },
             {
                 name: "灰白 · 鸦青 · 绛红",
                 keywords: "冷峻、锋利、对抗感、竞技感",
-                bg: "#DCDCDC",
+                bg: "#f5f5f7",
                 primary: "#40494D",
                 accent: "#7A1F27",
                 text: "#40494D",
-                border: "rgba(64, 73, 77, 0.25)",
-                cardBg: "rgba(255, 255, 255, 0.45)"
+                border: "rgba(64, 73, 77, 0.08)",
+                cardBg: "rgba(255, 255, 255, 0.72)"
             }
         ];
 
@@ -124,9 +124,17 @@ layout: default
     <!-- About Section -->
     <section class="my-32 sm:my-48">
         <div class="text-center mb-16 sm:mb-20 select-none">
-          <div class="grid grid-cols-1 md:grid-cols-6 gap-6 max-w-5xl mx-auto items-stretch">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                About Me
+            </h2>
+            <p class="text-lg sm:text-xl text-gray-500 dark:text-gray-400 font-light mb-6">
+                I Am What I Am
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-6 gap-6 max-w-5xl mx-auto items-stretch">
             <!-- Main Profile Card -->
-            <div class="p-6 sm:p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-4 flex flex-col justify-between relative overflow-hidden group">
+            <div class="p-6 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-4 flex flex-col justify-between relative overflow-hidden group">
                 <div>
                     <div class="mb-6 flex items-center gap-4">
                         <img src="{{ '/assets/images/avatar.png' | relative_url }}" class="w-16 h-16 rounded-full border-2 border-white dark:border-gray-800 shadow-md object-cover transition-transform group-hover:scale-105" alt="Vucius" />
@@ -161,157 +169,72 @@ layout: default
                     
                     <div class="mt-6 flex flex-wrap gap-2.5">
                         <span class="profile-badge px-3 py-1.5 text-xs font-medium rounded-full bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 flex items-center gap-1.5 border border-black/5 dark:border-white/5 shadow-sm">
-                            <span class="text-gray-500 dark:text-gray-400">⌘</span> Developer
+                            Developer
                         </span>
                         <span class="profile-badge px-3 py-1.5 text-xs font-medium rounded-full bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 flex items-center gap-1.5 border border-black/5 dark:border-white/5 shadow-sm">
-                            <span class="text-gray-500 dark:text-gray-400">✦</span> Hard-boiled
+                            Hard-boiled
                         </span>
                         <span class="profile-badge px-3 py-1.5 text-xs font-medium rounded-full bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 flex items-center gap-1.5 border border-black/5 dark:border-white/5 shadow-sm">
-                            <span class="text-gray-500 dark:text-gray-400">✦</span> Thinker
+                            Thinker
                         </span>
-                    </div>
-                </div>
-                
-                <div class="mt-8">
-                    <a href="#projects" class="explore-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-sm hover:shadow-md cursor-pointer group/btn">
-                        Explore My Work 
-                        <span class="group-hover/btn:translate-x-1 transition-transform">→</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Card 2: LLMs -->
-            <div class="p-6 sm:p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-2 flex flex-col justify-between">
-                <div>
-                    <h3 class="text-base sm:text-lg text-gray-900 dark:text-white mb-5 font-bold">LLM Ecosystem</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/llms/openai.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="OpenAI" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">OpenAI</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/llms/claude-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Claude" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Claude</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/llms/gemini-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Gemini" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Gemini</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/llms/deepseek.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="DeepSeek" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">DeepSeek</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/llms/gemma-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Gemma" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Gemma</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/llms/grok.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Grok" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Grok</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/llms/perplexity-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Perplexity" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Perplexity</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/llms/qwen-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Qwen" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Qwen</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/llms/chatglm-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="ChatGLM" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">ChatGLM</span>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Card 1: Tech Stack -->
-            <div class="p-6 sm:p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-4 flex flex-col justify-between">
+            <div class="p-6 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-2 flex flex-col justify-between">
                 <div>
                     <h3 class="text-base sm:text-lg text-gray-900 dark:text-white mb-5 font-bold">Tech Stack</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Programming_Language/cplusplus.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="C++" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">C++</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Programming_Language/csharp.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="C#" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">C#</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Programming_Language/python.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Python" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Python</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Programming_Language/ruby.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Ruby" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Ruby</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Programming_Language/rust.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Rust" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Rust</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/GUI/qt.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Qt" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Qt</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/GUI/avaloniaui.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Avalonia UI" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Avalonia UI</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Database_System/postgresql.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="PostgreSQL" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">PostgreSQL</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Database_System/sqlite.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="SQLite" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">SQLite</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Database_System/redis.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Redis" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Redis</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Agent/antigravity-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Antigravity" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Antigravity</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Agent/claudecode-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Claude Code" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Claude Code</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Agent/codex-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Codex" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Codex</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/Agent/cursor.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Cursor" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Cursor</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Gentoo Linux" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Gentoo Linux</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Arch Linux" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Arch Linux</span>
-                        </div>
-                        <div class="tech-pill flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
-                            <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Manjaro Linux" />
-                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Manjaro Linux</span>
-                        </div>
+                    <div class="flex flex-wrap gap-x-5 gap-y-4 py-1">
+                        <img src="{{ '/assets/icons/Programming_Language/cplusplus.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="C++" alt="C++" />
+                        <img src="{{ '/assets/icons/Programming_Language/csharp.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="C#" alt="C#" />
+                        <img src="{{ '/assets/icons/Programming_Language/python.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Python" alt="Python" />
+                        <img src="{{ '/assets/icons/Programming_Language/ruby.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Ruby" alt="Ruby" />
+                        <img src="{{ '/assets/icons/Programming_Language/rust.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Rust" alt="Rust" />
+                        <img src="{{ '/assets/icons/GUI/qt.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Qt" alt="Qt" />
+                        <img src="{{ '/assets/icons/GUI/avaloniaui.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Avalonia UI" alt="Avalonia UI" />
+                        <img src="{{ '/assets/icons/Database_System/postgresql.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="PostgreSQL" alt="PostgreSQL" />
+                        <img src="{{ '/assets/icons/Database_System/sqlite.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="SQLite" alt="SQLite" />
+                        <img src="{{ '/assets/icons/Database_System/redis.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Redis" alt="Redis" />
+                        <img src="{{ '/assets/icons/Agent/antigravity-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Antigravity" alt="Antigravity" />
+                        <img src="{{ '/assets/icons/Agent/claudecode-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Claude Code" alt="Claude Code" />
+                        <img src="{{ '/assets/icons/Agent/codex-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Codex" alt="Codex" />
+                        <img src="{{ '/assets/icons/Agent/cursor.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Cursor" alt="Cursor" />
+                        <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Gentoo Linux" alt="Gentoo Linux" />
+                        <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Arch Linux" alt="Arch Linux" />
+                        <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Manjaro Linux" alt="Manjaro Linux" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: LLMs -->
+            <div class="p-6 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-4 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-base sm:text-lg text-gray-900 dark:text-white mb-5 font-bold">LLM Ecosystem</h3>
+                    <div class="flex flex-wrap gap-x-5 gap-y-4 py-1">
+                        <img src="{{ '/assets/icons/llms/openai.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="OpenAI" alt="OpenAI" />
+                        <img src="{{ '/assets/icons/llms/claude-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Claude" alt="Claude" />
+                        <img src="{{ '/assets/icons/llms/gemini-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Gemini" alt="Gemini" />
+                        <img src="{{ '/assets/icons/llms/deepseek.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="DeepSeek" alt="DeepSeek" />
+                        <img src="{{ '/assets/icons/llms/gemma-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Gemma" alt="Gemma" />
+                        <img src="{{ '/assets/icons/llms/grok.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Grok" alt="Grok" />
+                        <img src="{{ '/assets/icons/llms/perplexity-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Perplexity" alt="Perplexity" />
+                        <img src="{{ '/assets/icons/llms/qwen-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Qwen" alt="Qwen" />
+                        <img src="{{ '/assets/icons/llms/chatglm-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="ChatGLM" alt="ChatGLM" />
                     </div>
                 </div>
             </div>
             
             <!-- Like Card -->
-            <button onclick="sendLike()" id="likeBtn" class="p-6 sm:p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-2 hover:-translate-y-1 focus:outline-none flex flex-col items-center justify-center text-center group cursor-pointer shadow-sm hover:shadow-md border border-transparent">
+            <button onclick="sendLike()" id="likeBtn" class="p-6 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-2 self-start w-full md:max-w-[280px] hover:-translate-y-1 focus:outline-none flex flex-col items-center justify-center text-center group cursor-pointer border border-transparent">
                 <div class="text-xl sm:text-2xl text-gray-900 dark:text-white font-bold mb-1.5 flex items-center gap-2">
                     <span class="icon-svg group-hover:scale-125 transition-transform text-gray-900 dark:text-white group-hover:text-rose-500 w-6 h-6 flex items-center justify-center">
                         {% include icons/favorite.svg %}
                     </span>
-                    <span id="like-count">...</span> <span class="like-label text-lg font-medium text-gray-600 dark:text-gray-300">Likes</span>
+                    <span id="like-count">...</span> <span class="like-label text-lg font-medium text-gray-600 dark:text-gray-300">likes</span>
                 </div>
-                <div class="text-xs font-semibold tracking-wider text-gray-500 dark:text-gray-400 uppercase">
-                    Support Me
+                <div class="text-xs font-semibold tracking-wider text-gray-500 dark:text-gray-400">
+                    Support me
                 </div>
             </button>
         </div>

@@ -89,8 +89,9 @@ body.home-theme-active .dark\:bg-gray-800,
 body.home-theme-active article.bg-gray-50 {
     background-color: var(--home-theme-card-bg) !important;
     border: 1px solid var(--home-theme-border) !important;
-    border-radius: 1.5rem !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04) !important;
     backdrop-filter: blur(8px) !important;
     -webkit-backdrop-filter: blur(8px) !important;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
@@ -100,7 +101,7 @@ body.home-theme-active .rounded-3xl:hover,
 body.home-theme-active .rounded-2xl:hover,
 body.home-theme-active article.bg-gray-50:hover {
     transform: translateY(-4px) !important;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08) !important;
     border-color: var(--home-theme-primary) !important;
 }
 
@@ -110,12 +111,15 @@ body.home-theme-active .rounded-3xl h3,
 body.home-theme-active article h3 {
     color: var(--home-theme-primary) !important;
     font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
+    font-size: 18px !important;
+    font-weight: 600 !important;
 }
 
 body.home-theme-active .rounded-2xl p,
 body.home-theme-active .rounded-3xl p,
 body.home-theme-active article p {
     color: var(--home-theme-text) !important;
+    font-size: 14px !important;
 }
 
 /* Icons and small circles in cards */
@@ -142,39 +146,18 @@ body.home-theme-active .profile-badge {
     border: 1px solid var(--home-theme-border) !important;
     background-color: rgba(255, 255, 255, 0.5) !important;
     color: var(--home-theme-primary) !important;
-}
-body.home-theme-active .profile-badge span {
-    color: var(--home-theme-primary) !important;
-    opacity: 0.8;
+    font-size: 12px !important;
 }
 
-/* Explore Button */
-body.home-theme-active .explore-btn {
-    background-color: var(--home-theme-primary) !important;
-    color: var(--home-theme-bg) !important;
-    transition: all 0.3s ease !important;
+/* Tech Stack and LLM Matrix Icons */
+body.home-theme-active .tech-matrix-icon {
+    width: 24px !important;
+    height: 24px !important;
+    object-fit: contain !important;
+    transition: transform 0.2s ease !important;
 }
-body.home-theme-active .explore-btn:hover {
-    background-color: var(--home-theme-accent) !important;
-    color: var(--home-theme-bg) !important;
-    transform: translateY(-2px) !important;
-}
-
-/* Tech Stack and LLM Badge Pills */
-body.home-theme-active .tech-pill {
-    background-color: rgba(255, 255, 255, 0.45) !important;
-    border: 1px solid var(--home-theme-border) !important;
-    color: var(--home-theme-primary) !important;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
-    transition: all 0.2s ease !important;
-}
-body.home-theme-active .tech-pill:hover {
-    background-color: rgba(255, 255, 255, 0.75) !important;
-    border-color: var(--home-theme-primary) !important;
-    transform: scale(1.05) !important;
-}
-body.home-theme-active .tech-pill span {
-    color: var(--home-theme-primary) !important;
+body.home-theme-active .tech-matrix-icon:hover {
+    transform: scale(1.15) !important;
 }
 
 /* Like Button specific */
@@ -182,6 +165,7 @@ body.home-theme-active #likeBtn {
     background-color: var(--home-theme-card-bg) !important;
     border: 1px solid var(--home-theme-border) !important;
     font-family: inherit !important;
+    height: 110px !important;
 }
 
 body.home-theme-active #likeBtn:hover {
@@ -205,10 +189,12 @@ body.home-theme-active #like-count {
 body.home-theme-active .like-label {
     color: var(--home-theme-primary) !important;
     opacity: 0.85;
+    font-size: 14px !important;
 }
 
 body.home-theme-active #likeBtn div {
     color: var(--home-theme-primary) !important;
+    font-size: 12px !important;
 }
 
 /* Project Links */
