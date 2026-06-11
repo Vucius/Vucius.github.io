@@ -106,12 +106,14 @@ body.home-theme-active article.bg-gray-50:hover {
 
 /* Text inside cards */
 body.home-theme-active .rounded-2xl h3,
+body.home-theme-active .rounded-3xl h3,
 body.home-theme-active article h3 {
     color: var(--home-theme-primary) !important;
     font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
 }
 
 body.home-theme-active .rounded-2xl p,
+body.home-theme-active .rounded-3xl p,
 body.home-theme-active article p {
     color: var(--home-theme-text) !important;
 }
@@ -135,9 +137,43 @@ body.home-theme-active .icon-svg {
 }
 
 /* Developer tag / badges */
-body.home-theme-active span.bg-gray-200 {
+body.home-theme-active span.bg-gray-200,
+body.home-theme-active .profile-badge {
     border: 1px solid var(--home-theme-border) !important;
-    background-color: rgba(255, 255, 255, 0.6) !important;
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    color: var(--home-theme-primary) !important;
+}
+body.home-theme-active .profile-badge span {
+    color: var(--home-theme-primary) !important;
+    opacity: 0.8;
+}
+
+/* Explore Button */
+body.home-theme-active .explore-btn {
+    background-color: var(--home-theme-primary) !important;
+    color: var(--home-theme-bg) !important;
+    transition: all 0.3s ease !important;
+}
+body.home-theme-active .explore-btn:hover {
+    background-color: var(--home-theme-accent) !important;
+    color: var(--home-theme-bg) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Tech Stack and LLM Badge Pills */
+body.home-theme-active .tech-pill {
+    background-color: rgba(255, 255, 255, 0.45) !important;
+    border: 1px solid var(--home-theme-border) !important;
+    color: var(--home-theme-primary) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+    transition: all 0.2s ease !important;
+}
+body.home-theme-active .tech-pill:hover {
+    background-color: rgba(255, 255, 255, 0.75) !important;
+    border-color: var(--home-theme-primary) !important;
+    transform: scale(1.05) !important;
+}
+body.home-theme-active .tech-pill span {
     color: var(--home-theme-primary) !important;
 }
 
@@ -145,6 +181,7 @@ body.home-theme-active span.bg-gray-200 {
 body.home-theme-active #likeBtn {
     background-color: var(--home-theme-card-bg) !important;
     border: 1px solid var(--home-theme-border) !important;
+    font-family: inherit !important;
 }
 
 body.home-theme-active #likeBtn:hover {
@@ -154,10 +191,20 @@ body.home-theme-active #likeBtn:hover {
 
 body.home-theme-active #likeBtn .icon-svg {
     color: var(--home-theme-accent) !important;
+    transition: color 0.3s ease, transform 0.3s ease !important;
+}
+
+body.home-theme-active #likeBtn:hover .icon-svg {
+    color: #f43f5e !important; /* rose-500 */
 }
 
 body.home-theme-active #like-count {
     color: var(--home-theme-primary) !important;
+}
+
+body.home-theme-active .like-label {
+    color: var(--home-theme-primary) !important;
+    opacity: 0.85;
 }
 
 body.home-theme-active #likeBtn div {
