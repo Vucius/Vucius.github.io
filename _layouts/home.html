@@ -209,13 +209,24 @@ layout: default
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <div class="flex flex-wrap gap-2.5">
+                                <img src="{{ '/assets/icons/Agent/antigravity-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Antigravity" alt="Antigravity" />
+                                <img src="{{ '/assets/icons/Agent/claudecode-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Claude Code" alt="Claude Code" />
+                                <img src="{{ '/assets/icons/Agent/codex-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Codex" alt="Codex" />
+                                <img src="{{ '/assets/icons/Agent/cursor.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Cursor" alt="Cursor" />
+                                <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Gentoo Linux" alt="Gentoo Linux" />
+                                <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Arch Linux" alt="Arch Linux" />
+                                <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Manjaro Linux" alt="Manjaro Linux" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Card 2: LLMs -->
             <div
-                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-4 md:col-span-4 flex flex-col justify-between">
+                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-4 md:col-span-6 flex flex-col justify-between">
                 <div>
                     <h3 class="text-base sm:text-lg text-gray-900 dark:text-white mb-4">LLM</h3>
                     <div class="flex flex-wrap gap-3">
@@ -244,19 +255,6 @@ layout: default
                     Do You Like Me
                 </div>
             </button>
-
-            <!-- Card 3: Systems -->
-            <div
-                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-4 md:col-span-2 flex flex-col justify-between">
-                <div>
-                    <h3 class="text-xl sm:text-2xl text-gray-900 dark:text-white mb-4">Operating Systems</h3>
-                    <div class="flex flex-wrap gap-4">
-                        <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="h-8 object-contain transition-transform hover:scale-110" title="Gentoo Linux" alt="Gentoo Linux" />
-                        <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="h-8 object-contain transition-transform hover:scale-110" title="Arch Linux" alt="Arch Linux" />
-                        <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="h-8 object-contain transition-transform hover:scale-110" title="Manjaro Linux" alt="Manjaro Linux" />
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Scripts for Like functionality -->
