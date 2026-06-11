@@ -132,127 +132,141 @@ layout: default
             </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-4 md:grid-cols-6 gap-3 sm:gap-4 max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-6 gap-6 max-w-5xl mx-auto items-stretch">
             <!-- Main Profile Card -->
-            <div
-                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-4 md:col-span-3 row-span-2 p-6 sm:p-8">
-                <div class="h-full flex flex-col justify-between">
-                    <div>
-                        <div class="mb-6 flex items-center gap-3">
-                            <div>
-                                <h3 class="text-xl sm:text-2xl text-gray-900 dark:text-white">{{ site.github_username }}</h3>
-                                <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">{{ site.description }}</p>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <a href="mailto:{{ site.email }}"
-                                class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                                title="Email">
-                                <span class="icon-svg">{% include icons/mail.svg %}</span>
-                            </a>
-                            <a href="https://github.com/{{ site.github_username }}" target="_blank"
-                                class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                                title="GitHub">
-                                <span class="icon-svg">{% include icons/github.svg %}</span>
-                            </a>
-                            <a href="https://twitter.com/{{ site.twitter_username }}" target="_blank"
-                                class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-                                title="Twitter">
-                                <span class="icon-svg">{% include icons/twitter.svg %}</span>
-                            </a>
-                        </div>
-                        <div class="mt-6 flex flex-wrap gap-2">
-                            <span
-                                class="px-2.5 py-1 text-sm rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center gap-1">
-                                Developer
-                            </span>
-                            <span
-                                class="px-2.5 py-1 text-sm rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center gap-1">
-                                hard-boiled
-                            </span>
-                            <span
-                                class="px-2.5 py-1 text-sm rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 flex items-center gap-1">
-                                thinker
-                            </span>
+            <div class="p-6 sm:p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-4 flex flex-col justify-between relative overflow-hidden group">
+                <div>
+                    <div class="mb-6 flex items-center gap-4">
+                        <img src="{{ '/assets/images/avatar.png' | relative_url }}" class="w-16 h-16 rounded-full border-2 border-white dark:border-gray-800 shadow-md object-cover transition-transform group-hover:scale-105" alt="Vucius" />
+                        <div>
+                            <h3 class="text-xl sm:text-2xl text-gray-900 dark:text-white mb-1 font-bold">{{ site.github_username }}</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">{{ site.description }}</p>
                         </div>
                     </div>
+                    
+                    <div class="mb-6 pt-4 border-t border-black/5 dark:border-white/10">
+                        <div class="text-xs font-bold tracking-widest text-gray-500 dark:text-gray-400 uppercase">Independent Developer</div>
+                        <div class="text-sm text-gray-800 dark:text-gray-200 mt-1 font-medium">Building AI systems, desktop applications, and open-source tools.</div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <a href="mailto:{{ site.email }}"
+                            class="social-btn w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
+                            title="Email">
+                            <span class="icon-svg">{% include icons/mail.svg %}</span>
+                        </a>
+                        <a href="https://github.com/{{ site.github_username }}" target="_blank"
+                            class="social-btn w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
+                            title="GitHub">
+                            <span class="icon-svg">{% include icons/github.svg %}</span>
+                        </a>
+                        <a href="https://twitter.com/{{ site.twitter_username }}" target="_blank"
+                            class="social-btn w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
+                            title="Twitter">
+                            <span class="icon-svg">{% include icons/twitter.svg %}</span>
+                        </a>
+                    </div>
+                    
+                    <div class="mt-6 flex flex-wrap gap-2.5">
+                        <span class="px-3 py-1.5 text-xs font-medium rounded-full bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 flex items-center gap-1.5 border border-black/5 dark:border-white/5 shadow-sm">
+                            <span class="text-gray-500 dark:text-gray-400">⌘</span> Developer
+                        </span>
+                        <span class="px-3 py-1.5 text-xs font-medium rounded-full bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 flex items-center gap-1.5 border border-black/5 dark:border-white/5 shadow-sm">
+                            <span class="text-gray-500 dark:text-gray-400">✦</span> Hard-boiled
+                        </span>
+                        <span class="px-3 py-1.5 text-xs font-medium rounded-full bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 flex items-center gap-1.5 border border-black/5 dark:border-white/5 shadow-sm">
+                            <span class="text-gray-500 dark:text-gray-400">✦</span> Thinker
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="mt-8">
+                    <a href="#projects" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-medium text-sm hover:bg-gray-800 dark:hover:bg-gray-100 transition-all shadow-sm hover:shadow-md cursor-pointer group/btn">
+                        Explore My Work 
+                        <span class="group-hover/btn:translate-x-1 transition-transform">→</span>
+                    </a>
                 </div>
             </div>
 
-            <!-- Card 1: Programming Language, GUI, Database System -->
-            <div
-                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-2 md:col-span-3 flex flex-col justify-between">
-                <div>
-                    <h3 class="text-base sm:text-lg text-gray-900 dark:text-white mb-4">Tech Stack</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex flex-wrap gap-2.5">
-                                <img src="{{ '/assets/icons/Programming_Language/cplusplus.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="C++" alt="C++" />
-                                <img src="{{ '/assets/icons/Programming_Language/csharp.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="C#" alt="C#" />
-                                <img src="{{ '/assets/icons/Programming_Language/python.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Python" alt="Python" />
-                                <img src="{{ '/assets/icons/Programming_Language/ruby.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Ruby" alt="Ruby" />
-                                <img src="{{ '/assets/icons/Programming_Language/rust.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Rust" alt="Rust" />
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <div class="flex flex-wrap gap-2.5">
-                                    <img src="{{ '/assets/icons/GUI/qt.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Qt" alt="Qt" />
-                                    <img src="{{ '/assets/icons/GUI/avaloniaui.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Avalonia UI" alt="Avalonia UI" />
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex flex-wrap gap-2.5">
-                                    <img src="{{ '/assets/icons/Database_System/postgresql.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="PostgreSQL" alt="PostgreSQL" />
-                                    <img src="{{ '/assets/icons/Database_System/sqlite.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="SQLite" alt="SQLite" />
-                                    <img src="{{ '/assets/icons/Database_System/redis.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Redis" alt="Redis" />
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex flex-wrap gap-2.5">
-                                <img src="{{ '/assets/icons/Agent/antigravity-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Antigravity" alt="Antigravity" />
-                                <img src="{{ '/assets/icons/Agent/claudecode-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Claude Code" alt="Claude Code" />
-                                <img src="{{ '/assets/icons/Agent/codex-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Codex" alt="Codex" />
-                                <img src="{{ '/assets/icons/Agent/cursor.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Cursor" alt="Cursor" />
-                                <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Gentoo Linux" alt="Gentoo Linux" />
-                                <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Arch Linux" alt="Arch Linux" />
-                                <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Manjaro Linux" alt="Manjaro Linux" />
-                            </div>
-                        </div>
-                    </div>
+            <!-- Card 1: Tech Stack -->
+            <div class="p-6 sm:p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-2 flex flex-col justify-center items-center text-center">
+                <h3 class="text-base sm:text-lg text-gray-900 dark:text-white mb-6 font-bold w-full text-left">Tech Stack</h3>
+                <div class="flex flex-wrap justify-center items-center gap-3 w-full py-2">
+                    <img src="{{ '/assets/icons/Programming_Language/cplusplus.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="C++" alt="C++" />
+                    <img src="{{ '/assets/icons/Programming_Language/csharp.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="C#" alt="C#" />
+                    <img src="{{ '/assets/icons/Programming_Language/python.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Python" alt="Python" />
+                    <img src="{{ '/assets/icons/Programming_Language/ruby.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Ruby" alt="Ruby" />
+                    <img src="{{ '/assets/icons/Programming_Language/rust.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Rust" alt="Rust" />
+                    <img src="{{ '/assets/icons/GUI/qt.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Qt" alt="Qt" />
+                    <img src="{{ '/assets/icons/GUI/avaloniaui.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Avalonia UI" alt="Avalonia UI" />
+                    <img src="{{ '/assets/icons/Database_System/postgresql.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="PostgreSQL" alt="PostgreSQL" />
+                    <img src="{{ '/assets/icons/Database_System/sqlite.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="SQLite" alt="SQLite" />
+                    <img src="{{ '/assets/icons/Database_System/redis.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Redis" alt="Redis" />
+                    <img src="{{ '/assets/icons/Agent/antigravity-color.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Antigravity" alt="Antigravity" />
+                    <img src="{{ '/assets/icons/Agent/claudecode-color.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Claude Code" alt="Claude Code" />
+                    <img src="{{ '/assets/icons/Agent/codex-color.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Codex" alt="Codex" />
+                    <img src="{{ '/assets/icons/Agent/cursor.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Cursor" alt="Cursor" />
+                    <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Gentoo Linux" alt="Gentoo Linux" />
+                    <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Arch Linux" alt="Arch Linux" />
+                    <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="w-7 h-7 object-contain transition-transform hover:scale-110" title="Manjaro Linux" alt="Manjaro Linux" />
                 </div>
             </div>
 
             <!-- Card 2: LLMs -->
-            <div
-                class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-colors duration-300 sm:col-span-4 md:col-span-6 flex flex-col justify-between">
+            <div class="p-6 sm:p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-4 flex flex-col justify-between">
                 <div>
-                    <h3 class="text-base sm:text-lg text-gray-900 dark:text-white mb-4">LLM</h3>
+                    <h3 class="text-base sm:text-lg text-gray-900 dark:text-white mb-5 font-bold">LLM Ecosystem</h3>
                     <div class="flex flex-wrap gap-3">
-                        <img src="{{ '/assets/icons/llms/openai.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="OpenAI" alt="OpenAI" />
-                        <img src="{{ '/assets/icons/llms/claude-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Claude" alt="Claude" />
-                        <img src="{{ '/assets/icons/llms/gemini-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Gemini" alt="Gemini" />
-                        <img src="{{ '/assets/icons/llms/deepseek.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="DeepSeek" alt="DeepSeek" />
-                        <img src="{{ '/assets/icons/llms/gemma-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Gemma" alt="Gemma" />
-                        <img src="{{ '/assets/icons/llms/grok.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Grok" alt="Grok" />
-                        <img src="{{ '/assets/icons/llms/perplexity-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Perplexity" alt="Perplexity" />
-                        <img src="{{ '/assets/icons/llms/qwen-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="Qwen" alt="Qwen" />
-                        <img src="{{ '/assets/icons/llms/chatglm-color.svg' | relative_url }}" class="w-6 h-6 object-contain transition-transform hover:scale-110" title="ChatGLM" alt="ChatGLM" />
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
+                            <img src="{{ '/assets/icons/llms/openai.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="OpenAI" />
+                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">OpenAI</span>
+                        </div>
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
+                            <img src="{{ '/assets/icons/llms/claude-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Claude" />
+                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Claude</span>
+                        </div>
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
+                            <img src="{{ '/assets/icons/llms/gemini-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Gemini" />
+                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Gemini</span>
+                        </div>
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
+                            <img src="{{ '/assets/icons/llms/deepseek.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="DeepSeek" />
+                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">DeepSeek</span>
+                        </div>
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
+                            <img src="{{ '/assets/icons/llms/gemma-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Gemma" />
+                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Gemma</span>
+                        </div>
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
+                            <img src="{{ '/assets/icons/llms/grok.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Grok" />
+                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Grok</span>
+                        </div>
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
+                            <img src="{{ '/assets/icons/llms/perplexity-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Perplexity" />
+                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Perplexity</span>
+                        </div>
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
+                            <img src="{{ '/assets/icons/llms/qwen-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="Qwen" />
+                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">Qwen</span>
+                        </div>
+                        <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/40 dark:bg-black/20 border border-black/5 dark:border-white/5 shadow-sm hover:scale-105 hover:bg-white/60 dark:hover:bg-black/30 transition-all duration-200 cursor-default">
+                            <img src="{{ '/assets/icons/llms/chatglm-color.svg' | relative_url }}" class="w-5 h-5 object-contain" alt="ChatGLM" />
+                            <span class="text-sm font-medium text-gray-800 dark:text-gray-200">ChatGLM</span>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <!-- Like Card -->
-            <button onclick="sendLike()" id="likeBtn" class="p-4 sm:p-6 rounded-2xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 sm:col-span-2 md:col-span-3 hover:scale-[1.02] focus:outline-none flex flex-col items-center justify-center text-center group cursor-pointer shadow-sm">
-                <div class="text-2xl sm:text-3xl text-gray-900 dark:text-white font-bold mb-2 flex items-center gap-2">
-                    <span class="group-hover:scale-110 transition-transform text-gray-900 dark:text-white group-hover:text-rose-500 w-8 h-8 flex items-center justify-center">
+            <button onclick="sendLike()" id="likeBtn" class="p-6 sm:p-8 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-2 hover:-translate-y-1 focus:outline-none flex flex-col items-center justify-center text-center group cursor-pointer shadow-sm hover:shadow-md border border-transparent">
+                <div class="text-xl sm:text-2xl text-gray-900 dark:text-white font-bold mb-1.5 flex items-center gap-2">
+                    <span class="group-hover:scale-125 transition-transform text-gray-900 dark:text-white group-hover:text-rose-500 w-6 h-6 flex items-center justify-center">
                         {% include icons/favorite.svg %}
                     </span>
-                    <span id="like-count">...</span>
+                    <span id="like-count">...</span> <span class="text-lg font-medium text-gray-600 dark:text-gray-300">Likes</span>
                 </div>
-                <div class="text-sm font-bold uppercase tracking-widest text-gray-900 dark:text-white">
-                    Do You Like Me
+                <div class="text-xs font-semibold tracking-wider text-gray-500 dark:text-gray-400 uppercase">
+                    Support Me
                 </div>
             </button>
         </div>
@@ -300,7 +314,7 @@ layout: default
     </section>
 
     <!-- Projects Section -->
-    <section class="my-32 sm:my-48">
+    <section id="projects" class="my-32 sm:my-48 scroll-mt-24">
         <div class="text-center mb-16 sm:mb-20">
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 select-none">
                 Projects
