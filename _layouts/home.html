@@ -132,108 +132,96 @@ layout: default
             </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-6 gap-6 max-w-5xl mx-auto items-stretch">
-            <!-- Main Profile Card -->
-            <div class="p-6 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-4 flex flex-col justify-between relative overflow-hidden group">
+        <div class="cards-grid mx-auto">
+            <!-- Profile Card -->
+            <div class="card profile-card">
                 <div>
-                    <div class="mb-6 flex items-center gap-4">
-                        <img src="{{ '/assets/images/avatar.png' | relative_url }}" class="w-16 h-16 rounded-full border-2 border-white dark:border-gray-800 shadow-md object-cover transition-transform group-hover:scale-105" alt="Vucius" />
-                        <div>
-                            <h3 class="text-xl sm:text-2xl text-gray-900 dark:text-white mb-1 font-bold">{{ site.github_username }}</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-0">{{ site.description }}</p>
+                    <div class="profile-header">
+                        <img src="{{ '/assets/images/avatar.png' | relative_url }}" class="profile-avatar" alt="Vucius" />
+                        <div class="profile-title-group">
+                            <h3 class="profile-name">{{ site.github_username }}</h3>
+                            <p class="profile-sig">{{ site.description }}</p>
                         </div>
                     </div>
                     
-                    <div class="mb-6 pt-4 border-t border-black/5 dark:border-white/10">
-                        <p class="text-xs font-bold tracking-widest text-gray-500 dark:text-gray-400 uppercase">Independent Developer</p>
-                        <p class="text-sm text-gray-800 dark:text-gray-200 mt-1 font-medium">Building AI systems, desktop applications, and open-source tools.</p>
+                    <div class="profile-body">
+                        <p class="profile-role">Independent Developer</p>
+                        <p class="profile-desc">Building AI systems, desktop applications, and open-source tools.</p>
                     </div>
 
-                    <div class="flex items-center gap-3">
+                    <div class="profile-socials">
                         <a href="mailto:{{ site.email }}"
-                            class="social-btn w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
+                            class="social-btn w-9 h-9 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
                             title="Email">
                             <span class="icon-svg">{% include icons/mail.svg %}</span>
                         </a>
                         <a href="https://github.com/{{ site.github_username }}" target="_blank"
-                            class="social-btn w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
+                            class="social-btn w-9 h-9 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
                             title="GitHub">
                             <span class="icon-svg">{% include icons/github.svg %}</span>
                         </a>
                         <a href="https://twitter.com/{{ site.twitter_username }}" target="_blank"
-                            class="social-btn w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
+                            class="social-btn w-9 h-9 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
                             title="Twitter">
                             <span class="icon-svg">{% include icons/twitter.svg %}</span>
                         </a>
                     </div>
-                    
-                    <div class="mt-6 flex flex-wrap gap-2.5">
-                        <span class="profile-badge px-3 py-1.5 text-xs font-medium rounded-full bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 flex items-center gap-1.5 border border-black/5 dark:border-white/5 shadow-sm">
-                            Developer
-                        </span>
-                        <span class="profile-badge px-3 py-1.5 text-xs font-medium rounded-full bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 flex items-center gap-1.5 border border-black/5 dark:border-white/5 shadow-sm">
-                            Hard-boiled
-                        </span>
-                        <span class="profile-badge px-3 py-1.5 text-xs font-medium rounded-full bg-gray-200/50 dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 flex items-center gap-1.5 border border-black/5 dark:border-white/5 shadow-sm">
-                            Thinker
-                        </span>
-                    </div>
+                </div>
+                
+                <div class="profile-tags">
+                    Developer &middot; Hard-boiled &middot; Thinker
                 </div>
             </div>
 
-            <!-- Card 1: Tech Stack -->
-            <div class="p-6 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-2 flex flex-col justify-between">
-                <div>
-                    <h3 class="text-base sm:text-lg text-gray-900 dark:text-white mb-5 font-bold">Tech Stack</h3>
-                    <div class="flex flex-wrap gap-x-5 gap-y-4 py-1">
-                        <img src="{{ '/assets/icons/Programming_Language/cplusplus.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="C++" alt="C++" />
-                        <img src="{{ '/assets/icons/Programming_Language/csharp.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="C#" alt="C#" />
-                        <img src="{{ '/assets/icons/Programming_Language/python.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Python" alt="Python" />
-                        <img src="{{ '/assets/icons/Programming_Language/ruby.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Ruby" alt="Ruby" />
-                        <img src="{{ '/assets/icons/Programming_Language/rust.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Rust" alt="Rust" />
-                        <img src="{{ '/assets/icons/GUI/qt.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Qt" alt="Qt" />
-                        <img src="{{ '/assets/icons/GUI/avaloniaui.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Avalonia UI" alt="Avalonia UI" />
-                        <img src="{{ '/assets/icons/Database_System/postgresql.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="PostgreSQL" alt="PostgreSQL" />
-                        <img src="{{ '/assets/icons/Database_System/sqlite.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="SQLite" alt="SQLite" />
-                        <img src="{{ '/assets/icons/Database_System/redis.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Redis" alt="Redis" />
-                        <img src="{{ '/assets/icons/Agent/antigravity-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Antigravity" alt="Antigravity" />
-                        <img src="{{ '/assets/icons/Agent/claudecode-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Claude Code" alt="Claude Code" />
-                        <img src="{{ '/assets/icons/Agent/codex-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Codex" alt="Codex" />
-                        <img src="{{ '/assets/icons/Agent/cursor.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Cursor" alt="Cursor" />
-                        <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Gentoo Linux" alt="Gentoo Linux" />
-                        <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Arch Linux" alt="Arch Linux" />
-                        <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Manjaro Linux" alt="Manjaro Linux" />
-                    </div>
+            <!-- Tech Stack Card -->
+            <div class="card tech-card">
+                <h3 class="card-title">Tech Stack</h3>
+                <div class="tech-matrix">
+                    <img src="{{ '/assets/icons/Programming_Language/cplusplus.svg' | relative_url }}" class="tech-matrix-icon" title="C++" alt="C++" />
+                    <img src="{{ '/assets/icons/Programming_Language/csharp.svg' | relative_url }}" class="tech-matrix-icon" title="C#" alt="C#" />
+                    <img src="{{ '/assets/icons/Programming_Language/python.svg' | relative_url }}" class="tech-matrix-icon" title="Python" alt="Python" />
+                    <img src="{{ '/assets/icons/Programming_Language/ruby.svg' | relative_url }}" class="tech-matrix-icon" title="Ruby" alt="Ruby" />
+                    <img src="{{ '/assets/icons/Programming_Language/rust.svg' | relative_url }}" class="tech-matrix-icon" title="Rust" alt="Rust" />
+                    <img src="{{ '/assets/icons/GUI/qt.svg' | relative_url }}" class="tech-matrix-icon" title="Qt" alt="Qt" />
+                    <img src="{{ '/assets/icons/GUI/avaloniaui.svg' | relative_url }}" class="tech-matrix-icon" title="Avalonia UI" alt="Avalonia UI" />
+                    <img src="{{ '/assets/icons/Database_System/postgresql.svg' | relative_url }}" class="tech-matrix-icon" title="PostgreSQL" alt="PostgreSQL" />
+                    <img src="{{ '/assets/icons/Database_System/sqlite.svg' | relative_url }}" class="tech-matrix-icon" title="SQLite" alt="SQLite" />
+                    <img src="{{ '/assets/icons/Database_System/redis.svg' | relative_url }}" class="tech-matrix-icon" title="Redis" alt="Redis" />
+                    <img src="{{ '/assets/icons/Agent/antigravity-color.svg' | relative_url }}" class="tech-matrix-icon" title="Antigravity" alt="Antigravity" />
+                    <img src="{{ '/assets/icons/Agent/claudecode-color.svg' | relative_url }}" class="tech-matrix-icon" title="Claude Code" alt="Claude Code" />
+                    <img src="{{ '/assets/icons/Agent/codex-color.svg' | relative_url }}" class="tech-matrix-icon" title="Codex" alt="Codex" />
+                    <img src="{{ '/assets/icons/Agent/cursor.svg' | relative_url }}" class="tech-matrix-icon" title="Cursor" alt="Cursor" />
+                    <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="tech-matrix-icon" title="Gentoo Linux" alt="Gentoo Linux" />
+                    <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="tech-matrix-icon" title="Arch Linux" alt="Arch Linux" />
+                    <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="tech-matrix-icon" title="Manjaro Linux" alt="Manjaro Linux" />
                 </div>
             </div>
 
-            <!-- Card 2: LLMs -->
-            <div class="p-6 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-4 flex flex-col justify-between">
-                <div>
-                    <h3 class="text-base sm:text-lg text-gray-900 dark:text-white mb-5 font-bold">LLM Ecosystem</h3>
-                    <div class="flex flex-wrap gap-x-5 gap-y-4 py-1">
-                        <img src="{{ '/assets/icons/llms/openai.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="OpenAI" alt="OpenAI" />
-                        <img src="{{ '/assets/icons/llms/claude-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Claude" alt="Claude" />
-                        <img src="{{ '/assets/icons/llms/gemini-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Gemini" alt="Gemini" />
-                        <img src="{{ '/assets/icons/llms/deepseek.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="DeepSeek" alt="DeepSeek" />
-                        <img src="{{ '/assets/icons/llms/gemma-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Gemma" alt="Gemma" />
-                        <img src="{{ '/assets/icons/llms/grok.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Grok" alt="Grok" />
-                        <img src="{{ '/assets/icons/llms/perplexity-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Perplexity" alt="Perplexity" />
-                        <img src="{{ '/assets/icons/llms/qwen-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="Qwen" alt="Qwen" />
-                        <img src="{{ '/assets/icons/llms/chatglm-color.svg' | relative_url }}" class="tech-matrix-icon w-6 h-6 object-contain transition-transform hover:scale-115" title="ChatGLM" alt="ChatGLM" />
-                    </div>
+            <!-- LLM Ecosystem Card -->
+            <div class="card llm-card">
+                <h3 class="card-title">LLM Ecosystem</h3>
+                <div class="tech-matrix">
+                    <img src="{{ '/assets/icons/llms/openai.svg' | relative_url }}" class="tech-matrix-icon" title="OpenAI" alt="OpenAI" />
+                    <img src="{{ '/assets/icons/llms/claude-color.svg' | relative_url }}" class="tech-matrix-icon" title="Claude" alt="Claude" />
+                    <img src="{{ '/assets/icons/llms/gemini-color.svg' | relative_url }}" class="tech-matrix-icon" title="Gemini" alt="Gemini" />
+                    <img src="{{ '/assets/icons/llms/deepseek.svg' | relative_url }}" class="tech-matrix-icon" title="DeepSeek" alt="DeepSeek" />
+                    <img src="{{ '/assets/icons/llms/gemma-color.svg' | relative_url }}" class="tech-matrix-icon" title="Gemma" alt="Gemma" />
+                    <img src="{{ '/assets/icons/llms/grok.svg' | relative_url }}" class="tech-matrix-icon" title="Grok" alt="Grok" />
+                    <img src="{{ '/assets/icons/llms/perplexity-color.svg' | relative_url }}" class="tech-matrix-icon" title="Perplexity" alt="Perplexity" />
+                    <img src="{{ '/assets/icons/llms/qwen-color.svg' | relative_url }}" class="tech-matrix-icon" title="Qwen" alt="Qwen" />
+                    <img src="{{ '/assets/icons/llms/chatglm-color.svg' | relative_url }}" class="tech-matrix-icon" title="ChatGLM" alt="ChatGLM" />
                 </div>
             </div>
             
             <!-- Like Card -->
-            <button onclick="sendLike()" id="likeBtn" class="p-6 rounded-3xl bg-gray-50 dark:bg-gray-800 transition-all duration-300 md:col-span-2 self-start w-full md:max-w-[280px] hover:-translate-y-1 focus:outline-none flex flex-col items-center justify-center text-center group cursor-pointer border border-transparent">
-                <div class="text-xl sm:text-2xl text-gray-900 dark:text-white font-bold mb-1.5 flex items-center gap-2">
-                    <span class="icon-svg group-hover:scale-125 transition-transform text-gray-900 dark:text-white group-hover:text-rose-500 w-6 h-6 flex items-center justify-center">
+            <button onclick="sendLike()" id="likeBtn" class="card like-card-btn">
+                <div class="like-content">
+                    <span class="icon-svg">
                         {% include icons/favorite.svg %}
                     </span>
-                    <span id="like-count">...</span> <span class="like-label text-lg font-medium text-gray-600 dark:text-gray-300">likes</span>
+                    <span id="like-count">...</span> <span class="like-label">likes</span>
                 </div>
-                <div class="text-xs font-semibold tracking-wider text-gray-500 dark:text-gray-400">
+                <div class="like-support">
                     Support me
                 </div>
             </button>
