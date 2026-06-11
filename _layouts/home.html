@@ -74,24 +74,187 @@ layout: default
 
 <style>
     @keyframes floatY {
-
-        0%,
-        to {
-            transform: translateY(0);
-        }
-
-        50% {
-            transform: translateY(4px);
-        }
+        0%, to { transform: translateY(0); }
+        50% { transform: translateY(4px); }
     }
-
     .animate-floatY {
         animation: floatY 1.6s ease-in-out infinite;
     }
 
-    @media (min-width: 640px) {
-        .sm\:col-span-2 {
-            grid-column: span 2 / span 2;
+    /* ===== 2×2 Card Grid ===== */
+    .cards-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        width: 100%;
+        max-width: 90vw;
+        margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+        .cards-grid {
+            grid-template-columns: 1.2fr 1fr;
+            width: 820px;
+        }
+    }
+
+    /* ===== Base Card ===== */
+    .card {
+        border-radius: 16px;
+        padding: 20px 24px;
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+        display: flex;
+        flex-direction: column;
+        transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.07);
+    }
+
+    /* ===== Card Title ===== */
+    .card-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 0 12px 0;
+        color: inherit;
+    }
+
+    /* ===== Profile Card ===== */
+    .profile-card {
+        justify-content: space-between;
+    }
+    .profile-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 16px;
+    }
+    .profile-avatar {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        object-fit: cover;
+        flex-shrink: 0;
+    }
+    .profile-name {
+        font-size: 22px;
+        font-weight: 700;
+        margin: 0 0 2px 0;
+        line-height: 1.2;
+    }
+    .profile-sig {
+        font-size: 13px;
+        opacity: 0.75;
+        margin: 0;
+    }
+    .profile-body {
+        margin-bottom: 14px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .profile-role {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin: 0 0 4px 0;
+        opacity: 0.7;
+    }
+    .profile-desc {
+        font-size: 13px;
+        margin: 0;
+        line-height: 1.55;
+    }
+    .profile-socials {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+    .profile-socials .social-btn {
+        width: 34px !important;
+        height: 34px !important;
+    }
+    .profile-tags {
+        font-size: 12px;
+        opacity: 0.65;
+        padding-top: 10px;
+        border-top: 1px solid rgba(0, 0, 0, 0.06);
+        font-weight: 500;
+    }
+
+    /* ===== Tech / LLM Matrix ===== */
+    .tech-matrix {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+    .tech-matrix-icon {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+        transition: transform 160ms ease, opacity 160ms ease;
+    }
+    .tech-matrix-icon:hover {
+        transform: translateY(-2px) scale(1.06);
+        opacity: 0.9;
+    }
+
+    /* ===== Like Button ===== */
+    .like-card-btn {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        cursor: pointer;
+        height: 110px;
+        font-family: inherit;
+        outline: none;
+    }
+    .like-card-btn:hover {
+        transform: translateY(-3px);
+    }
+    .like-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+    .like-content .icon-svg {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 160ms ease, color 160ms ease;
+    }
+    .like-card-btn:hover .icon-svg {
+        color: #f43f5e !important;
+        transform: scale(1.15);
+    }
+    .like-label {
+        font-size: 14px;
+        font-weight: 400;
+        opacity: 0.7;
+    }
+    .like-support {
+        font-size: 12px;
+        font-weight: 600;
+        opacity: 0.6;
+    }
+
+    /* ===== Desktop card self-sizing ===== */
+    @media (min-width: 768px) {
+        .tech-card,
+        .llm-card,
+        .like-card-btn {
+            align-self: start;
         }
     }
 </style>
