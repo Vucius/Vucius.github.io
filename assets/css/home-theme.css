@@ -7,7 +7,7 @@ body.home-theme-active {
     background-color: var(--home-theme-bg) !important;
     background-image: none !important;
     color: var(--home-theme-text) !important;
-    font-family: "Noto Serif SC", "SimSun", "STSong", "Georgia", serif !important;
+    font-family: var(--home-theme-font-body) !important;
     transition: background-color 0.5s ease, color 0.5s ease !important;
 }
 
@@ -62,8 +62,8 @@ body.home-theme-active h1.text-gray-900,
 body.home-theme-active .dark\:text-white,
 body.home-theme-active h2.text-gray-900 {
     color: var(--home-theme-primary) !important;
-    font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
-    font-weight: 600 !important;
+    font-family: var(--home-theme-font-title) !important;
+    font-weight: var(--home-theme-font-weight-title) !important;
     text-shadow: none !important;
 }
 
@@ -77,8 +77,8 @@ body.home-theme-active p.text-gray-500 {
 /* Scrolling Text Animation */
 body.home-theme-active .scroll-text {
     color: var(--home-theme-primary) !important;
-    font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
-    font-weight: 600 !important;
+    font-family: var(--home-theme-font-title) !important;
+    font-weight: var(--home-theme-font-weight-title) !important;
 }
 /* ===== About-Me Card Color Overrides ===== */
 body.home-theme-active .card {
@@ -92,13 +92,13 @@ body.home-theme-active .card:hover {
 
 body.home-theme-active .card-title {
     color: var(--home-theme-primary) !important;
-    font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
+    font-family: var(--home-theme-font-title) !important;
 }
 
 /* Profile color overrides */
 body.home-theme-active .profile-name {
     color: var(--home-theme-primary) !important;
-    font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
+    font-family: var(--home-theme-font-title) !important;
 }
 
 body.home-theme-active .profile-sig {
@@ -162,9 +162,9 @@ body.home-theme-active article.bg-gray-50:hover {
 body.home-theme-active .rounded-2xl h3,
 body.home-theme-active article h3 {
     color: var(--home-theme-primary) !important;
-    font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
+    font-family: var(--home-theme-font-title) !important;
     font-size: 18px !important;
-    font-weight: 600 !important;
+    font-weight: var(--home-theme-font-weight-title) !important;
     transition: color 0.3s ease !important;
 }
 
