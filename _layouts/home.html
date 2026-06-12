@@ -193,6 +193,19 @@ layout: default
         flex-wrap: wrap;
         gap: 16px;
     }
+    .tech-matrix-grouped {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .tech-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .tech-row-spacer {
+        width: 12px;
+    }
     .tech-matrix-icon {
         width: 24px;
         height: 24px;
@@ -339,24 +352,35 @@ layout: default
             <!-- Tech Stack Card -->
             <div class="card tech-card">
                 <h3 class="card-title">Tech Stack</h3>
-                <div class="tech-matrix">
-                    <img src="{{ '/assets/icons/Programming_Language/cplusplus.svg' | relative_url }}" class="tech-matrix-icon" title="C++" alt="C++" />
-                    <img src="{{ '/assets/icons/Programming_Language/csharp.svg' | relative_url }}" class="tech-matrix-icon" title="C#" alt="C#" />
-                    <img src="{{ '/assets/icons/Programming_Language/python.svg' | relative_url }}" class="tech-matrix-icon" title="Python" alt="Python" />
-                    <img src="{{ '/assets/icons/Programming_Language/ruby.svg' | relative_url }}" class="tech-matrix-icon" title="Ruby" alt="Ruby" />
-                    <img src="{{ '/assets/icons/Programming_Language/rust.svg' | relative_url }}" class="tech-matrix-icon" title="Rust" alt="Rust" />
-                    <img src="{{ '/assets/icons/GUI/qt.svg' | relative_url }}" class="tech-matrix-icon" title="Qt" alt="Qt" />
-                    <img src="{{ '/assets/icons/GUI/avaloniaui.svg' | relative_url }}" class="tech-matrix-icon" title="Avalonia UI" alt="Avalonia UI" />
-                    <img src="{{ '/assets/icons/Database_System/postgresql.svg' | relative_url }}" class="tech-matrix-icon" title="PostgreSQL" alt="PostgreSQL" />
-                    <img src="{{ '/assets/icons/Database_System/sqlite.svg' | relative_url }}" class="tech-matrix-icon" title="SQLite" alt="SQLite" />
-                    <img src="{{ '/assets/icons/Database_System/redis.svg' | relative_url }}" class="tech-matrix-icon" title="Redis" alt="Redis" />
-                    <img src="{{ '/assets/icons/Agent/antigravity-color.svg' | relative_url }}" class="tech-matrix-icon" title="Antigravity" alt="Antigravity" />
-                    <img src="{{ '/assets/icons/Agent/claudecode-color.svg' | relative_url }}" class="tech-matrix-icon" title="Claude Code" alt="Claude Code" />
-                    <img src="{{ '/assets/icons/Agent/codex-color.svg' | relative_url }}" class="tech-matrix-icon" title="Codex" alt="Codex" />
-                    <img src="{{ '/assets/icons/Agent/cursor.svg' | relative_url }}" class="tech-matrix-icon" title="Cursor" alt="Cursor" />
-                    <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="tech-matrix-icon" title="Gentoo Linux" alt="Gentoo Linux" />
-                    <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="tech-matrix-icon" title="Arch Linux" alt="Arch Linux" />
-                    <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="tech-matrix-icon" title="Manjaro Linux" alt="Manjaro Linux" />
+                <div class="tech-matrix-grouped">
+                    <!-- Row 1: Programming Languages -->
+                    <div class="tech-row">
+                        <img src="{{ '/assets/icons/Programming_Language/cplusplus.svg' | relative_url }}" class="tech-matrix-icon" title="C++" alt="C++" />
+                        <img src="{{ '/assets/icons/Programming_Language/csharp.svg' | relative_url }}" class="tech-matrix-icon" title="C#" alt="C#" />
+                        <img src="{{ '/assets/icons/Programming_Language/python.svg' | relative_url }}" class="tech-matrix-icon" title="Python" alt="Python" />
+                        <img src="{{ '/assets/icons/Programming_Language/ruby.svg' | relative_url }}" class="tech-matrix-icon" title="Ruby" alt="Ruby" />
+                        <img src="{{ '/assets/icons/Programming_Language/rust.svg' | relative_url }}" class="tech-matrix-icon" title="Rust" alt="Rust" />
+                    </div>
+                    <!-- Row 2: GUI + Database -->
+                    <div class="tech-row">
+                        <img src="{{ '/assets/icons/GUI/qt.svg' | relative_url }}" class="tech-matrix-icon" title="Qt" alt="Qt" />
+                        <img src="{{ '/assets/icons/GUI/avaloniaui.svg' | relative_url }}" class="tech-matrix-icon" title="Avalonia UI" alt="Avalonia UI" />
+                        <span class="tech-row-spacer"></span>
+                        <img src="{{ '/assets/icons/Database_System/postgresql.svg' | relative_url }}" class="tech-matrix-icon" title="PostgreSQL" alt="PostgreSQL" />
+                        <img src="{{ '/assets/icons/Database_System/sqlite.svg' | relative_url }}" class="tech-matrix-icon" title="SQLite" alt="SQLite" />
+                        <img src="{{ '/assets/icons/Database_System/redis.svg' | relative_url }}" class="tech-matrix-icon" title="Redis" alt="Redis" />
+                    </div>
+                    <!-- Row 3: Agent + Systems -->
+                    <div class="tech-row">
+                        <img src="{{ '/assets/icons/Agent/antigravity-color.svg' | relative_url }}" class="tech-matrix-icon" title="Antigravity" alt="Antigravity" />
+                        <img src="{{ '/assets/icons/Agent/claudecode-color.svg' | relative_url }}" class="tech-matrix-icon" title="Claude Code" alt="Claude Code" />
+                        <img src="{{ '/assets/icons/Agent/codex-color.svg' | relative_url }}" class="tech-matrix-icon" title="Codex" alt="Codex" />
+                        <img src="{{ '/assets/icons/Agent/cursor.svg' | relative_url }}" class="tech-matrix-icon" title="Cursor" alt="Cursor" />
+                        <span class="tech-row-spacer"></span>
+                        <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="tech-matrix-icon" title="Gentoo Linux" alt="Gentoo Linux" />
+                        <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="tech-matrix-icon" title="Arch Linux" alt="Arch Linux" />
+                        <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="tech-matrix-icon" title="Manjaro Linux" alt="Manjaro Linux" />
+                    </div>
                 </div>
             </div>
 
