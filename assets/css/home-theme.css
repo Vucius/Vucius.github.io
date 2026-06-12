@@ -159,13 +159,21 @@ body.home-theme-active article.bg-gray-50:hover {
     border-color: var(--home-theme-primary) !important;
 }
 
+body.home-theme-active .rounded-2xl h3,
 body.home-theme-active article h3 {
     color: var(--home-theme-primary) !important;
     font-family: "Noto Serif SC", "SimSun", "STSong", serif !important;
     font-size: 18px !important;
     font-weight: 600 !important;
+    transition: color 0.3s ease !important;
 }
 
+body.home-theme-active .rounded-2xl:hover h3,
+body.home-theme-active article.bg-gray-50:hover h3 {
+    color: var(--home-theme-accent) !important;
+}
+
+body.home-theme-active .rounded-2xl p,
 body.home-theme-active article p {
     color: var(--home-theme-text) !important;
     font-size: 14px !important;
