@@ -5,8 +5,105 @@ title: Han Column Encoder
 ---
 
 <style>
+    /* Apple-style Scrollbar (Scroll-on-Demand) */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    /* Base state: invisible */
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(120, 120, 128, 0);
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+    }
+    /* Parent hover state: visible */
+    .card-container:hover .custom-scrollbar::-webkit-scrollbar-thumb,
+    .custom-scrollbar:focus::-webkit-scrollbar-thumb,
+    .custom-scrollbar:focus-within::-webkit-scrollbar-thumb {
+        background: rgba(120, 120, 128, 0.3);
+    }
+    .dark .card-container:hover .custom-scrollbar::-webkit-scrollbar-thumb,
+    .dark .custom-scrollbar:focus::-webkit-scrollbar-thumb,
+    .dark .custom-scrollbar:focus-within::-webkit-scrollbar-thumb {
+        background: rgba(156, 163, 175, 0.25);
+    }
+    /* Thumb hover state: darker */
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(120, 120, 128, 0.5) !important;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(156, 163, 175, 0.4) !important;
+    }
+
+    /* Typography & Layout */
+    .han-sans, .han-mono {
+        line-height: 1.6;
+        letter-spacing: 0.03em;
+        padding: 16px 40px 16px 16px !important;
+    }
+    .han-sans {
+        font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+        text-align: justify; 
+        text-justify: inter-character;
+    }
+    .han-mono {
+        font-family: ui-monospace, SFMono-Regular, SF Pro Text, Menlo, Monaco, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+    }
     textarea::placeholder {
         color: rgba(156, 163, 175, 0.5);
+    }
+    div[contenteditable="false"]:empty:before {
+        content: attr(placeholder);
+        color: rgba(156, 163, 175, 0.5);
+        pointer-events: none;
+        display: block;
+    }
+    
+    /* Floating Action Buttons */
+    .floating-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        opacity: 0.15; /* Subtly visible in light mode */
+        transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(229, 231, 235, 0.8);
+        color: #6b7280;
+        cursor: pointer;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        z-index: 10;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+    .dark .floating-btn {
+        background: rgba(31, 41, 55, 0.8);
+        border: 1px solid rgba(75, 85, 99, 0.8);
+        color: #9ca3af;
+        opacity: 0; /* Hidden in dark mode until hover */
+    }
+    .floating-btn:hover {
+        background: rgba(255, 255, 255, 1);
+        color: #111827;
+        transform: scale(1.05);
+    }
+    .dark .floating-btn:hover {
+        background: rgba(31, 41, 55, 1);
+        color: #f3f4f6;
+    }
+    .card-container:hover .floating-btn {
+        opacity: 0.8;
+    }
+    .card-container:hover .floating-btn:hover {
+        opacity: 1;
     }
 </style>
 
@@ -18,46 +115,62 @@ title: Han Column Encoder
         </h1>
     </header>
 
-
-
     <!-- 加密面板 (Encode Panel) -->
     <div id="encodePanel" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <!-- 左侧：原文输入与设置 -->
-        <div class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+        <div class="card-container flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
                 <label for="inputText" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
                     输入横排原文：
                 </label>
             </div>
-            <textarea id="inputText" rows="8" oninput="generateEncodedText()"
-                placeholder="请在此输入或粘贴需要转换为竖排的原文..." 
-                class="w-full h-48 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-sans resize-none mb-4"></textarea>
+            
+            <div class="relative w-full flex-1 mb-4 flex flex-col">
+                <textarea id="inputText" rows="8" oninput="generateEncodedText()"
+                    placeholder="请在此输入或粘贴需要转换为竖排的原文..." 
+                    class="han-sans custom-scrollbar w-full h-48 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none"></textarea>
+                    
+                <button onclick="clearInput()" class="floating-btn" title="清空" aria-label="清空">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2-2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
+                </button>
+            </div>
 
             <div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 border border-gray-100 dark:border-gray-850">
-                <label for="colHeight" class="text-sm font-semibold text-gray-700 dark:text-gray-300">每列字数（高）：</label>
-                <input type="number" id="colHeight" value="18" min="5" max="50" oninput="generateEncodedText()"
-                    class="w-20 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-center">
+                <label for="colHeight" class="text-sm font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">每列字数（高）：</label>
+                <div class="flex items-center gap-3 flex-1">
+                    <input type="number" id="colHeight" value="18" min="5" max="50" oninput="generateEncodedText()"
+                        class="w-20 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-center">
+                </div>
             </div>
         </div>
 
         <!-- 右侧：加密后的密文输出 -->
-        <div class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+        <div class="card-container flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
                 <label for="encodedOutput" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
                     生成的混淆密文（已将各行拼接）：
                 </label>
-                <button id="copyBtn" onclick="copyResult()" 
-                    class="px-3 py-1 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-semibold rounded-lg hover:opacity-80 transition-opacity flex items-center gap-1">
-                    <span>复制密文</span>
+            </div>
+            
+            <div class="relative w-full flex-1 flex flex-col">
+                <div id="encodedOutput" contenteditable="false" tabindex="0"
+                    placeholder="生成后的连贯密文将显示在此处..." 
+                    class="han-mono custom-scrollbar w-full h-60 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-850 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all overflow-y-auto whitespace-pre-wrap break-all"></div>
+                
+                <button id="copyBtn" onclick="copyResult()" class="floating-btn" title="复制密文" aria-label="复制密文">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
                 </button>
             </div>
-            <textarea id="encodedOutput" readonly rows="8"
-                placeholder="生成后的连贯密文将显示在此处..." 
-                class="w-full h-60 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-850 dark:text-gray-200 focus:outline-none font-mono resize-none"></textarea>
         </div>
     </div>
-
-
 </article>
 
 <script>
@@ -68,11 +181,11 @@ title: Han Column Encoder
         const colHeight = parseInt(document.getElementById('colHeight').value) || 18;
         
         if (!text) {
-            document.getElementById('encodedOutput').value = '';
+            document.getElementById('encodedOutput').textContent = '';
             return;
         }
 
-        document.getElementById('encodedOutput').value = '正在加密中...';
+        document.getElementById('encodedOutput').textContent = '正在加密中...';
         
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
@@ -103,7 +216,7 @@ title: Han Column Encoder
             if (result.success && result.data) {
                 // Check if the input still matches the text we requested to avoid race conditions
                 if (document.getElementById('inputText').value === text) {
-                    document.getElementById('encodedOutput').value = result.data.encodedText;
+                    document.getElementById('encodedOutput').textContent = result.data.encodedText;
                 }
             } else {
                 throw new Error(result.message || 'Unknown error');
@@ -111,9 +224,37 @@ title: Han Column Encoder
         } catch (error) {
             console.error('Failed to encode text:', error);
             if (document.getElementById('inputText').value === text) {
-                document.getElementById('encodedOutput').value = '加密失败，请稍后重试。';
+                document.getElementById('encodedOutput').textContent = '加密失败，请稍后重试。';
             }
         }
+    }
+
+    function clearInput() {
+        document.getElementById('inputText').value = '';
+        document.getElementById('encodedOutput').textContent = '';
+        document.getElementById('colHeight').value = 18;
+        document.getElementById('inputText').focus();
+    }
+
+    function copyResult() {
+        const output = document.getElementById('encodedOutput');
+        const textToCopy = output.textContent;
+        if (!textToCopy) return;
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            const btn = document.getElementById('copyBtn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `
+                <svg class="w-4 h-4 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            `;
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+            }, 2000);
+        }).catch(err => {
+            console.error('无法复制文本: ', err);
+        });
     }
 
     // 初始运行一次
@@ -126,7 +267,7 @@ title: Han Column Encoder
         if (e.isComposing) return; // Ignore IME composing
         
         const activeEl = document.activeElement;
-        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.getAttribute('contenteditable') === 'true')) {
             return;
         }
 

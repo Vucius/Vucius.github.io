@@ -5,8 +5,105 @@ title: Han Column Decoder
 ---
 
 <style>
+    /* Apple-style Scrollbar (Scroll-on-Demand) */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    /* Base state: invisible */
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(120, 120, 128, 0);
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+    }
+    /* Parent hover state: visible */
+    .card-container:hover .custom-scrollbar::-webkit-scrollbar-thumb,
+    .custom-scrollbar:focus::-webkit-scrollbar-thumb,
+    .custom-scrollbar:focus-within::-webkit-scrollbar-thumb {
+        background: rgba(120, 120, 128, 0.3);
+    }
+    .dark .card-container:hover .custom-scrollbar::-webkit-scrollbar-thumb,
+    .dark .custom-scrollbar:focus::-webkit-scrollbar-thumb,
+    .dark .custom-scrollbar:focus-within::-webkit-scrollbar-thumb {
+        background: rgba(156, 163, 175, 0.25);
+    }
+    /* Thumb hover state: darker */
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(120, 120, 128, 0.5) !important;
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(156, 163, 175, 0.4) !important;
+    }
+
+    /* Typography & Layout */
+    .han-input, .han-output {
+        line-height: 1.6;
+        letter-spacing: 0.03em;
+        padding: 16px 40px 16px 16px !important;
+    }
+    .han-input {
+        font-family: ui-monospace, SFMono-Regular, SF Pro Text, Menlo, Monaco, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+    }
+    .han-output {
+        font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+        text-align: justify; 
+        text-justify: inter-character;
+    }
     textarea::placeholder {
         color: rgba(156, 163, 175, 0.5);
+    }
+    div[contenteditable="false"]:empty:before {
+        content: attr(placeholder);
+        color: rgba(156, 163, 175, 0.5);
+        pointer-events: none;
+        display: block;
+    }
+    
+    /* Floating Action Buttons */
+    .floating-btn {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        opacity: 0.15; /* Subtly visible in light mode */
+        transition: opacity 0.2s ease, transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(229, 231, 235, 0.8);
+        color: #6b7280;
+        cursor: pointer;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        z-index: 10;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+    }
+    .dark .floating-btn {
+        background: rgba(31, 41, 55, 0.8);
+        border: 1px solid rgba(75, 85, 99, 0.8);
+        color: #9ca3af;
+        opacity: 0; /* Hidden in dark mode until hover */
+    }
+    .floating-btn:hover {
+        background: rgba(255, 255, 255, 1);
+        color: #111827;
+        transform: scale(1.05);
+    }
+    .dark .floating-btn:hover {
+        background: rgba(31, 41, 55, 1);
+        color: #f3f4f6;
+    }
+    .card-container:hover .floating-btn {
+        opacity: 0.8;
+    }
+    .card-container:hover .floating-btn:hover {
+        opacity: 1;
     }
 </style>
 
@@ -21,42 +118,59 @@ title: Han Column Decoder
     <!-- 主要转换区域 -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <!-- 输入面板 -->
-        <div class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+        <div class="card-container flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
                 <label for="encodedInput" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
                     输入连贯密文：
                 </label>
-                <button onclick="clearInput()" 
-                    class="text-xs text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors">
-                    清空
+            </div>
+            
+            <div class="relative w-full flex-1 mb-4 flex flex-col">
+                <textarea id="encodedInput" rows="8" oninput="decodeText(false)"
+                    placeholder="请将各行拼接后的密文粘贴到此处..." 
+                    class="han-input custom-scrollbar w-full h-48 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none"></textarea>
+                
+                <button onclick="clearInput()" class="floating-btn" title="清空" aria-label="清空">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                    </svg>
                 </button>
             </div>
-            <textarea id="encodedInput" rows="8" oninput="decodeText(false)"
-                placeholder="请将各行拼接后的密文粘贴到此处..." 
-                class="w-full h-48 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono resize-none mb-4"></textarea>
 
             <div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 border border-gray-100 dark:border-gray-850">
-                <label for="colHeight" class="text-sm font-semibold text-gray-700 dark:text-gray-300">每列字数（高）：</label>
-                <input type="number" id="colHeight" value="18" min="5" max="50" oninput="decodeText(true)"
-                    class="w-20 px-3 py-1.5 bg-white dark:bg-gray-850 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-center">
-                <span id="guessStatus" class="text-xs text-blue-500 dark:text-blue-400 font-medium select-none">自动推测中</span>
+                <label for="colHeight" class="text-sm font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">每列字数（高）：</label>
+                <div class="flex items-center gap-3 flex-1">
+                    <input type="number" id="colHeight" value="18" min="5" max="50" oninput="decodeText(true)"
+                        class="w-20 px-3 py-1.5 bg-white dark:bg-gray-850 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-center">
+                    
+                    <span id="guessStatus" class="hidden inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium select-none transition-colors duration-200"></span>
+                </div>
             </div>
         </div>
 
         <!-- 输出面板 -->
-        <div class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+        <div class="card-container flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
                 <label for="decodedOutput" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
                     还原后的横排原文：
                 </label>
-                <button id="copyBtn" onclick="copyResult()" 
-                    class="px-3 py-1 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-semibold rounded-lg hover:opacity-80 transition-opacity flex items-center gap-1">
-                    <span>复制原文</span>
+            </div>
+            
+            <div class="relative w-full flex-1 flex flex-col">
+                <div id="decodedOutput" contenteditable="false" tabindex="0"
+                    placeholder="此处将显示还原后的文本..." 
+                    class="han-output custom-scrollbar w-full h-60 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all overflow-y-auto whitespace-pre-wrap break-all"></div>
+                
+                <button id="copyBtn" onclick="copyResult()" class="floating-btn" title="复制原文" aria-label="复制原文">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
                 </button>
             </div>
-            <textarea id="decodedOutput" readonly rows="8"
-                placeholder="此处将显示还原后的文本..." 
-                class="w-full h-60 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-800 dark:text-gray-200 focus:outline-none font-sans resize-none"></textarea>
         </div>
     </div>
 
@@ -103,26 +217,48 @@ title: Han Column Decoder
 
     let decodeDebounceTimer;
 
+    const BADGE_STYLES = {
+        guessing: 'bg-blue-50 text-blue-700 border border-blue-200/50 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800/30',
+        guessed: 'bg-green-50 text-green-700 border border-green-200/50 dark:bg-green-900/30 dark:text-green-300 dark:border-green-800/30',
+        manual: 'bg-amber-50 text-amber-700 border border-amber-200/50 dark:bg-amber-900/30 dark:text-amber-300 dark:border-amber-800/30'
+    };
+    
+    function updateBadge(state, text) {
+        const badge = document.getElementById('guessStatus');
+        if (!state) {
+            badge.classList.add('hidden');
+            return;
+        }
+        badge.classList.remove('hidden');
+        
+        // Remove all state classes
+        Object.values(BADGE_STYLES).forEach(styleStr => {
+            styleStr.split(' ').forEach(cls => badge.classList.remove(cls));
+        });
+        
+        // Add new state classes
+        BADGE_STYLES[state].split(' ').forEach(cls => badge.classList.add(cls));
+        badge.textContent = text;
+    }
+
     function decodeText(isManualChange = false) {
         const input = document.getElementById('encodedInput').value;
         if (!input) {
-            document.getElementById('decodedOutput').value = '';
+            document.getElementById('decodedOutput').textContent = '';
+            updateBadge(null);
             return;
         }
         
         let colHeightInput = document.getElementById('colHeight');
         let colHeight = isManualChange ? (parseInt(colHeightInput.value) || 18) : 'auto';
         
-        const guessStatus = document.getElementById('guessStatus');
         if (!isManualChange) {
-            guessStatus.textContent = "自动推测中";
-            guessStatus.className = "text-xs text-blue-500 dark:text-blue-400 font-medium select-none";
+            updateBadge('guessing', '自动推测中');
         } else {
-            guessStatus.textContent = "已手动微调";
-            guessStatus.className = "text-xs text-amber-500 dark:text-amber-400 font-medium select-none";
+            updateBadge('manual', '已手动微调');
         }
 
-        document.getElementById('decodedOutput').value = '正在解密中...';
+        document.getElementById('decodedOutput').textContent = '正在解密中...';
 
         clearTimeout(decodeDebounceTimer);
         decodeDebounceTimer = setTimeout(() => {
@@ -146,13 +282,11 @@ title: Han Column Decoder
             
             if (response.ok && result.success && result.data) {
                 if (document.getElementById('encodedInput').value === encodedText) {
-                    document.getElementById('decodedOutput').value = result.data.text;
+                    document.getElementById('decodedOutput').textContent = result.data.text;
                     
                     if (!isManualChange && result.data.colHeight) {
                         document.getElementById('colHeight').value = result.data.colHeight;
-                        const guessStatus = document.getElementById('guessStatus');
-                        guessStatus.textContent = "已自动推测";
-                        guessStatus.className = "text-xs text-green-500 dark:text-green-400 font-medium select-none";
+                        updateBadge('guessed', '已自动推测');
                     }
                 }
             } else {
@@ -165,33 +299,34 @@ title: Han Column Decoder
         } catch (error) {
             console.error('Failed to decode text:', error);
             if (document.getElementById('encodedInput').value === encodedText) {
-                document.getElementById('decodedOutput').value = '解密失败：' + error.message;
+                document.getElementById('decodedOutput').textContent = '解密失败：' + error.message;
             }
         }
     }
 
     function clearInput() {
         document.getElementById('encodedInput').value = '';
-        document.getElementById('decodedOutput').value = '';
+        document.getElementById('decodedOutput').textContent = '';
         document.getElementById('colHeight').value = 18;
-        const guessStatus = document.getElementById('guessStatus');
-        guessStatus.textContent = "自动推测中";
-        guessStatus.className = "text-xs text-blue-500 dark:text-blue-400 font-medium select-none";
+        updateBadge(null);
         document.getElementById('encodedInput').focus();
     }
 
     function copyResult() {
         const output = document.getElementById('decodedOutput');
-        if (!output.value) return;
+        const textToCopy = output.textContent;
+        if (!textToCopy) return;
         
-        navigator.clipboard.writeText(output.value).then(() => {
+        navigator.clipboard.writeText(textToCopy).then(() => {
             const btn = document.getElementById('copyBtn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<span>已复制!</span>';
-            btn.style.opacity = '0.7';
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `
+                <svg class="w-4 h-4 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            `;
             setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.opacity = '1';
+                btn.innerHTML = originalHTML;
             }, 2000);
         }).catch(err => {
             console.error('无法复制文本: ', err);
