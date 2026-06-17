@@ -5,41 +5,13 @@ title: Han Column Encoder
 ---
 
 <style>
-    /* 仅在表格区域应用宋体和特定样式 */
-    .han-table-container {
-        overflow-x: auto;
-    }
-    .han-table {
-        border-collapse: collapse;
-        margin: 0 auto;
-        background-color: #f5f5dc; /* 宣纸/米黄底色 */
-    }
-    /* 暗色模式下的表格底色 - Cyberpunk Style */
-    .dark .han-table {
-        background-color: rgba(15, 23, 42, 0.85);
-        box-shadow: 0 0 20px rgba(79, 110, 247, 0.2);
-    }
-    .han-table td {
-        font-family: "SimSun", "STSong", serif;
-        border: 1px solid #333;
-        padding: 8px 12px;
-        text-align: center;
-        font-size: 18px;
-        width: 30px;
-        height: 30px;
-        color: #333;
-    }
-    .dark .han-table td {
-        border-color: rgba(79, 110, 247, 0.4);
-        color: #06b6d4; /* Neon cyan text */
-        text-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
-    }
     textarea::placeholder {
         color: rgba(156, 163, 175, 0.5);
     }
 </style>
 
 <article class="max-w-4xl mx-auto px-4 md:px-6 pt-6 pb-32">
+    <!-- 页面头部 -->
     <header class="text-center mb-16">
         <h1 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
             Han Column Encoder
@@ -82,80 +54,66 @@ title: Han Column Encoder
                 class="w-full h-60 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-850 dark:text-gray-200 focus:outline-none font-mono resize-none"></textarea>
         </div>
     </div>
-
-    <!-- 下方：视觉效果预览 -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
-        <h3 class="text-md font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">竖排排版视觉预览：</h3>
-        <div class="han-table-container rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-300">
-            <table id="resultTable" class="han-table w-full"></table>
-        </div>
-    </div>
 </article>
 
 <script>
+    let debounceTimer;
+
     function generateEncodedText() {
         const text = document.getElementById('inputText').value;
         const colHeight = parseInt(document.getElementById('colHeight').value) || 18;
         
         if (!text) {
             document.getElementById('encodedOutput').value = '';
-            document.getElementById('resultTable').innerHTML = '';
             return;
         }
+
+        document.getElementById('encodedOutput').value = '正在加密中...';
         
-        const N = text.length;
-        const numCols = Math.ceil(N / colHeight);
-        
-        // 1. 生成并显示各行拼接后的密文
-        let encodedResult = '';
-        for (let r = 0; r < colHeight; r++) {
-            for (let c = numCols - 1; c >= 0; c--) {
-                const idx = c * colHeight + r;
-                if (idx < N) {
-                    encodedResult += text[idx];
-                } else {
-                    encodedResult += ' '; // 用空格填充不足的部分
-                }
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            fetchEncodedText(text, colHeight);
+        }, 300);
+    }
+
+    async function fetchEncodedText(text, colHeight) {
+        try {
+            // Check if localhost or production is used
+            const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                ? 'http://localhost:3000/api/han-column-encode'
+                : 'https://vukservices.vercel.app/api/han-column-encode';
+            
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text, colHeight })
+            });
+
+            if (!response.ok) {
+                throw new Error('API request failed');
             }
-        }
-        document.getElementById('encodedOutput').value = encodedResult;
-        
-        // 2. 渲染下方视觉表格供作者参考
-        const table = document.getElementById('resultTable');
-        table.innerHTML = '';
-        
-        for (let row = 0; row < colHeight; row++) {
-            const tr = document.createElement('tr');
-            for (let col = numCols - 1; col >= 0; col--) {
-                const td = document.createElement('td');
-                const charIndex = col * colHeight + row;
-                
-                if (charIndex < N) {
-                    td.textContent = text[charIndex];
-                } else {
-                    // 空白填充格样式
-                    const isDark = document.documentElement.classList.contains('dark');
-                    td.style.backgroundColor = isDark ? 'rgba(79, 110, 247, 0.1)' : '#e8e8d3'; 
-                    td.innerHTML = '&nbsp;';
+
+            const result = await response.json();
+            if (result.success && result.data) {
+                // Check if the input still matches the text we requested to avoid race conditions
+                if (document.getElementById('inputText').value === text) {
+                    document.getElementById('encodedOutput').value = result.data.encodedText;
                 }
-                tr.appendChild(td);
+            } else {
+                throw new Error(result.message || 'Unknown error');
             }
-            table.appendChild(tr);
+        } catch (error) {
+            console.error('Failed to encode text:', error);
+            if (document.getElementById('inputText').value === text) {
+                document.getElementById('encodedOutput').value = '加密失败，请稍后重试。';
+            }
         }
     }
 
     // 初始运行一次
     generateEncodedText();
-
-    // 监听暗色模式切换，以重绘表格背景
-    const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
-            if (mutation.attributeName === 'class') {
-                generateEncodedText();
-            }
-        });
-    });
-    observer.observe(document.documentElement, { attributes: true });
 
     function copyResult() {
         const output = document.getElementById('encodedOutput');
