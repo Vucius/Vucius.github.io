@@ -6,10 +6,10 @@ permalink: /archive/
 
 <div class="max-w-4xl mx-auto px-4 md:px-6 pt-6 pb-32">
     <header class="text-center mb-16">
-        <h1 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
+        <h1 class="text-4xl md:text-5xl font-medium text-gray-900 mb-6 tracking-tight leading-tight">
             文章归档
         </h1>
-        <p class="text-xl text-gray-600 dark:text-gray-400 font-light max-w-2xl mx-auto">
+        <p class="text-xl text-gray-600 font-light max-w-2xl mx-auto">
             当时明月在，曾照彩云归。
         </p>
     </header>
@@ -20,7 +20,7 @@ permalink: /archive/
             {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
             {% for year in posts_by_year %}
             <section class="group">
-                <h2 class="text-5xl font-semibold text-gray-900 dark:text-gray-100 mb-10 tracking-tight">
+                <h2 class="text-5xl font-semibold text-gray-900 mb-10 tracking-tight">
                     {{ year.name }}
                 </h2>
                 <div class="space-y-4">
@@ -28,13 +28,11 @@ permalink: /archive/
                     <article class="group/item">
                         <a href="{{ post.url | relative_url }}" class="block transition-all duration-300">
                             <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-0">
-                                <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 
-                                    group-hover/item:text-blue-600 dark:group-hover/item:text-blue-400 
-                                    transition-colors duration-300 flex-1">
+                                <h3 class="text-lg font-medium text-gray-900 group-hover/item:text-blue-600 transition-colors duration-300 flex-1">
                                     {{ post.title }}
                                 </h3>
                                 <time datetime="{{ post.date | date_to_xmlschema }}"
-                                    class="text-sm text-gray-500 dark:text-gray-400 font-light md:ml-4">
+                                    class="text-sm text-gray-500 font-light md:ml-4">
                                     {{ post.date | date: "%b %-d" }}
                                 </time>
                             </div>
@@ -47,10 +45,10 @@ permalink: /archive/
         </div>
         {% else %}
         <div class="text-center py-16">
-            <p class="text-xl text-gray-500 dark:text-gray-400">
+            <p class="text-xl text-gray-500">
                 暂无文章
             </p>
-            <p class="text-sm text-gray-400 dark:text-gray-500 mt-2">
+            <p class="text-sm text-gray-400 mt-2">
                 在 _posts 文件夹中添加 markdown 文件即可发布文章
             </p>
         </div>

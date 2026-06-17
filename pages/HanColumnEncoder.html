@@ -25,17 +25,9 @@ title: Han Column Encoder
     .custom-scrollbar:focus-within::-webkit-scrollbar-thumb {
         background: rgba(120, 120, 128, 0.3);
     }
-    .dark .card-container:hover .custom-scrollbar::-webkit-scrollbar-thumb,
-    .dark .custom-scrollbar:focus::-webkit-scrollbar-thumb,
-    .dark .custom-scrollbar:focus-within::-webkit-scrollbar-thumb {
-        background: rgba(156, 163, 175, 0.25);
-    }
     /* Thumb hover state: darker */
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
         background: rgba(120, 120, 128, 0.5) !important;
-    }
-    .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: rgba(156, 163, 175, 0.4) !important;
     }
 
     /* Typography & Layout */
@@ -84,20 +76,10 @@ title: Han Column Encoder
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
     }
-    .dark .floating-btn {
-        background: rgba(31, 41, 55, 0.8);
-        border: 1px solid rgba(75, 85, 99, 0.8);
-        color: #9ca3af;
-        opacity: 0; /* Hidden in dark mode until hover */
-    }
     .floating-btn:hover {
         background: rgba(255, 255, 255, 1);
         color: #111827;
         transform: scale(1.05);
-    }
-    .dark .floating-btn:hover {
-        background: rgba(31, 41, 55, 1);
-        color: #f3f4f6;
     }
     .card-container:hover .floating-btn {
         opacity: 0.8;
@@ -110,7 +92,7 @@ title: Han Column Encoder
 <article class="max-w-4xl mx-auto px-4 md:px-6 pt-6 pb-32">
     <!-- 页面头部 -->
     <header class="text-center mb-16">
-        <h1 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
+        <h1 class="text-4xl md:text-5xl font-medium text-gray-900 mb-6 tracking-tight leading-tight">
             Han Column Encoder
         </h1>
     </header>
@@ -118,9 +100,9 @@ title: Han Column Encoder
     <!-- 加密面板 (Encode Panel) -->
     <div id="encodePanel" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <!-- 左侧：原文输入与设置 -->
-        <div class="card-container flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+        <div class="card-container flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm p-6 transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
-                <label for="inputText" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                <label for="inputText" class="text-sm font-semibold text-gray-700">
                     输入横排原文：
                 </label>
             </div>
@@ -128,31 +110,31 @@ title: Han Column Encoder
             <div class="relative w-full flex-1 mb-4 flex flex-col">
                 <textarea id="inputText" rows="8" oninput="generateEncodedText()"
                     placeholder="请在此输入或粘贴需要转换为竖排的原文..." 
-                    class="han-sans custom-scrollbar w-full h-48 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none"></textarea>
+                    class="han-sans custom-scrollbar w-full h-48 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none"></textarea>
                     
                 <button onclick="clearInput()" class="floating-btn" title="清空" aria-label="清空">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2-2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <path d="M19 6v14a2 2 0 0 1-2-2H7a2 2 0 0 1-2 2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                         <line x1="10" y1="11" x2="10" y2="17"></line>
                         <line x1="14" y1="11" x2="14" y2="17"></line>
                     </svg>
                 </button>
             </div>
 
-            <div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 border border-gray-100 dark:border-gray-850">
-                <label for="colHeight" class="text-sm font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">每列字数（高）：</label>
+            <div class="flex items-center gap-4 bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <label for="colHeight" class="text-sm font-semibold text-gray-700 whitespace-nowrap">每列字数（高）：</label>
                 <div class="flex items-center gap-3 flex-1">
                     <input type="number" id="colHeight" value="18" min="5" max="50" oninput="generateEncodedText()"
-                        class="w-20 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-center">
+                        class="w-20 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-center">
                 </div>
             </div>
         </div>
 
         <!-- 右侧：加密后的密文输出 -->
-        <div class="card-container flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+        <div class="card-container flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm p-6 transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
-                <label for="encodedOutput" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                <label for="encodedOutput" class="text-sm font-semibold text-gray-700">
                     生成的混淆密文（已将各行拼接）：
                 </label>
             </div>
@@ -160,7 +142,7 @@ title: Han Column Encoder
             <div class="relative w-full flex-1 flex flex-col">
                 <div id="encodedOutput" contenteditable="false" tabindex="0"
                     placeholder="生成后的连贯密文将显示在此处..." 
-                    class="han-mono custom-scrollbar w-full h-60 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-850 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all overflow-y-auto whitespace-pre-wrap break-all"></div>
+                    class="han-mono custom-scrollbar w-full h-60 bg-gray-50 border border-gray-200 rounded-xl text-gray-850 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all overflow-y-auto whitespace-pre-wrap break-all"></div>
                 
                 <button id="copyBtn" onclick="copyResult()" class="floating-btn" title="复制密文" aria-label="复制密文">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

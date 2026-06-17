@@ -25,17 +25,9 @@ title: Han Column Decoder
     .custom-scrollbar:focus-within::-webkit-scrollbar-thumb {
         background: rgba(120, 120, 128, 0.3);
     }
-    .dark .card-container:hover .custom-scrollbar::-webkit-scrollbar-thumb,
-    .dark .custom-scrollbar:focus::-webkit-scrollbar-thumb,
-    .dark .custom-scrollbar:focus-within::-webkit-scrollbar-thumb {
-        background: rgba(156, 163, 175, 0.25);
-    }
     /* Thumb hover state: darker */
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
         background: rgba(120, 120, 128, 0.5) !important;
-    }
-    .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: rgba(156, 163, 175, 0.4) !important;
     }
 
     /* Typography & Layout */
@@ -84,20 +76,10 @@ title: Han Column Decoder
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
     }
-    .dark .floating-btn {
-        background: rgba(31, 41, 55, 0.8);
-        border: 1px solid rgba(75, 85, 99, 0.8);
-        color: #9ca3af;
-        opacity: 0; /* Hidden in dark mode until hover */
-    }
     .floating-btn:hover {
         background: rgba(255, 255, 255, 1);
         color: #111827;
         transform: scale(1.05);
-    }
-    .dark .floating-btn:hover {
-        background: rgba(31, 41, 55, 1);
-        color: #f3f4f6;
     }
     .card-container:hover .floating-btn {
         opacity: 0.8;
@@ -110,7 +92,7 @@ title: Han Column Decoder
 <article class="max-w-4xl mx-auto px-4 md:px-6 pt-6 pb-32">
     <!-- 页面头部 -->
     <header class="text-center mb-16">
-        <h1 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
+        <h1 class="text-4xl md:text-5xl font-medium text-gray-900 mb-6 tracking-tight leading-tight">
             Han Column Decoder
         </h1>
     </header>
@@ -118,9 +100,9 @@ title: Han Column Decoder
     <!-- 主要转换区域 -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <!-- 输入面板 -->
-        <div class="card-container flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+        <div class="card-container flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm p-6 transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
-                <label for="encodedInput" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                <label for="encodedInput" class="text-sm font-semibold text-gray-700">
                     输入连贯密文：
                 </label>
             </div>
@@ -128,7 +110,7 @@ title: Han Column Decoder
             <div class="relative w-full flex-1 mb-4 flex flex-col">
                 <textarea id="encodedInput" rows="8" oninput="decodeText(false)"
                     placeholder="请将各行拼接后的密文粘贴到此处..." 
-                    class="han-input custom-scrollbar w-full h-48 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none"></textarea>
+                    class="han-input custom-scrollbar w-full h-48 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all resize-none"></textarea>
                 
                 <button onclick="clearInput()" class="floating-btn" title="清空" aria-label="清空">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -140,11 +122,11 @@ title: Han Column Decoder
                 </button>
             </div>
 
-            <div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 border border-gray-100 dark:border-gray-850">
-                <label for="colHeight" class="text-sm font-semibold text-gray-700 dark:text-gray-300 whitespace-nowrap">每列字数（高）：</label>
+            <div class="flex items-center gap-4 bg-gray-50 rounded-xl p-4 border border-gray-100">
+                <label for="colHeight" class="text-sm font-semibold text-gray-700 whitespace-nowrap">每列字数（高）：</label>
                 <div class="flex items-center gap-3 flex-1">
                     <input type="number" id="colHeight" value="18" min="5" max="50" oninput="decodeText(true)"
-                        class="w-20 px-3 py-1.5 bg-white dark:bg-gray-850 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-center">
+                        class="w-20 px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-center">
                     
                     <span id="guessStatus" class="hidden inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium select-none transition-colors duration-200"></span>
                 </div>
@@ -152,9 +134,9 @@ title: Han Column Decoder
         </div>
 
         <!-- 输出面板 -->
-        <div class="card-container flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+        <div class="card-container flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm p-6 transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
-                <label for="decodedOutput" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                <label for="decodedOutput" class="text-sm font-semibold text-gray-700">
                     还原后的横排原文：
                 </label>
             </div>
@@ -162,7 +144,7 @@ title: Han Column Decoder
             <div class="relative w-full flex-1 flex flex-col">
                 <div id="decodedOutput" contenteditable="false" tabindex="0"
                     placeholder="此处将显示还原后的文本..." 
-                    class="han-output custom-scrollbar w-full h-60 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all overflow-y-auto whitespace-pre-wrap break-all"></div>
+                    class="han-output custom-scrollbar w-full h-60 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all overflow-y-auto whitespace-pre-wrap break-all"></div>
                 
                 <button id="copyBtn" onclick="copyResult()" class="floating-btn" title="复制原文" aria-label="复制原文">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -175,14 +157,14 @@ title: Han Column Decoder
     </div>
 
     <!-- 提示面板 -->
-    <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm transition-colors duration-300">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+    <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm transition-colors duration-300">
+        <h3 class="text-lg font-semibold text-gray-900 mb-3 flex items-center gap-2">
             <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
             </svg>
             使用提示：
         </h3>
-        <ul class="list-disc list-inside space-y-2 text-sm text-gray-600 dark:text-gray-400 font-light">
+        <ul class="list-disc list-inside space-y-2 text-sm text-gray-600 font-light">
             <li><strong>自动推测列高</strong>：本工具会根据粘贴密文末尾的空格分布特征，自动分析并推测出生成时所用的“每列字数（高）”，省去手动配置的麻烦。</li>
             <li><strong>密文格式要求</strong>：请粘贴完整的、连贯无换行的原始密文。密文如果包含了额外的物理换行或制表符，会被直接视为密文字符处理，可能导致还原出错（解密者需自行对密文完整度负责）。</li>
             <li><strong>手动微调</strong>：如果自动推测的结果有偏差，您也可以直接在左下角修改“每列字数（高）”进行手动解密。</li>
@@ -290,11 +272,11 @@ title: Han Column Decoder
                     }
                 }
             } else {
-                throw new Error(result.message || 'Unknown error');
-                // Redirect if session expired
                 if (response.status === 403) {
                      window.location.href = '/hancolumnencoder/';
+                     return;
                 }
+                throw new Error(result.message || 'Unknown error');
             }
         } catch (error) {
             console.error('Failed to decode text:', error);

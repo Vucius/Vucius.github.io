@@ -2,8 +2,6 @@
 layout: default
 ---
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@100..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&f[]=general-sans@200,300,400,500,600,700&f[]=clash-display@200,300,400,500,600,700&f[]=boska@200,300,400,500,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ '/assets/css/home-theme.css' | relative_url }}">
@@ -311,10 +309,10 @@ layout: default
     <!-- Hero Section -->
     <header class="text-center mb-32 sm:mb-40 select-none relative">
         <div class="max-w-4xl mx-auto space-y-4 sm:space-y-6">
-            <h1 class="text-3xl sm:text-4xl md:text-7xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h1 class="text-3xl sm:text-4xl md:text-7xl font-bold tracking-tight text-gray-900">
                 {{ site.title }}
             </h1>
-            <p class="text-xl md:text-2xl text-gray-500 dark:text-gray-400 font-light">
+            <p class="text-xl md:text-2xl text-gray-500 font-light">
                 I Am What I Am
             </p>
         </div>
@@ -322,24 +320,24 @@ layout: default
         <!-- 滚动提示指示器 -->
         <div class="fixed bottom-4 z-10" style="left: 50%; transform: translateX(-50%);">
             <div id="navScrollNotice" aria-hidden="true"
-                class="h-2 w-16 bg-black/60 dark:bg-white/40 rounded-full transition-opacity duration-500 animate-floatY">
+                class="h-2 w-16 bg-black/60 rounded-full transition-opacity duration-500 animate-floatY">
             </div>
         </div>
     </header>
 
     <!-- 滚动文字动画 1 -->
     <section class="my-48 sm:my-80">
-        <div class="scroll-text text-center text-3xl sm:text-4xl md:text-6xl font-bold text-gray-800 dark:text-gray-300 select-none"
+        <div class="scroll-text text-center text-3xl sm:text-4xl md:text-6xl font-bold text-gray-800 select-none"
             data-text="人生天地之间，若白驹过隙，忽然而已"></div>
     </section>
 
     <!-- About Section -->
     <section class="my-32 sm:my-48">
         <div class="text-center mb-16 sm:mb-20 select-none">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 About Me
             </h2>
-            <p class="text-lg sm:text-xl text-gray-500 dark:text-gray-400 font-light mb-6">
+            <p class="text-lg sm:text-xl text-gray-500 font-light mb-6">
                 I Am What I Am
             </p>
         </div>
@@ -363,17 +361,17 @@ layout: default
 
                     <div class="profile-socials">
                         <a href="mailto:{{ site.email }}"
-                            class="social-btn w-9 h-9 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
+                            class="social-btn w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center hover:bg-white transition-all"
                             title="Email">
                             <span class="icon-svg">{% include icons/mail.svg %}</span>
                         </a>
                         <a href="https://github.com/{{ site.github_username }}" target="_blank"
-                            class="social-btn w-9 h-9 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
+                            class="social-btn w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center hover:bg-white transition-all"
                             title="GitHub">
                             <span class="icon-svg">{% include icons/github.svg %}</span>
                         </a>
                         <a href="https://twitter.com/{{ site.twitter_username }}" target="_blank"
-                            class="social-btn w-9 h-9 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-gray-600 transition-all"
+                            class="social-btn w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center hover:bg-white transition-all"
                             title="Twitter">
                             <span class="icon-svg">{% include icons/twitter.svg %}</span>
                         </a>
@@ -488,50 +486,50 @@ layout: default
 
     <!-- 滚动文字动画 2 -->
     <section class="my-48 sm:my-80">
-        <div class="scroll-text text-center text-3xl sm:text-4xl md:text-6xl font-bold text-gray-800 dark:text-gray-300 select-none"
+        <div class="scroll-text text-center text-3xl sm:text-4xl md:text-6xl font-bold text-gray-800 select-none"
             data-text="持续学习，以代码编织世界"></div>
     </section>
 
     <!-- Projects Section -->
     <section id="projects" class="my-32 sm:my-48 scroll-mt-24">
         <div class="text-center mb-16 sm:mb-20">
-            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 select-none">
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4 select-none">
                 Projects
             </h2>
-            <p class="text-sm sm:text-base text-gray-500 dark:text-gray-400 font-light mb-6">
+            <p class="text-sm sm:text-base text-gray-500 font-light mb-6">
                 Building, Contributing, Learning
             </p>
         </div>
 
         <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             <!-- p1 -->
-            <a href="https://github.com/lbjlaq/Antigravity-Manager/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="block p-6 bg-gray-50 dark:bg-gray-800 rounded-2xl transition-colors duration-300 group">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">lbjlaq/Antigravity-Manager</h3>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-3" title="A desktop AI gateway converting Gemini/Claude sessions into APIs with multi-account rotation.">
+            <a href="https://github.com/lbjlaq/Antigravity-Manager/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="block p-6 bg-gray-50 rounded-2xl transition-colors duration-300 group">
+                <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">lbjlaq/Antigravity-Manager</h3>
+                <p class="text-gray-700 leading-relaxed line-clamp-3" title="A desktop AI gateway converting Gemini/Claude sessions into APIs with multi-account rotation.">
                     A desktop AI gateway converting Gemini/Claude sessions into APIs with multi-account rotation.
                 </p>
             </a>
 
             <!-- p2 -->
-            <a href="https://github.com/Vucius/Sudoku_demo/blob/master/README.md" target="_blank" rel="noopener noreferrer" class="block p-6 bg-gray-50 dark:bg-gray-800 rounded-2xl transition-colors duration-300 group">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Sudoku_demo</h3>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-3" title="A Qt-based desktop Sudoku solver using computer vision and constraint propagation.">
+            <a href="https://github.com/Vucius/Sudoku_demo/blob/master/README.md" target="_blank" rel="noopener noreferrer" class="block p-6 bg-gray-50 rounded-2xl transition-colors duration-300 group">
+                <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Sudoku_demo</h3>
+                <p class="text-gray-700 leading-relaxed line-clamp-3" title="A Qt-based desktop Sudoku solver using computer vision and constraint propagation.">
                     A Qt-based desktop Sudoku solver using computer vision and constraint propagation.
                 </p>
             </a>
 
             <!-- p3 -->
-            <a href="https://github.com/Vucius/Gomoku_Avalonia" target="_blank" rel="noopener noreferrer" class="block p-6 bg-gray-50 dark:bg-gray-800 rounded-2xl transition-colors duration-300 group">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Gomoku_Avalonia</h3>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-3" title="A cross-platform Gomoku game client built with Avalonia UI and .NET 10, featuring remote AI play.">
+            <a href="https://github.com/Vucius/Gomoku_Avalonia" target="_blank" rel="noopener noreferrer" class="block p-6 bg-gray-50 rounded-2xl transition-colors duration-300 group">
+                <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">Gomoku_Avalonia</h3>
+                <p class="text-gray-700 leading-relaxed line-clamp-3" title="A cross-platform Gomoku game client built with Avalonia UI and .NET 10, featuring remote AI play.">
                     A cross-platform Gomoku game client built with Avalonia UI and .NET 10, featuring remote AI play.
                 </p>
             </a>
 
             <!-- p4 -->
-            <a href="https://github.com/Vucius/PPT_Agent_Rust" target="_blank" rel="noopener noreferrer" class="block p-6 bg-gray-50 dark:bg-gray-800 rounded-2xl transition-colors duration-300 group">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">PPT_Agent_Rust</h3>
-                <p class="text-gray-700 dark:text-gray-300 leading-relaxed line-clamp-3" title="A Rust client for Marker that intelligently schedules multiple LLM quotas to efficiently convert PDFs, images, and Office docs into structured formats like Markdown.">
+            <a href="https://github.com/Vucius/PPT_Agent_Rust" target="_blank" rel="noopener noreferrer" class="block p-6 bg-gray-50 rounded-2xl transition-colors duration-300 group">
+                <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">PPT_Agent_Rust</h3>
+                <p class="text-gray-700 leading-relaxed line-clamp-3" title="A Rust client for Marker that intelligently schedules multiple LLM quotas to efficiently convert PDFs, images, and Office docs into structured formats like Markdown.">
                     A Rust client for Marker that intelligently schedules multiple LLM quotas to efficiently convert PDFs, images, and Office docs into structured formats like Markdown.
                 </p>
             </a>

@@ -47,16 +47,16 @@ permalink: /about/
 
 <div class="max-w-4xl mx-auto px-4 md:px-6 pt-6 pb-32">
     <header class="text-center mb-16">
-        <h1 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
+        <h1 class="text-4xl md:text-5xl font-medium text-gray-900 mb-6 tracking-tight leading-tight">
             むめい
         </h1>
-        <p class="text-xl text-gray-600 dark:text-gray-400 font-light max-w-2xl mx-auto">
+        <p class="text-xl text-gray-600 font-light max-w-2xl mx-auto">
             Peter Vucius
         </p>
     </header>
     
     <section class="space-y-8">
-        <div class="prose prose-lg max-w-none dark:prose-invert">
+        <div class="prose prose-lg max-w-none">
             <h2>人となり</h2>
             <p>世俗の欲望を断ち切れない</p>
             <p>Don Quijote に憧れるが、私は永遠に彼にはなれない</p>

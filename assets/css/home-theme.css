@@ -236,11 +236,6 @@ body.home-theme-active .inline-flex.items-center.text-gray-900:hover {
     color: var(--home-theme-accent) !important;
 }
 
-/* ===== Theme Toggle ===== */
-body.home-theme-active .theme-toggle {
-    display: none !important;
-}
-
 /* ===== Social Buttons ===== */
 body.home-theme-active .social-btn {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;

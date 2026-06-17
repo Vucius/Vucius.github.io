@@ -2,8 +2,6 @@
 layout: default
 ---
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ '/assets/css/post-theme.css' | relative_url }}">
 
@@ -26,14 +24,6 @@ layout: default
                 primary: "#457053",
                 border: "#cbd6d3",
                 text: "#1C1C1C"
-            },
-            {
-                name: "寒潭孤剑",
-                keywords: "清冷、克制、文人、现代国风",
-                bg: "#E2ECE9",
-                primary: "#16345C",
-                border: "#cbd6d3",
-                text: "#1A2E40"
             }
         ];
 
@@ -56,10 +46,10 @@ layout: default
 
 <article class="max-w-4xl mx-auto px-4 md:px-6 pt-10 pb-32">
     <header class="mb-12 text-center">
-        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4 tracking-tight">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
             {{ page.title }}
         </h1>
-        <div class="flex items-center justify-center gap-4 text-gray-600 dark:text-gray-400">
+        <div class="flex items-center justify-center gap-4 text-gray-600">
             <time datetime="{{ page.date | date_to_xmlschema }}">
                 {{ page.date | date: "%Y年%m月%d日" }}
             </time>
@@ -71,7 +61,7 @@ layout: default
         {% if page.categories.size > 0 %}
         <div class="mt-4 flex flex-wrap justify-center gap-2">
             {% for category in page.categories %}
-            <span class="post-category-tag px-3 py-1 text-sm rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
+            <span class="post-category-tag px-3 py-1 text-sm rounded-full bg-blue-100 text-blue-800">
                 {{ category }}
             </span>
             {% endfor %}
@@ -80,14 +70,14 @@ layout: default
     </header>
 
     <div
-        class="prose prose-lg max-w-none dark:prose-invert prose-headings:text-gray-900 dark:prose-headings:text-gray-100">
+        class="prose prose-lg max-w-none prose-headings:text-gray-900">
         {{ content }}
     </div>
 
-    <footer class="mt-12 pt-8 border-t border-gray-200 dark:border-gray-700">
+    <footer class="mt-12 pt-8 border-t border-gray-200">
         <div class="flex justify-between items-center">
             {% if page.previous.url %}
-            <a href="{{ page.previous.url | relative_url }}" class="text-blue-600 dark:text-blue-400 hover:underline">
+            <a href="{{ page.previous.url | relative_url }}" class="text-blue-600 hover:underline">
                 ← {{ page.previous.title }}
             </a>
             {% else %}
@@ -95,7 +85,7 @@ layout: default
             {% endif %}
 
             {% if page.next.url %}
-            <a href="{{ page.next.url | relative_url }}" class="text-blue-600 dark:text-blue-400 hover:underline">
+            <a href="{{ page.next.url | relative_url }}" class="text-blue-600 hover:underline">
                 {{ page.next.title }} →
             </a>
             {% else %}
@@ -103,4 +93,4 @@ layout: default
             {% endif %}
         </div>
     </footer>
-</article>
+</article>
