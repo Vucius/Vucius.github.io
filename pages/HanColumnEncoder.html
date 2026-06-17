@@ -34,6 +34,9 @@ title: Han Column Encoder
         color: #06b6d4; /* Neon cyan text */
         text-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
     }
+    textarea::placeholder {
+        color: rgba(156, 163, 175, 0.5);
+    }
 </style>
 
 <article class="max-w-4xl mx-auto px-4 md:px-6 pt-6 pb-32">
@@ -47,70 +50,132 @@ title: Han Column Encoder
         </p>
     </header>
 
-    <!-- 控制面板 -->
-    <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-6 mb-12 flex flex-col sm:flex-row items-center justify-center gap-4 border border-gray-100 dark:border-gray-700 shadow-sm transition-colors duration-300">
-        <label for="colHeight" class="text-gray-700 dark:text-gray-300 font-medium">每列字数：</label>
-        <input type="number" id="colHeight" value="20" min="5" max="50" 
-            class="w-24 px-3 py-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-colors">
-        <button onclick="regenerateTable()" 
-            class="px-6 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-medium rounded-full hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-gray-500/50">
-            重新生成
-        </button>
+    <!-- 输入面板与控制区 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <!-- 左侧：原文输入与设置 -->
+        <div class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <label for="inputText" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    输入横排原文：
+                </label>
+            </div>
+            <textarea id="inputText" rows="8" oninput="generateEncodedText()"
+                placeholder="请在此输入或粘贴需要转换为竖排的原文..." 
+                class="w-full h-48 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-sans resize-none mb-4">神州气数已终问鼎寰球之机逝矣察其民情犹盲信昔日之故神殊不知此神者实万恶之首灭世之魁昔其当政决断乖谬致千万生灵涂炭国力大损文明倒退数十载及其殁继之者讳其恶掩其迹禁万民述其真史致使今日之世愚民犹对朽像尸祝膜拜以此为尊执迷弗悟诚积重难返也夫天下无生而为奴者盖因慷慷英雄已死绝存者之众清醒者则柔懦自保冥顽者则倒行逆施至若今日之王德薄而位尊才疏而好战既无远瞩之决断又多怙过之成见致国势日蹙危如累卵王道既穷终焉之途唯余穷兵黩武而已</textarea>
+
+            <div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 border border-gray-100 dark:border-gray-850">
+                <label for="colHeight" class="text-sm font-semibold text-gray-700 dark:text-gray-300">每列字数（高）：</label>
+                <input type="number" id="colHeight" value="18" min="5" max="50" oninput="generateEncodedText()"
+                    class="w-20 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-center">
+            </div>
+        </div>
+
+        <!-- 右侧：加密后的密文输出 -->
+        <div class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <label for="encodedOutput" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    生成的混淆密文（已将各行拼接）：
+                </label>
+                <button id="copyBtn" onclick="copyResult()" 
+                    class="px-3 py-1 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-semibold rounded-lg hover:opacity-80 transition-opacity flex items-center gap-1">
+                    <span>复制密文</span>
+                </button>
+            </div>
+            <textarea id="encodedOutput" readonly rows="8"
+                placeholder="生成后的连贯密文将显示在此处..." 
+                class="w-full h-60 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-850 dark:text-gray-200 focus:outline-none font-mono resize-none"></textarea>
+        </div>
     </div>
 
-    <!-- 结果展示区 -->
-    <div class="han-table-container rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-300">
-        <table id="resultTable" class="han-table w-full"></table>
+    <!-- 下方：视觉效果预览 -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+        <h3 class="text-md font-semibold text-gray-700 dark:text-gray-300 mb-6 text-center">竖排排版视觉预览：</h3>
+        <div class="han-table-container rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700 shadow-sm transition-colors duration-300">
+            <table id="resultTable" class="han-table w-full"></table>
+        </div>
     </div>
+</article>
 
-    <script>
-        const originalText = `神州气数已终问鼎寰球之机逝矣察其民情犹盲信昔日之故神殊不知此神者实万恶之首灭世之魁昔其当政决断乖谬致千万生灵涂炭国力大损文明倒退数十载及其殁继之者讳其恶掩其迹禁万民述其真史致使今日之世愚民犹对朽像尸祝膜拜以此为尊执迷弗悟诚积重难返也夫天下无生而为奴者盖因慷慷英雄已死绝存者之众清醒者则柔懦自保冥顽者则倒行逆施至若今日之王德薄而位尊才疏而好战既无远瞩之决断又多怙过之成见致国势日蹙危如累卵王道既穷终焉之途唯余穷兵黩武而已`;
-
-        function regenerateTable() {
-            const colHeight = parseInt(document.getElementById('colHeight').value) || 20;
-            const table = document.getElementById('resultTable');
-            table.innerHTML = '';
-            
-            // 计算需要多少列
-            const totalChars = originalText.length;
-            const numCols = Math.ceil(totalChars / colHeight);
-            
-            // 创建表格：每行代表一个高度位置，每列代表一个竖列
-            for (let row = 0; row < colHeight; row++) {
-                const tr = document.createElement('tr');
-                
-                // 从右到左填充列（倒序）
-                for (let col = numCols - 1; col >= 0; col--) {
-                    const td = document.createElement('td');
-                    const charIndex = col * colHeight + row;
-                    
-                    if (charIndex < totalChars) {
-                        td.textContent = originalText[charIndex];
-                    } else {
-                        // 空白填充格的颜色
-                        const isDark = document.documentElement.classList.contains('dark');
-                        td.style.backgroundColor = isDark ? 'rgba(79, 110, 247, 0.1)' : '#e8e8d3'; 
-                        td.innerHTML = '&nbsp;';
-                    }
-                    
-                    tr.appendChild(td);
+<script>
+    function generateEncodedText() {
+        const text = document.getElementById('inputText').value;
+        const colHeight = parseInt(document.getElementById('colHeight').value) || 18;
+        
+        if (!text) {
+            document.getElementById('encodedOutput').value = '';
+            document.getElementById('resultTable').innerHTML = '';
+            return;
+        }
+        
+        const N = text.length;
+        const numCols = Math.ceil(N / colHeight);
+        
+        // 1. 生成并显示各行拼接后的密文
+        let encodedResult = '';
+        for (let r = 0; r < colHeight; r++) {
+            for (let c = numCols - 1; c >= 0; c--) {
+                const idx = c * colHeight + r;
+                if (idx < N) {
+                    encodedResult += text[idx];
+                } else {
+                    encodedResult += ' '; // 用空格填充不足的部分
                 }
-                
-                table.appendChild(tr);
             }
         }
-
-        // 初始生成
-        regenerateTable();
-
-        // 监听暗色模式切换，重新渲染以更新空白格颜色
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                if (mutation.attributeName === 'class') {
-                    regenerateTable();
+        document.getElementById('encodedOutput').value = encodedResult;
+        
+        // 2. 渲染下方视觉表格供作者参考
+        const table = document.getElementById('resultTable');
+        table.innerHTML = '';
+        
+        for (let row = 0; row < colHeight; row++) {
+            const tr = document.createElement('tr');
+            for (let col = numCols - 1; col >= 0; col--) {
+                const td = document.createElement('td');
+                const charIndex = col * colHeight + row;
+                
+                if (charIndex < N) {
+                    td.textContent = text[charIndex];
+                } else {
+                    // 空白填充格样式
+                    const isDark = document.documentElement.classList.contains('dark');
+                    td.style.backgroundColor = isDark ? 'rgba(79, 110, 247, 0.1)' : '#e8e8d3'; 
+                    td.innerHTML = '&nbsp;';
                 }
-            });
+                tr.appendChild(td);
+            }
+            table.appendChild(tr);
+        }
+    }
+
+    // 初始运行一次
+    generateEncodedText();
+
+    // 监听暗色模式切换，以重绘表格背景
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.attributeName === 'class') {
+                generateEncodedText();
+            }
         });
-        observer.observe(document.documentElement, { attributes: true });
-    </script>
-</article>
+    });
+    observer.observe(document.documentElement, { attributes: true });
+
+    function copyResult() {
+        const output = document.getElementById('encodedOutput');
+        if (!output.value) return;
+        
+        navigator.clipboard.writeText(output.value).then(() => {
+            const btn = document.getElementById('copyBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span>已复制!</span>';
+            btn.style.opacity = '0.7';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+            }, 2000);
+        }).catch(err => {
+            console.error('无法复制文本: ', err);
+        });
+    }
+</script>

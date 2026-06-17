@@ -18,7 +18,7 @@ title: Han Column Decoder
             Han Column Decoder
         </h1>
         <p class="text-xl text-gray-600 dark:text-gray-400 font-light max-w-2xl mx-auto">
-            古文竖排格式还原器 — 将竖排文本还原为横排原文
+            古文竖排格式还原器 — 将混淆后的竖排密文还原为横排原文
         </p>
     </header>
 
@@ -28,16 +28,23 @@ title: Han Column Decoder
         <div class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
                 <label for="encodedInput" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    输入竖排文本 / 表格：
+                    输入连贯密文：
                 </label>
                 <button onclick="clearInput()" 
                     class="text-xs text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors">
                     清空
                 </button>
             </div>
-            <textarea id="encodedInput" rows="12" oninput="decodeText()"
-                placeholder="请直接复制竖排表格或文本并粘贴到此处...&#10;例如：&#10;第  且  昔&#10;二  步  其&#10;。  观  当&#10;    之  政" 
-                class="w-full h-80 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono resize-none"></textarea>
+            <textarea id="encodedInput" rows="8" oninput="decodeText(false)"
+                placeholder="请将各行拼接后的密文粘贴到此处..." 
+                class="w-full h-48 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono resize-none mb-4"></textarea>
+
+            <div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-900 rounded-xl p-4 border border-gray-100 dark:border-gray-850">
+                <label for="colHeight" class="text-sm font-semibold text-gray-700 dark:text-gray-300">每列字数（高）：</label>
+                <input type="number" id="colHeight" value="18" min="5" max="50" oninput="decodeText(true)"
+                    class="w-20 px-3 py-1.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all text-center">
+                <span id="guessStatus" class="text-xs text-blue-500 dark:text-blue-400 font-medium select-none">自动推测中</span>
+            </div>
         </div>
 
         <!-- 输出面板 -->
@@ -51,9 +58,9 @@ title: Han Column Decoder
                     <span>复制原文</span>
                 </button>
             </div>
-            <textarea id="decodedOutput" readonly rows="12"
+            <textarea id="decodedOutput" readonly rows="8"
                 placeholder="此处将显示还原后的文本..." 
-                class="w-full h-80 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-800 dark:text-gray-200 focus:outline-none font-mono resize-none"></textarea>
+                class="w-full h-60 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-800 dark:text-gray-200 focus:outline-none font-mono resize-none"></textarea>
         </div>
     </div>
 
@@ -66,88 +73,130 @@ title: Han Column Decoder
             使用提示：
         </h3>
         <ul class="list-disc list-inside space-y-2 text-sm text-gray-600 dark:text-gray-400 font-light">
-            <li><strong>表格还原</strong>：直接从竖排页面中拖动鼠标选中表格，复制并粘贴到输入框中，程序将自动以制表符为界进行按列还原。</li>
-            <li><strong>普通文本还原</strong>：如果您粘贴的是纯文本类型的竖排内容，只要每一行的字符数量与列数排列整齐，程序也会自动进行识别转换。</li>
-            <li><strong>自动识别</strong>：本工具会在您粘贴或输入时进行<strong>实时自动解密</strong>，无需手动点击。</li>
+            <li><strong>自动推测列高</strong>：本工具会根据粘贴密文末尾的空格分布特征，自动分析并推测出生成时所用的“每列字数（高）”，省去手动配置的麻烦。</li>
+            <li><strong>密文格式要求</strong>：请粘贴完整的、连贯无换行的原始密文。密文如果包含了额外的物理换行或制表符，会被直接视为密文字符处理，可能导致还原出错（解密者需自行对密文完整度负责）。</li>
+            <li><strong>手动微调</strong>：如果自动推测的结果有偏差，您也可以直接在左下角修改“每列字数（高）”进行手动解密。</li>
         </ul>
     </div>
 </article>
 
 <script>
-    function decodeText() {
+    // 根据密文末尾空格分布特征推测 colHeight (行数)
+    function guessColHeight(text) {
+        const L = text.length;
+        if (L === 0) return 18;
+        
+        let bestH = null;
+        let maxP = -1;
+        let candidates = [];
+        
+        // 查找所有在 [5, 50] 范围内的整除因数
+        for (let h = 5; h <= 50; h++) {
+            if (L % h === 0) {
+                const c = L / h;
+                let P = 0;
+                // 从矩阵最底部的行向上扫描 Visual Column 0 (即原 Column C - 1) 的空格数
+                for (let r = h - 1; r >= 0; r--) {
+                    if (text[r * c] === ' ') {
+                        P++;
+                    } else {
+                        break;
+                    }
+                }
+                // 填充空格数必须小于总高度 h (因为最后一列不可能全空)
+                if (P < h) {
+                    candidates.push({ h, P });
+                }
+            }
+        }
+        
+        // 优先选择匹配到填充空格数最多 (P > 0) 的高度 candidate
+        for (let cand of candidates) {
+            if (cand.P > 0 && cand.P > maxP) {
+                maxP = cand.P;
+                bestH = cand.h;
+            }
+        }
+        
+        // 如果没有找到带空格填充的因数，则使用回退策略
+        if (bestH === null) {
+            if (candidates.some(cand => cand.h === 18)) {
+                bestH = 18;
+            } else if (candidates.length > 0) {
+                // 优先选择最接近 18 的因数
+                candidates.sort((a, b) => Math.abs(a.h - 18) - Math.abs(b.h - 18));
+                bestH = candidates[0].h;
+            } else {
+                bestH = 18;
+            }
+        }
+        
+        return bestH;
+    }
+
+    function decodeText(isManualChange = false) {
         const input = document.getElementById('encodedInput').value;
         if (!input) {
             document.getElementById('decodedOutput').value = '';
             return;
         }
         
-        // 分割行，并过滤回车符
-        const lines = input.split('\n').map(l => l.replace('\r', ''));
+        let colHeightInput = document.getElementById('colHeight');
+        let colHeight = parseInt(colHeightInput.value) || 18;
+        const guessStatus = document.getElementById('guessStatus');
+        
+        // 只有在非手动更改高度输入框时，才进行自动推测
+        if (!isManualChange) {
+            colHeight = guessColHeight(input);
+            colHeightInput.value = colHeight;
+            guessStatus.textContent = "已自动推测";
+            guessStatus.className = "text-xs text-green-500 dark:text-green-400 font-medium select-none";
+        } else {
+            guessStatus.textContent = "已手动微调";
+            guessStatus.className = "text-xs text-amber-500 dark:text-amber-400 font-medium select-none";
+        }
+        
+        const L = input.length;
+        
+        // 将密文长度补齐为 colHeight 的倍数以防溢出
+        let paddedInput = input;
+        const rem = L % colHeight;
+        if (rem !== 0) {
+            paddedInput = input + ' '.repeat(colHeight - rem);
+        }
+        const C = paddedInput.length / colHeight;
+        
+        // 构建行切片矩阵
         let grid = [];
-        
-        // 检测分隔符：优先检查是否含制表符（来自HTML表格拷贝）
-        let hasTab = lines.some(line => line.includes('\t'));
-        
-        for (let line of lines) {
-            // 忽略开头完全为空的行
-            if (grid.length === 0 && line.trim() === '') continue;
-            
-            let cells = [];
-            if (hasTab) {
-                cells = line.split('\t');
-            } else {
-                const trimmed = line.trim();
-                // 检查是否是用空格分隔的
-                if (trimmed.includes(' ')) {
-                    cells = line.split(/\s+/);
-                } else {
-                    // 没有空格则将每个字符视为一列
-                    cells = Array.from(line);
-                }
-            }
-            grid.push(cells);
+        for (let r = 0; r < colHeight; r++) {
+            const start = r * C;
+            const end = start + C;
+            grid.push(Array.from(paddedInput.slice(start, end)));
         }
         
-        // 过滤掉末尾全为空的行
-        while (grid.length > 0 && grid[grid.length - 1].every(cell => cell.trim() === '')) {
-            grid.pop();
-        }
-        
-        if (grid.length === 0) {
-            document.getElementById('decodedOutput').value = '';
-            return;
-        }
-        
-        const numRows = grid.length;
-        const numCols = Math.max(...grid.map(row => row.length));
-        
-        // 对齐各行宽度
-        for (let r = 0; r < numRows; r++) {
-            while (grid[r].length < numCols) {
-                grid[r].push('');
-            }
-        }
-        
-        // 从右向左按列还原，再逐行拼接 (Visual Column = numCols - 1 - col)
+        // 按原顺序从右往左还原各列字符
         let result = '';
-        for (let col = 0; col < numCols; col++) {
-            let vc = numCols - 1 - col;
-            for (let row = 0; row < numRows; row++) {
+        for (let col = 0; col < C; col++) {
+            let vc = C - 1 - col;
+            for (let row = 0; row < colHeight; row++) {
                 let cell = grid[row][vc];
                 if (cell !== undefined) {
-                    let char = cell.replace(/\u00a0/g, ' '); // 替换不换行空格
+                    let char = cell.replace(/\u00a0/g, ' ');
                     result += char;
                 }
             }
         }
         
-        // 去除末尾的填充空格并显示
         document.getElementById('decodedOutput').value = result.trimEnd();
     }
 
     function clearInput() {
         document.getElementById('encodedInput').value = '';
         document.getElementById('decodedOutput').value = '';
+        document.getElementById('colHeight').value = 18;
+        const guessStatus = document.getElementById('guessStatus');
+        guessStatus.textContent = "自动推测中";
+        guessStatus.className = "text-xs text-blue-500 dark:text-blue-400 font-medium select-none";
         document.getElementById('encodedInput').focus();
     }
 
