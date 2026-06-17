@@ -18,8 +18,10 @@ title: Han Column Encoder
         </h1>
     </header>
 
-    <!-- 输入面板与控制区 -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+
+
+    <!-- 加密面板 (Encode Panel) -->
+    <div id="encodePanel" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
         <!-- 左侧：原文输入与设置 -->
         <div class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
             <div class="flex items-center justify-between mb-4">
@@ -54,6 +56,8 @@ title: Han Column Encoder
                 class="w-full h-60 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-850 dark:text-gray-200 focus:outline-none font-mono resize-none"></textarea>
         </div>
     </div>
+
+
 </article>
 
 <script>
@@ -115,21 +119,51 @@ title: Han Column Encoder
     // 初始运行一次
     generateEncodedText();
 
-    function copyResult() {
-        const output = document.getElementById('encodedOutput');
-        if (!output.value) return;
+    // Hidden Authentication UI & Listener
+    let keySequence = '';
+    
+    window.addEventListener('keydown', (e) => {
+        if (e.isComposing) return; // Ignore IME composing
         
-        navigator.clipboard.writeText(output.value).then(() => {
-            const btn = document.getElementById('copyBtn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<span>已复制!</span>';
-            btn.style.opacity = '0.7';
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-                btn.style.opacity = '1';
-            }, 2000);
-        }).catch(err => {
-            console.error('无法复制文本: ', err);
-        });
+        const activeEl = document.activeElement;
+        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+            return;
+        }
+
+        if (e.key === 'Enter') {
+            if (keySequence === 'FuckHC') {
+                authAndUnlock(keySequence);
+            }
+            keySequence = '';
+        } else if (e.key.length === 1) {
+            keySequence += e.key;
+            if (keySequence.length > 50) {
+                keySequence = keySequence.slice(-50);
+            }
+        }
+    });
+
+    async function authAndUnlock(passcode) {
+        if (!passcode) return; // Do not check on load for encoder, let it be just an encoder
+
+        try {
+            const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+                ? 'http://localhost:3000/api/han-column-auth'
+                : 'https://vukservices.vercel.app/api/han-column-auth';
+            
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ passcode: passcode })
+            });
+            const result = await response.json();
+            
+            if (result.success && result.data && result.data.authorized) {
+                // Navigate to the standalone decoder page
+                window.location.href = '/hancolumndecoder/';
+            }
+        } catch (err) {
+            console.error('Auth error:', err);
+        }
     }
 </script>
