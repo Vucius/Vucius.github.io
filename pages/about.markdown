@@ -1,6 +1,7 @@
 ---
 layout: default
 title: About
+permalink: /about/
 ---
 
 <link rel="preconnect" href="https://fonts.googleapis.com">

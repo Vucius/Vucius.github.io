@@ -17,8 +17,12 @@ Its most complex component is the **Gomoku AI Play Page** (`/gomoku/`), which ac
 Vucius.github.io/
 ├── _config.yml              # Jekyll configuration (defines title, plugins, exclusions)
 ├── Gemfile                  # Ruby dependencies listing
-├── about.markdown           # profile / bio page (contains personal metadata & technical history)
-├── gomoku.html              # Core Gomoku AI game client (HTML, CSS, JS, sound engine)
+├── pages/                   # Standalone content pages
+│   ├── about.markdown       # profile / bio page (contains personal metadata & technical history)
+│   ├── archive.html         # Article archive page
+│   ├── collections.html     # Photos/collections page
+│   ├── gomoku.html          # Core Gomoku AI game client (HTML, CSS, JS, sound engine)
+│   └── HanColumnEncoder.html # Ancient Chinese vertical text alignment tool
 ├── index.markdown           # Homepage entrance
 ├── _includes/               # Shared page parts
 │   ├── header.html          # Global header navigation & theme toggling menu
@@ -40,7 +44,7 @@ Vucius.github.io/
 
 ## Gomoku Client-Side Architecture
 
-The file [gomoku.html](file:///C:/AAAAAAAAAAA_temp/desktop/Hephaestus_Repository/Docs_Repositories/Blog/Vucius.github.io/gomoku.html) encapsulates all logic for the Gomoku frontend:
+The file [gomoku.html](file:///C:/AAAAAAAAAAA_temp/desktop/Hephaestus_Repository/Docs_Repositories/Blog/Vucius.github.io/pages/gomoku.html) encapsulates all logic for the Gomoku frontend:
 
 ### 1. Game State (`gameState`)
 Stores runtime configurations, matching stats, and current board representations:

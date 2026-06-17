@@ -1,0 +1,171 @@
+---
+layout: default
+permalink: /hancolumndecoder/
+title: Han Column Decoder
+---
+
+<style>
+    /* 仅在页面特定元素应用微调 */
+    textarea::placeholder {
+        color: rgba(156, 163, 175, 0.5);
+    }
+</style>
+
+<article class="max-w-4xl mx-auto px-4 md:px-6 pt-6 pb-32">
+    <!-- 页面头部 -->
+    <header class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-medium text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
+            Han Column Decoder
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-400 font-light max-w-2xl mx-auto">
+            古文竖排格式还原器 — 将竖排文本还原为横排原文
+        </p>
+    </header>
+
+    <!-- 主要转换区域 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <!-- 输入面板 -->
+        <div class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <label for="encodedInput" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    输入竖排文本 / 表格：
+                </label>
+                <button onclick="clearInput()" 
+                    class="text-xs text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 transition-colors">
+                    清空
+                </button>
+            </div>
+            <textarea id="encodedInput" rows="12" oninput="decodeText()"
+                placeholder="请直接复制竖排表格或文本并粘贴到此处...&#10;例如：&#10;第  且  昔&#10;二  步  其&#10;。  观  当&#10;    之  政" 
+                class="w-full h-80 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all font-mono resize-none"></textarea>
+        </div>
+
+        <!-- 输出面板 -->
+        <div class="flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm p-6 transition-all duration-300">
+            <div class="flex items-center justify-between mb-4">
+                <label for="decodedOutput" class="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                    还原后的横排原文：
+                </label>
+                <button id="copyBtn" onclick="copyResult()" 
+                    class="px-3 py-1 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xs font-semibold rounded-lg hover:opacity-80 transition-opacity flex items-center gap-1">
+                    <span>复制原文</span>
+                </button>
+            </div>
+            <textarea id="decodedOutput" readonly rows="12"
+                placeholder="此处将显示还原后的文本..." 
+                class="w-full h-80 px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-800 dark:text-gray-200 focus:outline-none font-mono resize-none"></textarea>
+        </div>
+    </div>
+
+    <!-- 提示面板 -->
+    <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-100 dark:border-gray-700/60 shadow-sm transition-colors duration-300">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+            <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            使用提示：
+        </h3>
+        <ul class="list-disc list-inside space-y-2 text-sm text-gray-600 dark:text-gray-400 font-light">
+            <li><strong>表格还原</strong>：直接从竖排页面中拖动鼠标选中表格，复制并粘贴到输入框中，程序将自动以制表符为界进行按列还原。</li>
+            <li><strong>普通文本还原</strong>：如果您粘贴的是纯文本类型的竖排内容，只要每一行的字符数量与列数排列整齐，程序也会自动进行识别转换。</li>
+            <li><strong>自动识别</strong>：本工具会在您粘贴或输入时进行<strong>实时自动解密</strong>，无需手动点击。</li>
+        </ul>
+    </div>
+</article>
+
+<script>
+    function decodeText() {
+        const input = document.getElementById('encodedInput').value;
+        if (!input) {
+            document.getElementById('decodedOutput').value = '';
+            return;
+        }
+        
+        // 分割行，并过滤回车符
+        const lines = input.split('\n').map(l => l.replace('\r', ''));
+        let grid = [];
+        
+        // 检测分隔符：优先检查是否含制表符（来自HTML表格拷贝）
+        let hasTab = lines.some(line => line.includes('\t'));
+        
+        for (let line of lines) {
+            // 忽略开头完全为空的行
+            if (grid.length === 0 && line.trim() === '') continue;
+            
+            let cells = [];
+            if (hasTab) {
+                cells = line.split('\t');
+            } else {
+                const trimmed = line.trim();
+                // 检查是否是用空格分隔的
+                if (trimmed.includes(' ')) {
+                    cells = line.split(/\s+/);
+                } else {
+                    // 没有空格则将每个字符视为一列
+                    cells = Array.from(line);
+                }
+            }
+            grid.push(cells);
+        }
+        
+        // 过滤掉末尾全为空的行
+        while (grid.length > 0 && grid[grid.length - 1].every(cell => cell.trim() === '')) {
+            grid.pop();
+        }
+        
+        if (grid.length === 0) {
+            document.getElementById('decodedOutput').value = '';
+            return;
+        }
+        
+        const numRows = grid.length;
+        const numCols = Math.max(...grid.map(row => row.length));
+        
+        // 对齐各行宽度
+        for (let r = 0; r < numRows; r++) {
+            while (grid[r].length < numCols) {
+                grid[r].push('');
+            }
+        }
+        
+        // 从右向左按列还原，再逐行拼接 (Visual Column = numCols - 1 - col)
+        let result = '';
+        for (let col = 0; col < numCols; col++) {
+            let vc = numCols - 1 - col;
+            for (let row = 0; row < numRows; row++) {
+                let cell = grid[row][vc];
+                if (cell !== undefined) {
+                    let char = cell.replace(/\u00a0/g, ' '); // 替换不换行空格
+                    result += char;
+                }
+            }
+        }
+        
+        // 去除末尾的填充空格并显示
+        document.getElementById('decodedOutput').value = result.trimEnd();
+    }
+
+    function clearInput() {
+        document.getElementById('encodedInput').value = '';
+        document.getElementById('decodedOutput').value = '';
+        document.getElementById('encodedInput').focus();
+    }
+
+    function copyResult() {
+        const output = document.getElementById('decodedOutput');
+        if (!output.value) return;
+        
+        navigator.clipboard.writeText(output.value).then(() => {
+            const btn = document.getElementById('copyBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span>已复制!</span>';
+            btn.style.opacity = '0.7';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+            }, 2000);
+        }).catch(err => {
+            console.error('无法复制文本: ', err);
+        });
+    }
+</script>
