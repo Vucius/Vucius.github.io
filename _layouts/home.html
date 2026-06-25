@@ -119,7 +119,7 @@ layout: default
     .cards-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 24px;
         width: 100%;
         max-width: 90vw;
         margin: 0 auto;
@@ -133,8 +133,8 @@ layout: default
 
     /* ===== Base Card ===== */
     .card {
-        border-radius: 16px;
-        padding: 20px 24px;
+        border-radius: 20px;
+        padding: 32px;
         background: rgba(255, 255, 255, 0.75);
         border: 1px solid rgba(0, 0, 0, 0.06);
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
@@ -162,7 +162,7 @@ layout: default
     .profile-header {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 16px;
         margin-bottom: 16px;
     }
     .profile-avatar {
@@ -183,11 +183,12 @@ layout: default
     .profile-sig {
         font-size: 13px;
         opacity: 0.75;
-        margin: 0;
+        margin: 4px 0 0 0;
     }
     .profile-body {
-        margin-bottom: 14px;
-        padding-top: 12px;
+        margin-top: 24px;
+        margin-bottom: 24px;
+        padding-top: 16px;
         border-top: 1px solid rgba(0, 0, 0, 0.06);
     }
     .profile-role {
@@ -207,6 +208,7 @@ layout: default
         display: flex;
         align-items: center;
         gap: 10px;
+        padding: 12px 0;
         margin-bottom: 14px;
     }
     .profile-socials .social-btn {
@@ -216,9 +218,11 @@ layout: default
     .profile-tags {
         font-size: 12px;
         opacity: 0.65;
-        padding-top: 10px;
+        margin-top: 16px;
+        padding-top: 16px;
         border-top: 1px solid rgba(0, 0, 0, 0.06);
         font-weight: 500;
+        text-align: center;
     }
 
     /* ===== Tech / LLM Matrix ===== */
@@ -230,15 +234,25 @@ layout: default
     .tech-matrix-grouped {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 0;
     }
     .tech-row {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 16px;
+    }
+    .tech-row:not(:last-child) {
+        margin-bottom: 16px;
     }
     .tech-row-spacer {
         width: 12px;
+    }
+    .icon-wrapper {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .tech-matrix-icon {
         width: 24px;
@@ -246,18 +260,37 @@ layout: default
         object-fit: contain;
         transition: transform 160ms ease, opacity 160ms ease;
     }
-    .tech-matrix-icon:hover {
+    .icon-wrapper:hover .tech-matrix-icon {
         transform: translateY(-2px) scale(1.06);
         opacity: 0.9;
+    }
+    .icon-wrapper .irregular-icon {
+        transform: scale(1.15);
+    }
+
+    /* ===== LLM Ecosystem Card ===== */
+    .llm-card {
+        height: 96px;
+        padding: 0 24px !important;
+    }
+    .llm-card .tech-matrix {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
     }
 
     /* ===== Like Button ===== */
     .like-card-btn {
+        display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         text-align: center;
         cursor: pointer;
-        height: 110px;
+        height: 96px;
+        padding: 0 !important;
         font-family: inherit;
         outline: none;
     }
@@ -296,12 +329,59 @@ layout: default
         opacity: 0.6;
     }
 
+    /* ===== Personality Cards ===== */
+    .personality-cards-wrapper {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    @media (min-width: 768px) {
+        .personality-cards-wrapper {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+    .personality-card {
+        padding: 28px 24px !important;
+    }
+    .personality-title {
+        font-size: 16px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 0 0 4px 0;
+    }
+    .personality-subtitle {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        opacity: 0.6;
+        margin: 0 0 16px 0;
+        line-height: 1.4;
+    }
+    .personality-quotes {
+        font-family: var(--home-theme-font-title, serif);
+        font-size: 14px;
+        font-style: italic;
+        opacity: 0.85;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+    .personality-quotes p {
+        margin: 0;
+    }
+
     /* ===== Desktop card self-sizing ===== */
     @media (min-width: 768px) {
-        .tech-card,
+        .tech-card {
+            align-self: start;
+        }
         .llm-card,
         .like-card-btn {
-            align-self: start;
+            align-self: stretch;
         }
     }
 </style>
@@ -337,9 +417,6 @@ layout: default
             <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4">
                 About Me
             </h2>
-            <p class="text-lg sm:text-xl text-gray-500 font-light mb-6">
-                I Am What I Am
-            </p>
         </div>
 
         <div class="cards-grid mx-auto">
@@ -389,31 +466,61 @@ layout: default
                 <div class="tech-matrix-grouped">
                     <!-- Row 1: Programming Languages -->
                     <div class="tech-row">
-                        <img src="{{ '/assets/icons/Programming_Language/cplusplus.svg' | relative_url }}" class="tech-matrix-icon" title="C++" alt="C++" />
-                        <img src="{{ '/assets/icons/Programming_Language/csharp.svg' | relative_url }}" class="tech-matrix-icon" title="C#" alt="C#" />
-                        <img src="{{ '/assets/icons/Programming_Language/python.svg' | relative_url }}" class="tech-matrix-icon" title="Python" alt="Python" />
-                        <img src="{{ '/assets/icons/Programming_Language/ruby.svg' | relative_url }}" class="tech-matrix-icon" title="Ruby" alt="Ruby" />
-                        <img src="{{ '/assets/icons/Programming_Language/rust.svg' | relative_url }}" class="tech-matrix-icon" title="Rust" alt="Rust" />
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Programming_Language/cplusplus.svg' | relative_url }}" class="tech-matrix-icon" title="C++" alt="C++" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Programming_Language/csharp.svg' | relative_url }}" class="tech-matrix-icon" title="C#" alt="C#" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Programming_Language/python.svg' | relative_url }}" class="tech-matrix-icon irregular-icon" title="Python" alt="Python" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Programming_Language/ruby.svg' | relative_url }}" class="tech-matrix-icon" title="Ruby" alt="Ruby" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Programming_Language/rust.svg' | relative_url }}" class="tech-matrix-icon" title="Rust" alt="Rust" /></div>
                     </div>
                     <!-- Row 2: GUI + Database -->
                     <div class="tech-row">
-                        <img src="{{ '/assets/icons/GUI/qt.svg' | relative_url }}" class="tech-matrix-icon" title="Qt" alt="Qt" />
-                        <img src="{{ '/assets/icons/GUI/avaloniaui.svg' | relative_url }}" class="tech-matrix-icon" title="Avalonia UI" alt="Avalonia UI" />
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/GUI/qt.svg' | relative_url }}" class="tech-matrix-icon" title="Qt" alt="Qt" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/GUI/avaloniaui.svg' | relative_url }}" class="tech-matrix-icon" title="Avalonia UI" alt="Avalonia UI" /></div>
                         <span class="tech-row-spacer"></span>
-                        <img src="{{ '/assets/icons/Database_System/postgresql.svg' | relative_url }}" class="tech-matrix-icon" title="PostgreSQL" alt="PostgreSQL" />
-                        <img src="{{ '/assets/icons/Database_System/sqlite.svg' | relative_url }}" class="tech-matrix-icon" title="SQLite" alt="SQLite" />
-                        <img src="{{ '/assets/icons/Database_System/redis.svg' | relative_url }}" class="tech-matrix-icon" title="Redis" alt="Redis" />
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Database_System/postgresql.svg' | relative_url }}" class="tech-matrix-icon" title="PostgreSQL" alt="PostgreSQL" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Database_System/sqlite.svg' | relative_url }}" class="tech-matrix-icon" title="SQLite" alt="SQLite" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Database_System/redis.svg' | relative_url }}" class="tech-matrix-icon" title="Redis" alt="Redis" /></div>
                     </div>
                     <!-- Row 3: Agent + Systems -->
                     <div class="tech-row">
-                        <img src="{{ '/assets/icons/Agent/antigravity-color.svg' | relative_url }}" class="tech-matrix-icon" title="Antigravity" alt="Antigravity" />
-                        <img src="{{ '/assets/icons/Agent/claudecode-color.svg' | relative_url }}" class="tech-matrix-icon" title="Claude Code" alt="Claude Code" />
-                        <img src="{{ '/assets/icons/Agent/codex-color.svg' | relative_url }}" class="tech-matrix-icon" title="Codex" alt="Codex" />
-                        <img src="{{ '/assets/icons/Agent/cursor.svg' | relative_url }}" class="tech-matrix-icon" title="Cursor" alt="Cursor" />
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Agent/antigravity-color.svg' | relative_url }}" class="tech-matrix-icon" title="Antigravity" alt="Antigravity" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Agent/claudecode-color.svg' | relative_url }}" class="tech-matrix-icon" title="Claude Code" alt="Claude Code" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Agent/codex-color.svg' | relative_url }}" class="tech-matrix-icon" title="Codex" alt="Codex" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/Agent/cursor.svg' | relative_url }}" class="tech-matrix-icon" title="Cursor" alt="Cursor" /></div>
                         <span class="tech-row-spacer"></span>
-                        <img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="tech-matrix-icon" title="Gentoo Linux" alt="Gentoo Linux" />
-                        <img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="tech-matrix-icon" title="Arch Linux" alt="Arch Linux" />
-                        <img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="tech-matrix-icon" title="Manjaro Linux" alt="Manjaro Linux" />
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/systems/Gentoo_Linux_logo_matte.svg' | relative_url }}" class="tech-matrix-icon irregular-icon" title="Gentoo Linux" alt="Gentoo Linux" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/systems/archlinux.svg' | relative_url }}" class="tech-matrix-icon irregular-icon" title="Arch Linux" alt="Arch Linux" /></div>
+                        <div class="icon-wrapper"><img src="{{ '/assets/icons/systems/Manjaro-logo.svg' | relative_url }}" class="tech-matrix-icon" title="Manjaro Linux" alt="Manjaro Linux" /></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personality Cards -->
+            <div class="personality-cards-wrapper">
+                <div class="card personality-card">
+                    <h3 class="personality-title">realist</h3>
+                    <div class="personality-subtitle">LIVING WITH SHARP EDGES</div>
+                    <div class="personality-quotes">
+                        <p>"A coward who fears death"</p>
+                        <p>"A weapon of execution, a hatred for the false"</p>
+                    </div>
+                </div>
+                <div class="card personality-card">
+                    <h3 class="personality-title">Malcontent</h3>
+                    <div class="personality-subtitle">SWALLOWING WHAT CANNOT BE SAID</div>
+                    <div class="personality-quotes">
+                        <p>"Surviving beneath the weight of sin"</p>
+                        <p>"Dreaming of a rebirth that never comes"</p>
+                    </div>
+                </div>
+                <div class="card personality-card">
+                    <h3 class="personality-title">insomniac</h3>
+                    <div class="personality-subtitle">DISSOLVING BETWEEN TWO STATES</div>
+                    <div class="personality-quotes">
+                        <p>"Struggling through the mud"</p>
+                        <p>"Sinking in reality"</p>
+                        <p>"Fading numb in the haze"</p>
+                        <p>"Leaping between paralysis and breath"</p>
                     </div>
                 </div>
             </div>
@@ -422,16 +529,16 @@ layout: default
             <div class="card llm-card">
 
                 <div class="tech-matrix">
-                    <img src="{{ '/assets/icons/llms/openai.svg' | relative_url }}" class="tech-matrix-icon" title="OpenAI" alt="OpenAI" />
-                    <img src="{{ '/assets/icons/llms/claude-color.svg' | relative_url }}" class="tech-matrix-icon" title="Claude" alt="Claude" />
-                    <img src="{{ '/assets/icons/llms/gemini-color.svg' | relative_url }}" class="tech-matrix-icon" title="Gemini" alt="Gemini" />
-                    <img src="{{ '/assets/icons/llms/deepseek.svg' | relative_url }}" class="tech-matrix-icon" title="DeepSeek" alt="DeepSeek" />
-                    <img src="{{ '/assets/icons/llms/gemma-color.svg' | relative_url }}" class="tech-matrix-icon" title="Gemma" alt="Gemma" />
-                    <img src="{{ '/assets/icons/llms/grok.svg' | relative_url }}" class="tech-matrix-icon" title="Grok" alt="Grok" />
-                    <img src="{{ '/assets/icons/llms/perplexity-color.svg' | relative_url }}" class="tech-matrix-icon" title="Perplexity" alt="Perplexity" />
-                    <img src="{{ '/assets/icons/llms/qwen-color.svg' | relative_url }}" class="tech-matrix-icon" title="Qwen" alt="Qwen" />
-                    <img src="{{ '/assets/icons/llms/chatglm-color.svg' | relative_url }}" class="tech-matrix-icon" title="ChatGLM" alt="ChatGLM" />
-                    <img src="{{ '/assets/icons/llms/ninja%20ai.svg' | relative_url }}" class="tech-matrix-icon" title="Ninja AI" alt="Ninja AI" />
+                    <div class="icon-wrapper"><img src="{{ '/assets/icons/llms/openai.svg' | relative_url }}" class="tech-matrix-icon" title="OpenAI" alt="OpenAI" /></div>
+                    <div class="icon-wrapper"><img src="{{ '/assets/icons/llms/claude-color.svg' | relative_url }}" class="tech-matrix-icon" title="Claude" alt="Claude" /></div>
+                    <div class="icon-wrapper"><img src="{{ '/assets/icons/llms/gemini-color.svg' | relative_url }}" class="tech-matrix-icon" title="Gemini" alt="Gemini" /></div>
+                    <div class="icon-wrapper"><img src="{{ '/assets/icons/llms/deepseek.svg' | relative_url }}" class="tech-matrix-icon" title="DeepSeek" alt="DeepSeek" /></div>
+                    <div class="icon-wrapper"><img src="{{ '/assets/icons/llms/gemma-color.svg' | relative_url }}" class="tech-matrix-icon" title="Gemma" alt="Gemma" /></div>
+                    <div class="icon-wrapper"><img src="{{ '/assets/icons/llms/grok.svg' | relative_url }}" class="tech-matrix-icon" title="Grok" alt="Grok" /></div>
+                    <div class="icon-wrapper"><img src="{{ '/assets/icons/llms/perplexity-color.svg' | relative_url }}" class="tech-matrix-icon" title="Perplexity" alt="Perplexity" /></div>
+                    <div class="icon-wrapper"><img src="{{ '/assets/icons/llms/qwen-color.svg' | relative_url }}" class="tech-matrix-icon" title="Qwen" alt="Qwen" /></div>
+                    <div class="icon-wrapper"><img src="{{ '/assets/icons/llms/chatglm-color.svg' | relative_url }}" class="tech-matrix-icon" title="ChatGLM" alt="ChatGLM" /></div>
+                    <div class="icon-wrapper"><img src="{{ '/assets/icons/llms/ninja%20ai.svg' | relative_url }}" class="tech-matrix-icon" title="Ninja AI" alt="Ninja AI" /></div>
                 </div>
             </div>
             
