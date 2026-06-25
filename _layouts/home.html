@@ -119,7 +119,7 @@ layout: default
     .cards-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 12px;
         width: 100%;
         max-width: 90vw;
         margin: 0 auto;
@@ -134,7 +134,7 @@ layout: default
     /* ===== Base Card ===== */
     .card {
         border-radius: 20px;
-        padding: 32px;
+        padding: 16px;
         background: rgba(255, 255, 255, 0.75);
         border: 1px solid rgba(0, 0, 0, 0.06);
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
@@ -186,9 +186,9 @@ layout: default
         margin: 4px 0 0 0;
     }
     .profile-body {
-        margin-top: 24px;
-        margin-bottom: 24px;
-        padding-top: 16px;
+        margin-top: 16px;
+        margin-bottom: 16px;
+        padding-top: 12px;
         border-top: 1px solid rgba(0, 0, 0, 0.06);
     }
     .profile-role {
@@ -218,8 +218,8 @@ layout: default
     .profile-tags {
         font-size: 12px;
         opacity: 0.65;
-        margin-top: 16px;
-        padding-top: 16px;
+        margin-top: 12px;
+        padding-top: 12px;
         border-top: 1px solid rgba(0, 0, 0, 0.06);
         font-weight: 500;
         text-align: center;
@@ -242,7 +242,7 @@ layout: default
         gap: 16px;
     }
     .tech-row:not(:last-child) {
-        margin-bottom: 16px;
+        margin-bottom: 12px;
     }
     .tech-row-spacer {
         width: 12px;
@@ -270,8 +270,8 @@ layout: default
 
     /* ===== LLM Ecosystem Card ===== */
     .llm-card {
-        height: 96px;
-        padding: 0 24px !important;
+        height: 64px;
+        padding: 0 16px !important;
     }
     .llm-card .tech-matrix {
         display: flex;
@@ -279,6 +279,12 @@ layout: default
         justify-content: space-between;
         width: 100%;
         height: 100%;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+    .llm-card .tech-matrix::-webkit-scrollbar {
+        display: none;
     }
 
     /* ===== Like Button ===== */
@@ -289,7 +295,7 @@ layout: default
         justify-content: center;
         text-align: center;
         cursor: pointer;
-        height: 96px;
+        height: 64px;
         padding: 0 !important;
         font-family: inherit;
         outline: none;
@@ -334,7 +340,7 @@ layout: default
         grid-column: 1 / -1;
         display: grid;
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 12px;
     }
     @media (min-width: 768px) {
         .personality-cards-wrapper {
@@ -342,14 +348,14 @@ layout: default
         }
     }
     .personality-card {
-        padding: 28px 24px !important;
+        padding: 16px !important;
     }
     .personality-title {
         font-size: 16px;
         font-weight: 400;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        margin: 0 0 16px 0;
+        margin: 0 0 8px 0;
         text-align: center;
     }
     .personality-subtitle {
