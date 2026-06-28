@@ -128,16 +128,23 @@ body.home-theme-active .like-card-btn .like-content {
 }
 
 body.home-theme-active .like-card-btn .icon-svg {
-    color: var(--home-theme-accent) !important;
+    color: #94a3b8 !important;
+    transition: color 160ms ease, transform 160ms ease !important;
 }
 
-body.home-theme-active .like-card-btn:hover .icon-svg {
+body.home-theme-active .like-card-btn:not(:disabled):hover .icon-svg,
+body.home-theme-active .like-card-btn.liked .icon-svg {
     color: #f43f5e !important;
 }
 
 body.home-theme-active .like-card-btn .like-label,
 body.home-theme-active .like-card-btn .like-support {
     color: var(--home-theme-text) !important;
+}
+
+body.home-theme-active .like-card-btn:disabled {
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
 }
 
 /* ===== Project Section Cards (restored) ===== */

@@ -551,14 +551,14 @@ layout: default
             </div>
             
             <!-- Like Card -->
-            <button onclick="sendLike()" id="likeBtn" class="card like-card-btn">
+            <button onclick="sendLike()" id="likeBtn" class="card like-card-btn" disabled>
                 <div class="like-content">
                     <span class="icon-svg">
                         {% include icons/favorite.svg %}
                     </span>
-                    <span id="like-count">...</span> <span class="like-label">likes</span>
+                    <span id="like-count">...</span> <span class="like-label" style="display: none;">likes</span>
                 </div>
-                <div class="like-support">
+                <div class="like-support" id="like-msg">
                     Support me
                 </div>
             </button>
@@ -567,32 +567,99 @@ layout: default
         <!-- Scripts for Like functionality -->
         <script>
             const LIKE_SERVER_URL = 'https://vukservices.vercel.app';
+            let currentLikes = 0;
+            let isInitialized = false;
+
+            async function fetchWithRetry(url, options = {}, retries = 3, delay = 1000) {
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        const res = await fetch(url, options);
+                        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                        return await res.json();
+                    } catch (err) {
+                        console.warn(`Attempt ${i + 1} failed. Retrying in ${delay}ms...`, err);
+                        if (i === retries - 1) throw err;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    }
+                }
+            }
             
             async function fetchLikes() {
+                const btn = document.getElementById('likeBtn');
+                const countSpan = document.getElementById('like-count');
+                const labelSpan = document.querySelector('.like-label');
+                const msgDiv = document.getElementById('like-msg');
+
                 try {
-                    const res = await fetch(`${LIKE_SERVER_URL}/api/like`);
-                    const data = await res.json();
-                    document.getElementById('like-count').innerText = data?.data?.count || data?.count || 0;
+                    const data = await fetchWithRetry(`${LIKE_SERVER_URL}/api/like`, {}, 3, 1000);
+                    currentLikes = data?.data?.count || data?.count || 0;
+                    
+                    countSpan.innerText = currentLikes;
+                    labelSpan.style.display = 'inline';
+                    msgDiv.innerText = "Support me";
+                    
+                    btn.disabled = false;
+                    isInitialized = true;
                 } catch (err) {
-                    console.error('Failed to load likes:', err);
+                    console.error('Failed to load likes after retries:', err);
+                    countSpan.innerText = "Network Error";
+                    labelSpan.style.display = 'none';
+                    msgDiv.innerText = "Failed to connect";
+                    btn.disabled = true;
                 }
             }
 
             async function sendLike() {
                 const btn = document.getElementById('likeBtn');
-                if (btn.disabled) return;
-                btn.disabled = true;
+                if (btn.disabled || !isInitialized) return;
                 
+                btn.disabled = true;
+                const countSpan = document.getElementById('like-count');
+                const labelSpan = document.querySelector('.like-label');
+                const msgDiv = document.getElementById('like-msg');
+
+                const previousCountText = countSpan.innerText;
+                const previousLabelDisplay = labelSpan.style.display;
+                const previousMsgText = msgDiv.innerText;
+
                 try {
                     const res = await fetch(`${LIKE_SERVER_URL}/api/like`, { method: 'POST' });
+                    if (!res.ok) throw new Error('Failed to send like');
                     const data = await res.json();
-                    document.getElementById('like-count').innerText = data?.data?.count || data?.count || 0;
+                    
+                    const newLikes = data?.data?.count || data?.count || 0;
+                    btn.classList.add('liked');
+
+                    if (newLikes > currentLikes) {
+                        currentLikes = newLikes;
+                        countSpan.innerText = "Thank You";
+                        labelSpan.style.display = 'none';
+                        msgDiv.innerText = "You liked this!";
+                    } else {
+                        countSpan.innerText = "Already Liked Today";
+                        labelSpan.style.display = 'none';
+                        msgDiv.innerText = "Thank you for the support";
+                    }
+
+                    setTimeout(() => {
+                        countSpan.innerText = currentLikes;
+                        labelSpan.style.display = 'inline';
+                        msgDiv.innerText = "Support me";
+                        btn.disabled = false;
+                    }, 3000);
+
                 } catch (err) {
                     console.error('Failed to send like:', err);
-                } finally {
+                    countSpan.innerText = "Network Error";
+                    labelSpan.style.display = 'none';
+                    msgDiv.innerText = "Please try again later";
+                    
                     setTimeout(() => {
+                        countSpan.innerText = previousCountText;
+                        labelSpan.style.display = previousLabelDisplay;
+                        msgDiv.innerText = previousMsgText;
                         btn.disabled = false;
-                    }, 500);
+                    }, 3000);
                 }
             }
 
