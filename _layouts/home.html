@@ -297,7 +297,7 @@ layout: default
         cursor: pointer;
         height: 64px;
         padding: 0 16px !important;
-        width: fit-content;
+        width: 200px; /* Fixed width to prevent size bouncing */
         margin: 0 auto;
         font-family: inherit;
         outline: none;
@@ -595,6 +595,7 @@ layout: default
                     currentLikes = data?.data?.count || data?.count || 0;
                     
                     countSpan.innerText = currentLikes;
+                    countSpan.style.fontSize = "20px";
                     labelSpan.style.display = 'inline';
                     msgDiv.innerText = "Support me";
                     
@@ -603,6 +604,7 @@ layout: default
                 } catch (err) {
                     console.error('Failed to load likes after retries:', err);
                     countSpan.innerText = "Network Error";
+                    countSpan.style.fontSize = "14px";
                     labelSpan.style.display = 'none';
                     msgDiv.innerText = "Failed to connect";
                     btn.disabled = true;
@@ -633,16 +635,19 @@ layout: default
                     if (newLikes > currentLikes) {
                         currentLikes = newLikes;
                         countSpan.innerText = "Thank You";
+                        countSpan.style.fontSize = "16px";
                         labelSpan.style.display = 'none';
                         msgDiv.innerText = "You liked this!";
                     } else {
                         countSpan.innerText = "Already Liked Today";
+                        countSpan.style.fontSize = "12px";
                         labelSpan.style.display = 'none';
                         msgDiv.innerText = "Thank you for the support";
                     }
 
                     setTimeout(() => {
                         countSpan.innerText = currentLikes;
+                        countSpan.style.fontSize = "20px";
                         labelSpan.style.display = 'inline';
                         msgDiv.innerText = "Support me";
                         btn.disabled = false;
@@ -651,11 +656,13 @@ layout: default
                 } catch (err) {
                     console.error('Failed to send like:', err);
                     countSpan.innerText = "Network Error";
+                    countSpan.style.fontSize = "14px";
                     labelSpan.style.display = 'none';
                     msgDiv.innerText = "Please try again later";
                     
                     setTimeout(() => {
                         countSpan.innerText = previousCountText;
+                        countSpan.style.fontSize = "20px";
                         labelSpan.style.display = previousLabelDisplay;
                         msgDiv.innerText = previousMsgText;
                         btn.disabled = false;
